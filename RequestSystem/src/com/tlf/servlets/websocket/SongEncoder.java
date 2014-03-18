@@ -17,8 +17,6 @@ public class SongEncoder implements Encoder.Text<Song>
 	@Override
 	public String encode(Song song) throws EncodeException
 	{
-		String toSend = String.format("song={id=%s, name=%s, artist=%s, album=%s, albumartist=%s, composer=%s, time=%s}", song.trackID(), song.name(), song.artist(), song.album(), song.albumArtist(), song.composer(), song.time());
-		System.out.println("Sending " + toSend);
-		return toSend;
+		return String.format("song={id=%s, name=%s, artist=%s, album=%s, albumartist=%s, composer=%s, time=%s}", song.trackID(), song.name(), song.artist(), song.album(), song.albumArtist(), song.composer(), song.time());
 	}
 }
