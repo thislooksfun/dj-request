@@ -32,9 +32,9 @@ public class ChatEndpoint
 		
 		try {
 			session.getBasicRemote().sendText("Welcome!");
-			Iterator<Entry<String, Song>> iterator = LibraryDecoder.songs.entrySet().iterator();
+			Iterator<Song> iterator = LibraryDecoder.songs.iterator();
 			while (iterator.hasNext()) {
-				Song song = iterator.next().getValue();
+				Song song = iterator.next();
 				session.getBasicRemote().sendObject(song);
 			}
 		} catch (IOException | EncodeException e) {

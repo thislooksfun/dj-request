@@ -2,8 +2,9 @@ package com.tlf.itunes;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -17,12 +18,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
 @Singleton
 @Startup
 public class LibraryDecoder
 {
-	public static Map<String, Song> songs = new HashMap<String, Song>();
+	public static Set<Song> songs = Collections.synchronizedSet(new HashSet<Song>());
 	
 	private String home = System.getProperty("user.home");
 	private String osName = System.getProperty("os.name");
@@ -97,7 +97,7 @@ public class LibraryDecoder
 					} else if (((Element)nNode).getElementsByTagName("key").item(0).getTextContent().equals("Track ID")) {
 						Song song = new Song((Element)nNode);
 						if (!song.isMovie) {
-							songs.put(song.name(), song);
+							songs.add(song);
 						}
 					}
 				}
