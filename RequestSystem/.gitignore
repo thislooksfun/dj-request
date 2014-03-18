@@ -1,0 +1,9 @@
+/build
+/.classpath
+/.DS_Store
+/.project
+/src/.DS_Store
+/src/com/.DS_Store
+/src/com/tlf/.DS_Store
+/WebContent/WEB-INF
+/WebContent/META-INF
