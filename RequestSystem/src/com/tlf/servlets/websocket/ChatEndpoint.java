@@ -31,12 +31,15 @@ public class ChatEndpoint
 		sessions.add(session);
 		
 		try {
+			int temp = 0;
 			session.getBasicRemote().sendText("Welcome!");
 			Iterator<Song> iterator = LibraryDecoder.songs.iterator();
 			while (iterator.hasNext()) {
 				Song song = iterator.next();
 				session.getBasicRemote().sendObject(song);
+				temp++;
 			}
+			System.out.println(String.format("Sent %s songs", temp));
 		} catch (IOException | EncodeException e) {
 			e.printStackTrace();
 		}
