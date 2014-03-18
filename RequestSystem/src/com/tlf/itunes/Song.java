@@ -31,7 +31,7 @@ public class Song
 	
 	private boolean explicit;
 	
-	public boolean isMovie;
+	public boolean isSong = true;
 	
 	public Song(Element song)
 	{
@@ -46,6 +46,8 @@ public class Song
 	private void parseElement(Node item)
 	{
 		Node next = item.getNextSibling();
+		boolean temp;
+		
 		switch (item.getTextContent()) {
 		case "Track ID":
 			this.trackID = Integer.parseInt(next.getTextContent());
@@ -86,12 +88,18 @@ public class Song
 		case "Track Count":
 			this.trackCount = Integer.parseInt(next.getTextContent());
 			break;
-		case "Movie":
-			this.isMovie = Boolean.parseBoolean(next.getNodeName());
-			break;
 		case "Total Time":
 			this.totalTime = Integer.parseInt(next.getTextContent());
 			this.parseTime();
+			break;
+		case "Has Video":
+		case "Movie":
+			temp = Boolean.parseBoolean(next.getNodeName());
+			this.isSong = (temp ? false : this.isSong);
+			break;
+		case "Track Type":
+			temp = next.getTextContent().equals("Remote");
+			this.isSong = (temp ? false : this.isSong);
 			break;
 		default:
 			unrecognizedKeys.add(item.getTextContent());

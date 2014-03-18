@@ -96,7 +96,8 @@ public class LibraryDecoder
 						break;
 					} else if (((Element)nNode).getElementsByTagName("key").item(0).getTextContent().equals("Track ID")) {
 						Song song = new Song((Element)nNode);
-						if (!song.isMovie) {
+						if (song.isSong) {
+							System.out.println("Adding song #" + song.trackID());
 							songs.add(song);
 						}
 					}
