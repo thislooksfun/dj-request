@@ -110,7 +110,7 @@ public class Song
 	{
 		float minutes = (float)this.totalTime/60000;
 		
-		int seconds = (int)((minutes - (int)minutes)*60);
+		int seconds = (int)Math.round((minutes - (int)minutes)*60);
 		
 		int hours = 0;
 		while ((int)minutes >= 60) {
