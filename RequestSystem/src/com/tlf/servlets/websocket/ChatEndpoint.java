@@ -16,9 +16,6 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-import org.eclipse.persistence.internal.oxm.record.json.JSONReader;
-import org.glassfish.jersey.server.JSONP;
-
 import com.tlf.itunes.LibraryDecoder;
 import com.tlf.itunes.Song;
 
