@@ -17,6 +17,6 @@
 		<input type="text" id="msg" onkeydown="chatKeyPress(event)" />
 		<button type="button" id="sendButton" onclick="postToServer()">Send!</button>
 	</center>
-	<script type="text/javascript" src="websocket.js"></script>
+	<script type="text/javascript" src="/websocket.js"></script>
 </body>
 </html>

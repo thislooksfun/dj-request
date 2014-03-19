@@ -1,3 +1,4 @@
+<%@page import="com.tlf.util.LoginHelper"%>
 <%@ page language="java" contentType="text/html; charset=US-ASCII" pageEncoding="US-ASCII"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -20,12 +21,7 @@
 		</h1>
 		<h2>
 			<font color="white">Logged in as <%
-				Cookie[] cookies = request.getCookies();
-				for (Cookie cookie : cookies) {
-					if (cookie.getName().equals("user")) {
-						out.print(cookie.getValue());
-					}
-				}
+				out.print(LoginHelper.instance.getUserForSession(session));
 			%>
 			</font>
 		</h2>

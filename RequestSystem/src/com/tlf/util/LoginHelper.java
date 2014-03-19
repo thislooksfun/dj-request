@@ -51,6 +51,13 @@ public class LoginHelper
 	public boolean isUserLoggedIn(String username) {
 		return this.loggedIn.containsValue(username);
 	}
+	public boolean isSessionLoggedIn(HttpSession session) {
+		return this.loggedIn.containsKey(session.getId());
+	}
+	
+	public String getUserForSession(HttpSession session) {
+		return this.loggedIn.get(session.getId());
+	}
 	
 	public void logout(HttpSession session) {
 		this.loggedIn.remove(session.getId());

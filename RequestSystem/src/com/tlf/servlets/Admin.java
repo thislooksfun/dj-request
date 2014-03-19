@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.tlf.util.LoginHelper;
+
 /**
  * Servlet implementation class Admin
  */
@@ -30,22 +32,11 @@ public class Admin extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		String userName = null;
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			for(Cookie cookie : cookies){
-				if (cookie.getName().equals("user"))
-				{
-					userName = cookie.getValue();
-				}
-			}
-		}
-		
-		if (userName == null) {
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.jsp");
+		if (LoginHelper.instance.isSessionLoggedIn(request.getSession())) {
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp");
 			rd.forward(request, response);
 		} else {
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/admin.jsp");
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/login.jsp");
 			rd.forward(request, response);
 		}
 	}

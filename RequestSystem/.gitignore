@@ -5,6 +5,6 @@
 /src/.DS_Store
 /src/com/.DS_Store
 /src/com/tlf/.DS_Store
-/WebContent/WEB-INF
+/WebContent/WEB-INF/lib
 /WebContent/META-INF
 /.settings
