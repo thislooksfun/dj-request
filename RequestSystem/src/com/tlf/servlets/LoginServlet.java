@@ -45,42 +45,9 @@ public class LoginServlet extends HttpServlet
 			//setting cookie to expire in 2 hrs
 			loginCookie.setMaxAge(2*60*60);
 			
-			Cookie[] cookies = request.getCookies();
-			
-			if (cookies != null) {
-				for(Cookie cookie : cookies){
-					if (cookie.getName().equals("attempt"))
-					{
-						cookie.setMaxAge(0);
-					}
-				}
-			}
-			
 			response.addCookie(loginCookie);
-			response.sendRedirect("/admin");
-		} else {
-			boolean hasFailedAttempt = false;
-			
-			Cookie[] cookies = request.getCookies();
-			
-			if (cookies != null) {
-				for(Cookie cookie : cookies){
-					if (cookie.getName().equals("attempt"))
-					{
-						hasFailedAttempt = true;
-						cookie.setMaxAge(60);
-					}
-				}
-			}
-			
-			if (!hasFailedAttempt)
-			{
-				Cookie fac = new Cookie("attempt", "0"); //FailedAttemptCookie
-				fac.setMaxAge(60);
-				response.addCookie(fac);
-			}
-			
-			response.sendRedirect("/admin");
 		}
+		
+		response.sendRedirect("/admin");
 	}
 }

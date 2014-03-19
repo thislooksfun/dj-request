@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.tlf.util.LoginHelper;
+
 /**
  * Servlet implementation class LogoutServlet
  */
@@ -32,6 +34,8 @@ public class LogoutServlet extends HttpServlet
 		response.setContentType("text/html");
 		Cookie loginCookie = null;
 		Cookie[] cookies = request.getCookies();
+		
+		LoginHelper.instance.logout(request.getSession());
 		
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {

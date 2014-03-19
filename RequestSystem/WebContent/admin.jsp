@@ -11,6 +11,9 @@
 			<input type="submit" value="Logout">
 		</p>
 	</form>
+	<p align="right">
+		<a href=".."><font color="white" size="5">Main site</font></a>
+	</p>
 	<center>
 		<h1>
 			<font color="white">Admin site</font>

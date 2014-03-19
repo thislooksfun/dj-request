@@ -6,12 +6,11 @@
 <title>Request</title>
 </head>
 <body bgcolor="black">
+	<p align="right">
+		<a href="/admin"><font color="white" size="5">Admin site</font></a>
+	</p>
 	<center>
-		<font color="white" size="7">Welcome!</font>
-		<p align="right">
-			<a href="/admin"><font color="white" size="5">Admin site</font></a>
-		</p>
-		<br>
+		<font color="white" size="7">Welcome!</font> <br>
 		<textarea id="chatlog" readonly style="height: 250px; width: 500px"></textarea>
 		<br>
 		<button type="button" id="connectButton" onclick="connect()">Connect</button>
