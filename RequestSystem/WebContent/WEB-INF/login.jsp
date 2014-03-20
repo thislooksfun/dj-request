@@ -19,9 +19,7 @@
 			int attempt = LoginHelper.instance.getLoginAttempt(session);
 			int maxAttemps = 5;
 			
-			if (attempt == -2) {
-				out.println("<font color=\"red\">That user is already logged in</font><br>");
-			} else if (attempt > 0) {
+			if (attempt > 0) {
 				out.println("<font color=\"red\">Username or password is incorrect</font><br>");
 				out.println(String
 						.format("<font color=\"red\">You have %s attempt%s left</font><br>",
@@ -30,11 +28,10 @@
 			}
 		%>
 
-		<form method="post" action="LoginServlet">
+		<form action="LoginServlet" method="post">
 			<font color="white"> Username: <input type="text" name="user" /> <br> Password: <input type="password" name="pwd" /> <br> <input type="submit" value="Log in">
 			</font>
 		</form>
 	</center>
 </body>
-
 </html>

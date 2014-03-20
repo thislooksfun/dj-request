@@ -29,6 +29,8 @@ public class Song
 	private int trackCount;
 	private int year;
 	
+	public int requests = 0;
+	
 	private boolean explicit;
 	
 	public boolean isSong = true;
@@ -98,7 +100,7 @@ public class Song
 			this.isSong = (temp ? false : this.isSong);
 			break;
 		case "Track Type":
-			temp = next.getTextContent().equals("Remote");
+			temp = next.getTextContent().equals("Remote") || next.getTextContent().equals("URL");
 			this.isSong = (temp ? false : this.isSong);
 			break;
 		default:

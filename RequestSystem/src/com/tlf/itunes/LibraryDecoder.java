@@ -3,8 +3,8 @@ package com.tlf.itunes;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -23,7 +23,7 @@ import org.xml.sax.SAXException;
 @Startup
 public class LibraryDecoder
 {
-	public static Set<Song> songs = Collections.synchronizedSet(new HashSet<Song>());
+	public static Map<Integer, Song> songs = Collections.synchronizedMap(new HashMap<Integer, Song>());
 	
 	private String home = System.getProperty("user.home");
 	private String osName = System.getProperty("os.name");
@@ -99,7 +99,7 @@ public class LibraryDecoder
 						Song song = new Song((Element)nNode);
 						if (song.isSong) {
 							System.out.println("Adding song #" + song.trackID());
-							songs.add(song);
+							songs.put(song.trackID(), song);
 						}
 					}
 				}
