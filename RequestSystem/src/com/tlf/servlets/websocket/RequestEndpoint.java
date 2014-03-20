@@ -19,9 +19,9 @@ import javax.websocket.server.ServerEndpoint;
 import com.tlf.itunes.LibraryDecoder;
 import com.tlf.itunes.Song;
 
-@ServerEndpoint(value = "/websocket/chat",
+@ServerEndpoint(value = "/websocket/request",
 encoders = {SongEncoder.class})
-public class ChatEndpoint
+public class RequestEndpoint
 {
 	public static Set<Session> sessions = Collections.synchronizedSet(new HashSet<Session>());
 	
@@ -31,17 +31,48 @@ public class ChatEndpoint
 		sessions.add(session);
 		
 		try {
-			int temp = 0;
 			session.getBasicRemote().sendText("Welcome!");
-			Iterator<Song> iterator = LibraryDecoder.songs.iterator();
+			Iterator<Integer> iterator = LibraryDecoder.songs.keySet().iterator();
+			session.getBasicRemote().sendText("SONGCOUNT:"+LibraryDecoder.songs.size());
 			while (iterator.hasNext()) {
-				Song song = iterator.next();
+				Song song = LibraryDecoder.songs.get(iterator.next());
 				session.getBasicRemote().sendObject(song);
-				temp++;
 			}
-			System.out.println(String.format("Sent %s songs", temp));
 		} catch (IOException | EncodeException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void sendRequestUpdate(int trackID, int newCount) {
+		Iterator<Session> iterator = sessions.iterator();
+		
+		while (iterator.hasNext()) {
+			Session session = iterator.next();
+			
+			try {
+				session.getBasicRemote().sendText("REQUESTUPDATE:id='"+trackID+"', newCount='"+newCount+"'");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public void sendFullUpdate() {
+		Iterator<Session> iterator = sessions.iterator();
+		
+		while (iterator.hasNext()) {
+			Session session = iterator.next();
+			
+			try {
+				session.getBasicRemote().sendText("FULLUPDATE");
+				Iterator<Integer> songIterator = LibraryDecoder.songs.keySet().iterator();
+				session.getBasicRemote().sendText("SONGCOUNT:"+LibraryDecoder.songs.size());
+				while (songIterator.hasNext()) {
+					Song song = LibraryDecoder.songs.get(songIterator.next());
+					session.getBasicRemote().sendObject(song);
+				}
+			} catch (IOException | EncodeException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
