@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Admin site</title>
 </head>
+<script type="text/javascript" src="sorttable.js"></script>
 <body bgcolor="black">
 	<form action="LogoutServlet" method="get">
 		<p align="right">
@@ -26,14 +27,15 @@
 			</font>
 		</h2>
 	</center>
-	<table>
-  		<tr>
-    			<td>John</td>
-	    		<td>Doe</td>
-	  	</tr>
-	  	<tr>
-			<td>Jane</td>
-	  		<td>Doe</td>
+	<table bordercolor="white" border="1px">
+		
+		<tr>
+			<td><font color="white">John</font></td>
+			<td><font color="white">Doe</font></td>
+		</tr>
+		<tr>
+			<td><font color="white">Jane</font></td>
+			<td><font color="white">Doe</font></td>
 		</tr>
 	</table>
 </body>
