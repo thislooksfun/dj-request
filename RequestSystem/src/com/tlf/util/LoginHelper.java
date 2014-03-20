@@ -32,7 +32,6 @@ public class LoginHelper
 				return true;
 			} else {
 				this.failedAttemps.put(session.getId(), -2);
-				System.out.println("User exists!");
 				return false;
 			}
 		}
