@@ -45,14 +45,17 @@ function send(message) {
 }
 
 function requestSong() {
-	var selected = getRadioButtonValue(document.getElementById("requestForm").selectedSong);
-	var confirmed = false;
-	if (selected != null) {
-		confirmed = confirm("Are you sure you want to request '" + "song" + "' by '" + "artist" +"'?");
-	}
+	var song = getRadioButtonValue(document.getElementById("requestForm").selectedSong);
 	
-	if (confirmed) {
-		send("REQUEST:"+selected);
+	if (song != null) {
+		var id = song.substring(song.indexOf("'", song.indexOf("id="))+1, song.indexOf("'", song.indexOf("'", song.indexOf("id="))+1));
+		var title = song.substring(song.indexOf("'", song.indexOf("name="))+1, song.indexOf("'", song.indexOf("'", song.indexOf("name="))+1));
+		var artist = song.substring(song.indexOf("'", song.indexOf("artist="))+1, song.indexOf("'", song.indexOf("'", song.indexOf("artist="))+1));
+		
+		if (confirm("Are you sure you want to request '" + title + "' by '" + artist +"'?")) {
+			send("REQUEST:"+id);
+			alert("Thank you for your request!");
+		}
 	}
 }
 

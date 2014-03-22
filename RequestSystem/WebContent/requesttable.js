@@ -17,7 +17,7 @@ function addSong(song)
 	var cell0 = row.insertCell(0);
 	var button = document.createElement("input");
 	button.type = "radio";
-	button.value = info[0];
+	button.value = "id='"+info[0]+"', name='"+info[2]+"', artist='"+info[4]+"'";
 	button.name = "selectedSong";
 	cell0.appendChild(button);
 
