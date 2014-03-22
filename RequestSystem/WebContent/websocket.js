@@ -100,6 +100,7 @@ function onMessage(message)
 			if (currentSong < totalSongCount) {
 				document.getElementById("tableHeader").textContent = "Loading " + (totalSongCount - currentSong) + " items. Please wait.";
 			} else {
+				tableSearch.init();
 				document.getElementById("tableHeader").textContent = "Please select a song";
 			}
 		}

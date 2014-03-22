@@ -3,7 +3,7 @@ var hasPlaceholder = true;
 function addSong(song)
 {
 	var table = document.getElementById("songList");
-	
+
 	var posisions = [song.indexOf("id="), song.indexOf("requests="), song.indexOf("name="), song.indexOf("time="), song.indexOf("artist="), song.indexOf("album="), song.indexOf("albumartist="), song.indexOf("composer=")];
 	var info = [];
 
@@ -35,7 +35,7 @@ function addSong(song)
 	cell6.innerHTML = (info[6] == "null" ? "" : info[6]);
 	var cell7 = row.insertCell(7);
 	cell7.innerHTML = (info[7] == "null" ? "" : info[7]);
-	
+
 	if (hasPlaceholder) {
 		table.deleteRow(1);
 		hasPlaceholder = false;
@@ -52,13 +52,18 @@ function updateRequestCount(data) {
 }
 
 function clearTable() {
-	var table = document.getElementById("songList");
-	var rowCount = table.rows.length;
-	table.insertRow(rowCount).insertCell(0).innerHTML = "Hello";
-	
-	for (var i = 1; i < table.rows.length - 1; i++) {
-		table.deleteRow(1);
+	if (!hasPlaceholder)
+	{
+		var table = document.getElementById("songList");
+		var rowCount = table.rows.length;
+		table.insertRow(rowCount).insertCell(0).innerHTML = "foo";
+
+		var temp = 0;
+		for (var i = 1; i < rowCount; i++) {
+			table.deleteRow(1);
+			temp++;
+		}
+
+		hasPlaceholder = true;
 	}
-	
-	hasPlaceholder = true;
 }

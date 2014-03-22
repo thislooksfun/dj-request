@@ -4,8 +4,9 @@
 <html>
 <head>
 <script type="text/javascript" src="sorttable.js"></script>
-<script type="text/javascript" src="requestTable.js"></script>
+<script type="text/javascript" src="requesttable.js"></script>
 <script type="text/javascript" src="websocket.js"></script>
+<script type="text/javascript" src="tablesearch.js"></script>
 <style type="text/css">
 /* Sortable tables */
 table.sortable thead {
