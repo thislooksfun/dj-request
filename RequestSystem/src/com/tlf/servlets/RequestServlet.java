@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.tlf.itunes.LibraryDecoder;
-import com.tlf.util.LoginHelper;
 
 /**
  * Servlet implementation class RequestServlet

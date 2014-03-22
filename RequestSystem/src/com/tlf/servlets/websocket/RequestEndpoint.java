@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.websocket.CloseReason;
@@ -32,8 +31,16 @@ public class RequestEndpoint
 		
 		try {
 			session.getBasicRemote().sendText("Welcome!");
-			Iterator<Integer> iterator = LibraryDecoder.songs.keySet().iterator();
-			session.getBasicRemote().sendText("SONGCOUNT:"+LibraryDecoder.songs.size());
+			Iterator<Integer> iterator;
+			
+			if (LibraryDecoder.allowExplicit) {
+				iterator = LibraryDecoder.songs.keySet().iterator();
+				session.getBasicRemote().sendText("SONGCOUNT:"+LibraryDecoder.songs.size());
+			} else {
+				iterator = LibraryDecoder.notExplicit.keySet().iterator();
+				session.getBasicRemote().sendText("SONGCOUNT:"+LibraryDecoder.notExplicit.size());
+			}
+			
 			while (iterator.hasNext()) {
 				Song song = LibraryDecoder.songs.get(iterator.next());
 				session.getBasicRemote().sendObject(song);
@@ -85,10 +92,15 @@ public class RequestEndpoint
 	@OnMessage
 	public void onMessage(Session session, String msg)
 	{
-		System.out.println("String message!");
 		try {
+			if (msg.indexOf("REQUEST:") == 0) {
+				System.out.println("Request!");
+				Song song = LibraryDecoder.getSong(Integer.parseInt(msg.substring(8)));
+				song.requests++;
+				this.sendRequestUpdate(song.trackID(), song.requests);
+			}
 			session.getBasicRemote().sendText(msg);
-		} catch (IOException e) {
+		} catch (IOException | NumberFormatException e) {
 			e.printStackTrace();
 		}
 	}

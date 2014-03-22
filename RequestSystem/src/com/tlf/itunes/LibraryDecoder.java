@@ -24,10 +24,13 @@ import org.xml.sax.SAXException;
 public class LibraryDecoder
 {
 	public static Map<Integer, Song> songs = Collections.synchronizedMap(new HashMap<Integer, Song>());
+	public static Map<Integer, Song> notExplicit = Collections.synchronizedMap(new HashMap<Integer, Song>());
 	
 	private String home = System.getProperty("user.home");
 	private String osName = System.getProperty("os.name");
 	private String path = home;
+	
+	public static boolean allowExplicit = true;
 	
 	@PostConstruct
 	public void onStartup() {
@@ -100,6 +103,9 @@ public class LibraryDecoder
 						if (song.isSong) {
 							System.out.println("Adding song #" + song.trackID());
 							songs.put(song.trackID(), song);
+							if (!song.explicit()) {
+								notExplicit.put(song.trackID(), song);
+							}
 						}
 					}
 				}
@@ -116,5 +122,9 @@ public class LibraryDecoder
 		for (int i = 0; i < keys.length; i++) {
 			System.out.println("Unrecognized key '" + keys[i] + "'");
 		}
+	}
+	
+	public static Song getSong(int id) {
+		return allowExplicit ? songs.get(id) : notExplicit.get(id);
 	}
 }

@@ -5,6 +5,8 @@ var websocket = 'WebSocket' in window;
 
 var chatlog;
 
+var reconnecting = false;
+
 function connect() {
 	chatlog = document.getElementById("chatlog");
 	clearTable();
@@ -26,9 +28,14 @@ function connect() {
 
 		ws.onopen = function(evt) {
 			chatlog.textContent += "CONNECTED\n";
+			reconnecting = false;
 		};
 		ws.onclose = function(evt) {
 			chatlog.textContent += "DISCONNECTED\n";
+			if (!reconnecting) {
+				reconnecting = true;
+				connect();
+			}
 		};
 		ws.onmessage = function(message) {
 			onMessage(message);
@@ -102,14 +109,16 @@ function onMessage(message)
 		if (totalSongCount > 0) {
 			if (currentSong < totalSongCount) {
 				document.getElementById("tableHeader").textContent = "Loading " + (totalSongCount - currentSong) + " items. Please wait.";
+				document.getElementById("requestButton").disabled = true;
 			} else {
 				tableSearch.init();
 				document.getElementById("tableHeader").textContent = "Please select a song";
+				document.getElementById("requestButton").disabled = false;
 			}
 		}
 	} else if (data.length > 14 && data.substring(0, 14) == "REQUESTUPDATE:") {
 		updateRequestCount(data.substring(14));
-	} else if (data.length > 10 && data.substring(0, 10) == "FULLUPDATE") {
+	} else if (data.length == 10 && data.substring(0, 10) == "FULLUPDATE") {
 		clearTable();
 	} else {
 		chatlog.textContent += data + "\n";

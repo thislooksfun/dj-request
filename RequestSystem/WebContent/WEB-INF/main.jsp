@@ -59,7 +59,7 @@ body {
 	</center>
 
 	<form action="javascript:requestSong()" id="requestForm">
-		<input type="submit" value="Request">
+		<input type="submit" value="Request" id="requestButton">
 		<table class="sortable" id="songList" width="100%">
 			<thead>
 				<tr>
@@ -72,6 +72,7 @@ body {
 					<th width="6.1%">Album Artist</th>
 					<th width="28.2%">Composer</th>
 					<th width="7.4%">Genre</th>
+					<th style="display:none">ID</th>
 				</tr>
 			</thead>
 			<tbody id="searchSongs">

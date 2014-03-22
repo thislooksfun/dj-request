@@ -21,22 +21,14 @@ function addSong(song)
 	button.name = "selectedSong";
 	cell0.appendChild(button);
 
-	var cell1 = row.insertCell(1);
-	cell1.innerHTML = (info[1] == "null" ? "" : info[1]);
-	var cell2 = row.insertCell(2);
-	cell2.innerHTML = (info[2] == "null" ? "" : info[2]);
-	var cell3 = row.insertCell(3);
-	cell3.innerHTML = (info[3] == "null" ? "" : info[3]);
-	var cell4 = row.insertCell(4);
-	cell4.innerHTML = (info[4] == "null" ? "" : info[4]);
-	var cell5 = row.insertCell(5);
-	cell5.innerHTML = (info[5] == "null" ? "" : info[5]);
-	var cell6 = row.insertCell(6);
-	cell6.innerHTML = (info[6] == "null" ? "" : info[6]);
-	var cell7 = row.insertCell(7);
-	cell7.innerHTML = (info[7] == "null" ? "" : info[7]);
-	var cell8 = row.insertCell(8);
-	cell8.innerHTML = (info[8] == "null" ? "" : info[8]);
+	for (i = 1; i < info.length; i++) {
+		var cell = row.insertCell(i);
+		cell.innerHTML = (info[i] == "null" || info[i] == "Not Documented" ? "" : info[i]);
+	}
+	
+	var cellID = row.insertCell(info.length);
+	cellID.innerHTML = info[0];
+	cellID.style.display = "none";
 
 	if (hasPlaceholder) {
 		table.deleteRow(1);
@@ -49,7 +41,14 @@ function updateRequestCount(data) {
 	var info = [];
 
 	for (var i = 0; i < posisions.length; i++) {
-		info[i] = song.substring(song.indexOf("'", posisions[i])+1, song.indexOf("'", song.indexOf("'", posisions[i])+1));
+		info[i] = data.substring(data.indexOf("'", posisions[i])+1, data.indexOf("'", data.indexOf("'", posisions[i])+1));
+	}
+	
+	for (var i = 0; i < tableSearch.Rows.length; i++) {
+		if (tableSearch.Rows[i].cells[9].innerHTML == info[0]) {
+			tableSearch.Rows[i].cells[1].innerHTML = info[1];
+			break;
+		}
 	}
 }
 
