@@ -9,6 +9,7 @@
 <script type="text/javascript" src="websocket.js"></script>
 <script type="text/javascript" src="tablesearch.js"></script>
 <script type="text/javascript" src="removediacritics.js"></script>
+<script type="text/javascript" src="color.js"></script>
 <style type="text/css">
 /* Sortable tables */
 table.sortable thead {
@@ -24,10 +25,6 @@ table.sortable tbody tr:nth-child(2n) td {
 
 table.sortable tbody tr:nth-child(2n+1) td {
 	background: #424242;
-}
-
-table.sortable th:not (.sorttable_sorted ):not (.sorttable_sorted_reverse ):after {
-	content: " \25B4\25BE"
 }
 
 table.sortable tr {
@@ -58,8 +55,7 @@ body {
 		<button type="button" id="connectButton" onclick="connect()">Connect</button>
 		<input type="text" id="msg" onkeydown="chatKeyPress(event)" />
 		<button type="button" id="sendButton" onclick="postToServer()">Send!</button>
-		<br> <font size="6" id="tableHeader">Please select a song</font><br> <font size="4" id="tableHeader">Select a song with the buttons on the left, then click request. You can also click the headers to sort.</font> <br>
-		<label>Search: </label><input type="text" size="50" id="textBoxSearch" onkeyup="tableSearch.runSearch();">
+		<br> <font size="6" id="tableHeader">Please select a song</font><br> <font size="4" id="tableHeader">Select a song with the buttons on the left, then click request. You can also click the headers to sort.</font> <br> <label>Search: </label><input type="text" size="50" id="textBoxSearch" onkeyup="tableSearch.runSearch();">
 	</center>
 
 	<form action="javascript:requestSong()" id="requestForm">
@@ -67,14 +63,15 @@ body {
 		<table class="sortable" id="songList" width="100%">
 			<thead>
 				<tr>
-					<th class="sorttable_nosort" width="1.2%"></th>
+					<th width="1.1%" class="sorttable_nosort"></th>
 					<th width="3.9%">Requests</th>
-					<th width="23.3%">Name</th>
+					<th width="24.3%">Name</th>
 					<th width="3.2%">Time</th>
-					<th width="12.4%">Artist</th>
-					<th width="17.9%">Album</th>
-					<th width="6.6%">Album Artist</th>
-					<th width="30.9%">Composer</th>
+					<th width="10.2%">Artist</th>
+					<th width="15.7%">Album</th>
+					<th width="6.1%">Album Artist</th>
+					<th width="28.2%">Composer</th>
+					<th width="7.4%">Genre</th>
 				</tr>
 			</thead>
 			<tbody id="searchSongs">

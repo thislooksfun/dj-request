@@ -4,7 +4,7 @@ function addSong(song)
 {
 	var table = document.getElementById("songList");
 
-	var posisions = [song.indexOf("id="), song.indexOf("requests="), song.indexOf("name="), song.indexOf("time="), song.indexOf("artist="), song.indexOf("album="), song.indexOf("albumartist="), song.indexOf("composer=")];
+	var posisions = [song.indexOf("id="), song.indexOf("requests="), song.indexOf("name="), song.indexOf("time="), song.indexOf("artist="), song.indexOf("album="), song.indexOf("albumartist="), song.indexOf("composer="), song.indexOf("genre=")];
 	var info = [];
 
 	for (var i = 0; i < posisions.length; i++) {
@@ -35,6 +35,8 @@ function addSong(song)
 	cell6.innerHTML = (info[6] == "null" ? "" : info[6]);
 	var cell7 = row.insertCell(7);
 	cell7.innerHTML = (info[7] == "null" ? "" : info[7]);
+	var cell8 = row.insertCell(8);
+	cell8.innerHTML = (info[8] == "null" ? "" : info[8]);
 
 	if (hasPlaceholder) {
 		table.deleteRow(1);
