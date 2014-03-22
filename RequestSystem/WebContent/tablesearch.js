@@ -18,18 +18,11 @@ tableSearch.init = function() {
 tableSearch.runSearch = function() {
 	//get the search term
 	this.Term = removeDiacritics(document.getElementById('textBoxSearch').value.toUpperCase());
-	var colorState = false;
 	
 	//loop through the rows and hide rows that do not match the search query
 	for (var i = 0, row; row = this.Rows[i], rowText = this.RowsText[i]; i++) {
 		row.style.display = ((rowText.indexOf(this.Term) != -1) || this.Term === '') ? '' : 'none';
-		
-		if (row.style.display != "none") {
-			var cells = row.cells;
-			for (var j = 0; j < cells.length; j++) {
-				cells[j].style.backgroundColor = colorState ? "#242424" : "#424242";
-			}
-			colorState = !colorState;
-		}
 	}
+	
+	colorTable();
 };

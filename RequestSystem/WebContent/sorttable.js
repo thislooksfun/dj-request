@@ -158,6 +158,8 @@ sorttable = {
 	        }
 
 	        delete row_array;
+	        
+	        colorTable();
 	      });
 	    }
     }
@@ -175,7 +177,7 @@ sorttable = {
         // check for a date: dd/mm/yyyy or dd/mm/yy
         // can have / or . or - as separator
         // can be mm/dd as well
-        possdate = text.match(sorttable.DATE_RE)
+        possdate = text.match(sorttable.DATE_RE);
         if (possdate) {
           // looks like a date
           first = parseInt(possdate[1]);
@@ -253,6 +255,8 @@ sorttable = {
        tbody.appendChild(newrows[i]);
     }
     delete newrows;
+    
+    colorTable();
   },
 
   /* sort functions
@@ -331,7 +335,7 @@ sorttable = {
 
     } // while(swap)
   }
-}
+};
 
 /* ******************************************************************
    Supporting functions: bundled here to avoid depending on a library
@@ -437,7 +441,7 @@ fixEvent.preventDefault = function() {
 };
 fixEvent.stopPropagation = function() {
   this.cancelBubble = true;
-}
+};
 
 // Dean's forEach: http://dean.edwards.name/base/forEach.js
 /*
