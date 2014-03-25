@@ -59,7 +59,10 @@ function requestSong() {
 		var title = song.substring(song.indexOf("'", song.indexOf("name="))+1, song.indexOf("'", song.indexOf("'", song.indexOf("name="))+1));
 		var artist = song.substring(song.indexOf("'", song.indexOf("artist="))+1, song.indexOf("'", song.indexOf("'", song.indexOf("artist="))+1));
 		
-		if (confirm("Are you sure you want to request '" + title + "' by '" + artist +"'?")) {
+		var confirmMessage = "Are you sure you want to request '" + title + "'";
+		confirmMessage += artist == "null" || artist == "Not Defined" ? "?" :  " by '" + artist +"'?";
+		
+		if (confirm(confirmMessage)) {
 			send("REQUEST:"+id);
 			alert("Thank you for your request!");
 		}
