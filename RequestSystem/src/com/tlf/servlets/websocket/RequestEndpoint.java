@@ -17,6 +17,7 @@ import javax.websocket.server.ServerEndpoint;
 
 import com.tlf.itunes.LibraryDecoder;
 import com.tlf.itunes.Song;
+import com.tlf.servlets.websocket.encoders.SongEncoder;
 
 @ServerEndpoint(value = "/websocket/request",
 encoders = {SongEncoder.class})

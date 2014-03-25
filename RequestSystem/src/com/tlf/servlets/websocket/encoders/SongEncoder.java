@@ -1,4 +1,4 @@
-package com.tlf.servlets.websocket;
+package com.tlf.servlets.websocket.encoders;
 
 import javax.websocket.EncodeException;
 import javax.websocket.Encoder;
