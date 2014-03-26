@@ -15,14 +15,7 @@ function addSong(song)
 	var row = table.insertRow(rowCount);
 
 	var cell0 = row.insertCell(0);
-	/*
-	var button = document.createElement("input");
-	button.type = "radio";
-	button.value = "id='"+info[0]+"', name='"+info[2]+"', artist='"+info[4]+"'";
-	button.name = "selectedSong";
-	cell0.appendChild(button);
-	*/
-	cell0.innerHTML = "<input type=\"button\" value=\"Request\" name=\"requestButtons\" onclick=\"requestSong('id=\\'"+info[0]+"\\', name=\\'"+info[2]+"\\', artist=\\'"+info[4]+"\\'')\" disabled=\"true\">";
+	cell0.innerHTML = "<center><input type=\"button\" value=\"Played\" name=\"playButtons\" onclick=\"playSong('"+info[0]+"')\" disabled=\"true\"></center>";
 	
 	for (i = 1; i < info.length; i++) {
 		var cell = row.insertCell(i);
@@ -51,20 +44,7 @@ function updateRequestCount(data) {
 		if (tableSearch.Rows[i].cells[9].innerHTML == info[0]) {
 			tableSearch.Rows[i].cells[1].innerHTML = info[1];
 			
-			var requests = document.getElementById("requestColumn");
-			
-			var sortLevel = 0;
-			
-			var oldClassname = requests.className;
-			if ((requests.className = requests.className.replace('sorttable_sorted_reverse', '')) != oldClassname) {
-				sortLevel = 2;
-			} else if ((requests.className = requests.className.replace('sorttable_sorted', '')) != oldClassname) {
-				sortLevel = 1;
-			}
-			
-			for (var j = 0; j < sortLevel; j++) {
-				sorttable.innerSortFunction.apply(requests, []);
-			}
+			resortRequests();
 			
 			break;
 		}

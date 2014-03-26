@@ -1,4 +1,4 @@
-var wsUri = "ws://" + document.location.host + "/RequestSystem/websocket/request";
+var wsUri = "ws://" + document.location.host + "/RequestSystem/websocket/admin";
 var ws;
 
 var websocket = 'WebSocket' in window;
@@ -51,20 +51,10 @@ function send(message) {
 	ws.send(message);
 }
 
-function requestSong(song)
-{
+function playSong(song) {
 	if (song != null) {
-		var id = song.substring(song.indexOf("'", song.indexOf("id="))+1, song.indexOf("'", song.indexOf("'", song.indexOf("id="))+1));
-		var title = song.substring(song.indexOf("'", song.indexOf("name="))+1, song.indexOf("'", song.indexOf("'", song.indexOf("name="))+1));
-		var artist = song.substring(song.indexOf("'", song.indexOf("artist="))+1, song.indexOf("'", song.indexOf("'", song.indexOf("artist="))+1));
-		
-		var confirmMessage = "Are you sure you want to request '" + title + "'";
-		confirmMessage += artist == "null" || artist == "Not Defined" ? "?" :  " by '" + artist +"'?";
-		
-		if (confirm(confirmMessage)) {
-			send("REQUEST:"+id);
-			alert("Thank you for your request!");
-		}
+		send("PLAYED:"+song);
+		resortRequests();
 	}
 }
 
@@ -115,7 +105,7 @@ function onMessage(message)
 				tableSearch.init();
 				document.getElementById("tableHeader").textContent = "Please select a song";
 				
-				var buttons = document.getElementsByName("requestButtons");
+				var buttons = document.getElementsByName("playButtons");
 				for (var i = 0; i < buttons.length; i++) {
 					buttons[i].disabled = false;
 				}

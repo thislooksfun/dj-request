@@ -61,9 +61,9 @@ body {
 			<%=LoginHelper.instance.getUserForSession(session)%>
 		</h2>
 		<textarea id="chatlog" readonly style="height: 250px; width: 500px"></textarea>
-		<br>
+		<br> <font size="6" id="tableHeader">Please select a song</font><br> <font size="4" id="tableHeader">Select a song with the buttons on the left, then click request. You can also click the headers to sort.</font> <br> <label>Search: </label><input type="text" size="50" id="textBoxSearch" onkeyup="tableSearch.runSearch();">
 	</center>
-	
+
 	<table class="sortable" id="songList" width="100%">
 		<thead>
 			<tr>

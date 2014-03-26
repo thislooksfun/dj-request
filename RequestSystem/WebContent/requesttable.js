@@ -51,20 +51,7 @@ function updateRequestCount(data) {
 		if (tableSearch.Rows[i].cells[9].innerHTML == info[0]) {
 			tableSearch.Rows[i].cells[1].innerHTML = info[1];
 			
-			var requests = document.getElementById("requestColumn");
-			
-			var sortLevel = 0;
-			
-			var oldClassname = requests.className;
-			if ((requests.className = requests.className.replace('sorttable_sorted_reverse', '')) != oldClassname) {
-				sortLevel = 2;
-			} else if ((requests.className = requests.className.replace('sorttable_sorted', '')) != oldClassname) {
-				sortLevel = 1;
-			}
-			
-			for (var j = 0; j < sortLevel; j++) {
-				sorttable.innerSortFunction.apply(requests, []);
-			}
+			resortRequests();
 			
 			break;
 		}
