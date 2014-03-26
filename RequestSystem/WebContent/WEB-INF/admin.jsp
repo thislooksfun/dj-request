@@ -6,8 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Admin site</title>
 <script type="text/javascript" src="sorttable.js"></script>
-<script type="text/javascript" src="requesttable.js"></script>
-<script type="text/javascript" src="websocket.js"></script>
+<script type="text/javascript" src="adminrequesttable.js"></script>
+<script type="text/javascript" src="adminwebsocket.js"></script>
 <script type="text/javascript" src="tablesearch.js"></script>
 <script type="text/javascript" src="removediacritics.js"></script>
 <script type="text/javascript" src="color.js"></script>
@@ -63,29 +63,28 @@ body {
 		<textarea id="chatlog" readonly style="height: 250px; width: 500px"></textarea>
 		<br>
 	</center>
-	<form target="AdminRequestServlet" action="post">
-		<input type="submit" value="Request" id="requestButton">
-		<table class="sortable" id="songList" width="100%">
-			<thead>
-				<tr>
-					<th width="1.1%" class="sorttable_nosort"></th>
-					<th width="3.9%" id="requestColumn">Requests</th>
-					<th width="24.3%">Name</th>
-					<th width="3.2%">Time</th>
-					<th width="10.2%">Artist</th>
-					<th width="15.7%">Album</th>
-					<th width="6.1%">Album Artist</th>
-					<th width="28.2%">Composer</th>
-					<th width="7.4%">Genre</th>
-				</tr>
-			</thead>
-			<tbody id="searchSongs">
-				<tr>
-					<td>temp</td>
-				</tr>
-			</tbody>
-			<tfoot></tfoot>
-		</table>
-	</form>
+	
+	<table class="sortable" id="songList" width="100%">
+		<thead>
+			<tr>
+				<th width="4%" class="sorttable_nosort"></th>
+				<th width="3.9%" id="requestColumn" class="sorttable_reverse">Requests</th>
+				<th width="23.9%">Name</th>
+				<th width="3.2%">Time</th>
+				<th width="9.1%">Artist</th>
+				<th width="14.7%">Album</th>
+				<th width="5.9%">Album Artist</th>
+				<th width="27%">Composer</th>
+				<th width="7.4%">Genre</th>
+				<th style="display: none">ID</th>
+			</tr>
+		</thead>
+		<tbody id="searchSongs">
+			<tr>
+				<td>empty</td>
+			</tr>
+		</tbody>
+		<tfoot></tfoot>
+	</table>
 </body>
 </html>

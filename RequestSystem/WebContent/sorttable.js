@@ -121,9 +121,12 @@ sorttable = {
 							tableSearch.init();
 							return;
 						}
-
+						
 						// remove sorttable_sorted classes
 						theadrow = this.parentNode;
+						
+						var shouldReverse = (this.className.search(/\bsorttable_reverse\b/) != -1) != (theadrow.parentNode.parentNode.className.search(/\breverse\b/) != -1);
+						
 						forEach(theadrow.childNodes, function(cell) {
 							if (cell.nodeType == 1) { // an element
 								cell.className = cell.className.replace('sorttable_sorted_reverse','');
@@ -137,8 +140,8 @@ sorttable = {
 
 						this.className += ' sorttable_sorted';
 						sortfwdind = document.createElement('span');
-						sortfwdind.id = "sorttable_sortfwdind";
-						sortfwdind.innerHTML = stIsIE ? '&nbsp<font face="webdings">6</font>' : '&nbsp;&#x25BE;';
+						sortfwdind.id = shouldReverse ? "sorttable_sortrevind" : "sorttable_sortfwdind";
+						sortfwdind.innerHTML = shouldReverse ? (stIsIE ? '&nbsp<font face="webdings">5</font>' : '&nbsp;&#x25B4;') : (stIsIE ? '&nbsp<font face="webdings">6</font>' : '&nbsp;&#x25BE;');
 						this.appendChild(sortfwdind);
 
 						// build an array to sort. This is a Schwartzian transform thing,
@@ -155,6 +158,11 @@ sorttable = {
 						//sorttable.shaker_sort(row_array, this.sorttable_sortfunction);
 						/* and comment out this one */
 						row_array.sort(this.sorttable_sortfunction);
+
+						if (shouldReverse) {
+							row_array.reverse();
+							this.className = this.className.replace('sorttable_sorted', 'sorttable_sorted_reverse');
+						}
 
 						tb = this.sorttable_tbody;
 						for (var j=0; j<row_array.length; j++) {
