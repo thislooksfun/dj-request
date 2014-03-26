@@ -9,7 +9,6 @@ var reconnecting = false;
 
 function connect() {
 	chatlog = document.getElementById("chatlog");
-	clearTable();
 	
 	if (!websocket) {
 		chatlog += "WebSockets aren't supported in your browser, sorry";
@@ -29,6 +28,7 @@ function connect() {
 		ws.onopen = function(evt) {
 			chatlog.textContent += "CONNECTED\n";
 			reconnecting = false;
+			clearTable();
 		};
 		ws.onclose = function(evt) {
 			chatlog.textContent += "DISCONNECTED\n";
@@ -51,9 +51,8 @@ function send(message) {
 	ws.send(message);
 }
 
-function requestSong() {
-	var song = getRadioButtonValue(document.getElementById("requestForm").selectedSong);
-	
+function requestSong(song)
+{
 	if (song != null) {
 		var id = song.substring(song.indexOf("'", song.indexOf("id="))+1, song.indexOf("'", song.indexOf("'", song.indexOf("id="))+1));
 		var title = song.substring(song.indexOf("'", song.indexOf("name="))+1, song.indexOf("'", song.indexOf("'", song.indexOf("name="))+1));
@@ -112,11 +111,14 @@ function onMessage(message)
 		if (totalSongCount > 0) {
 			if (currentSong < totalSongCount) {
 				document.getElementById("tableHeader").textContent = "Loading " + (totalSongCount - currentSong) + " items. Please wait.";
-				document.getElementById("requestButton").disabled = true;
 			} else {
 				tableSearch.init();
 				document.getElementById("tableHeader").textContent = "Please select a song";
-				document.getElementById("requestButton").disabled = false;
+				
+				var buttons = document.getElementsByName("requestButtons");
+				for (var i = 0; i < buttons.length; i++) {
+					buttons[i].disabled = false;
+				}
 			}
 		}
 	} else if (data.length > 14 && data.substring(0, 14) == "REQUESTUPDATE:") {

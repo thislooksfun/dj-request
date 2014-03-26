@@ -15,12 +15,15 @@ function addSong(song)
 	var row = table.insertRow(rowCount);
 
 	var cell0 = row.insertCell(0);
+	/*
 	var button = document.createElement("input");
 	button.type = "radio";
 	button.value = "id='"+info[0]+"', name='"+info[2]+"', artist='"+info[4]+"'";
 	button.name = "selectedSong";
 	cell0.appendChild(button);
-
+	*/
+	cell0.innerHTML = "<input type=\"button\" value=\"Request\" name=\"requestButtons\" onclick=\"requestSong('id=\\'"+info[0]+"\\', name=\\'"+info[2]+"\\', artist=\\'"+info[4]+"\\'')\" disabled=\"true\">";
+	
 	for (i = 1; i < info.length; i++) {
 		var cell = row.insertCell(i);
 		cell.innerHTML = (info[i] == "null" || info[i] == "Not Documented" ? "" : info[i]);
@@ -53,9 +56,9 @@ function updateRequestCount(data) {
 			var sortLevel = 0;
 			
 			var oldClassname = requests.className;
-			if ((requests.className = requests.className.replace('sorttable_sorted_reverse','')) != oldClassname) {
+			if ((requests.className = requests.className.replace('sorttable_sorted_reverse', '')) != oldClassname) {
 				sortLevel = 2;
-			} else if ((requests.className = requests.className.replace('sorttable_sorted','')) != oldClassname) {
+			} else if ((requests.className = requests.className.replace('sorttable_sorted', '')) != oldClassname) {
 				sortLevel = 1;
 			}
 			
@@ -73,7 +76,7 @@ function clearTable() {
 	{
 		var table = document.getElementById("songList");
 		var rowCount = table.rows.length;
-		table.insertRow(rowCount).insertCell(0).innerHTML = "foo";
+		table.insertRow(rowCount).insertCell(0).innerHTML = "empty";
 
 		var temp = 0;
 		for (var i = 1; i < rowCount; i++) {

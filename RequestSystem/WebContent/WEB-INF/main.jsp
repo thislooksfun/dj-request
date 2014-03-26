@@ -58,30 +58,27 @@ body {
 		<br> <font size="6" id="tableHeader">Please select a song</font><br> <font size="4" id="tableHeader">Select a song with the buttons on the left, then click request. You can also click the headers to sort.</font> <br> <label>Search: </label><input type="text" size="50" id="textBoxSearch" onkeyup="tableSearch.runSearch();">
 	</center>
 
-	<form action="javascript:requestSong()" id="requestForm">
-		<input type="submit" value="Request" id="requestButton">
-		<table class="sortable" id="songList" width="100%">
-			<thead>
-				<tr>
-					<th width="1.1%" class="sorttable_nosort"></th>
-					<th width="3.9%" id="requestColumn">Requests</th>
-					<th width="24.3%">Name</th>
-					<th width="3.2%">Time</th>
-					<th width="10.2%">Artist</th>
-					<th width="15.7%">Album</th>
-					<th width="6.1%">Album Artist</th>
-					<th width="28.2%">Composer</th>
-					<th width="7.4%">Genre</th>
-					<th style="display:none">ID</th>
-				</tr>
-			</thead>
-			<tbody id="searchSongs">
-				<tr>
-					<td>temp</td>
-				</tr>
-			</tbody>
-			<tfoot></tfoot>
-		</table>
-	</form>
+	<table class="sortable" id="songList" width="100%">
+		<thead>
+			<tr>
+				<th width="4%" class="sorttable_nosort"></th>
+				<th width="3.9%" id="requestColumn">Requests</th>
+				<th width="23.9%">Name</th>
+				<th width="3.2%">Time</th>
+				<th width="9.1%">Artist</th>
+				<th width="14.7%">Album</th>
+				<th width="5.9%">Album Artist</th>
+				<th width="27%">Composer</th>
+				<th width="7.4%">Genre</th>
+				<th style="display: none">ID</th>
+			</tr>
+		</thead>
+		<tbody id="searchSongs">
+			<tr>
+				<td>empty</td>
+			</tr>
+		</tbody>
+		<tfoot></tfoot>
+	</table>
 </body>
 </html>
