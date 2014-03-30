@@ -4,12 +4,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Request</title>
+<script type="text/javascript" src="websocket.js"></script>
 <script type="text/javascript" src="sorttable.js"></script>
 <script type="text/javascript" src="requesttable.js"></script>
-<script type="text/javascript" src="websocket.js"></script>
 <script type="text/javascript" src="tablesearch.js"></script>
 <script type="text/javascript" src="removediacritics.js"></script>
-<script type="text/javascript" src="color.js"></script>
+<script type="text/javascript" src="util.js"></script>
 <style type="text/css">
 /* Sortable tables */
 table.sortable thead {
@@ -44,7 +44,7 @@ body {
 }
 </style>
 </head>
-<body bgcolor="black" onload="connect(); tableSearch.init();">
+<body bgcolor="black" onload="onLoad()">
 	<p align="right">
 		<a href="/admin"><font size="5">Admin site</font></a>
 	</p>

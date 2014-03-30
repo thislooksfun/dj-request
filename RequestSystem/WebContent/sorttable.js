@@ -89,6 +89,11 @@ sorttable = {
 					// make it clickable to sort
 					headrow[i].sorttable_columnindex = i;
 					headrow[i].sorttable_tbody = table.tBodies[0];
+					if (headrow[i].style.cursor == "") {
+						headrow[i].style.cursor = "pointer";
+					}
+					log("cursor: " + headrow[i].style.cursor);
+					
 					dean_addEvent(headrow[i],"click", sorttable.innerSortFunction = function(e) {
 
 						if (this.className.search(/\bsorttable_sorted\b/) != -1) {
@@ -381,8 +386,11 @@ if (/WebKit/i.test(navigator.userAgent)) { // sniff
 	}, 10);
 }
 
+
 /* for other browsers */
 window.onload = sorttable.init;
+
+
 
 //written by Dean Edwards, 2005
 //with input from Tino Zijdel, Matthias Miller, Diego Perini

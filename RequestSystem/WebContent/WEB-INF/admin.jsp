@@ -5,12 +5,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Admin site</title>
+<script type="text/javascript" src="adminwebsocket.js"></script>
 <script type="text/javascript" src="sorttable.js"></script>
 <script type="text/javascript" src="adminrequesttable.js"></script>
-<script type="text/javascript" src="adminwebsocket.js"></script>
 <script type="text/javascript" src="tablesearch.js"></script>
 <script type="text/javascript" src="removediacritics.js"></script>
-<script type="text/javascript" src="color.js"></script>
+<script type="text/javascript" src="util.js"></script>
 <style type="text/css">
 /* Sortable tables */
 table.sortable thead {

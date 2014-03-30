@@ -3,13 +3,10 @@ var ws;
 
 var websocket = 'WebSocket' in window;
 
-var chatlog;
-
 var reconnecting = false;
 
-function connect() {
-	chatlog = document.getElementById("chatlog");
-	
+function connect()
+{
 	if (!websocket) {
 		chatlog += "WebSockets aren't supported in your browser, sorry";
 		return;
@@ -22,16 +19,16 @@ function connect() {
 		ws = new WebSocket(wsUri);
 
 		if (ws != null) {
-			chatlog.textContent += "CONNECTING TO " + wsUri + "\n";
+			log("CONNECTING TO " + wsUri);
 		}
 
 		ws.onopen = function(evt) {
-			chatlog.textContent += "CONNECTED\n";
+			log("CONNECTED");
 			reconnecting = false;
 			clearTable();
 		};
 		ws.onclose = function(evt) {
-			chatlog.textContent += "DISCONNECTED\n";
+			log("DISCONNECTED");
 			if (!reconnecting) {
 				reconnecting = true;
 				connect();
@@ -41,13 +38,13 @@ function connect() {
 			onMessage(message);
 		};
 		ws.onerror = function(evt) {
-			chatlog.textContent += "An error occurred... :(\n";
+			log("An error occurred... :(");
 		};
 	}
 };
 
 function send(message) {
-	chatlog.textContent += "SENT: " + message + "\n";
+	log("SENT: " + message);
 	ws.send(message);
 }
 
@@ -94,7 +91,7 @@ function onMessage(message)
 	if (data.length > 10 && data.substring(0, 10) == "SONGCOUNT:") {
 		totalSongCount = +data.substring(10);
 		currentSong = 0;
-		chatlog.textContent += "Loading " + totalSongCount + " songs\n";
+		log("Loading " + totalSongCount + " songs");
 	} else if (data.length > 5 && data.substring(0, 5) == "song=") {
 		addSong(data);
 		currentSong++;
@@ -116,6 +113,6 @@ function onMessage(message)
 	} else if (data.length == 10 && data.substring(0, 10) == "FULLUPDATE") {
 		clearTable();
 	} else {
-		chatlog.textContent += data + "\n";
+		log(data);
 	}
 }
