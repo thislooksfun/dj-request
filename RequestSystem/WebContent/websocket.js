@@ -107,10 +107,11 @@ function onMessage(message)
 		if (totalSongCount > 0) {
 			if (currentSong < totalSongCount) {
 				document.getElementById("tableHeader").textContent = "Loading " + (totalSongCount - currentSong) + " items. Please wait.";
+				document.getElementById("textBoxSearch").disabled = true;
 			} else {
 				tableSearch.init();
 				document.getElementById("tableHeader").textContent = "Please select a song";
-				
+				document.getElementById("textBoxSearch").disabled = false;
 				var buttons = document.getElementsByName("requestButtons");
 				for (var i = 0; i < buttons.length; i++) {
 					buttons[i].disabled = false;
