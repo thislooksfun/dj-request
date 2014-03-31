@@ -35,8 +35,13 @@ public class AdminServlet extends HttpServlet {
 			RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp");
 			rd.forward(request, response);
 		} else {
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/login.jsp");
-			rd.forward(request, response);
+			if (LoginHelper.instance.getLoginAttempt(request.getSession()) >= LoginHelper.maxAttemps) {
+				RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/maxAttempts.jsp");
+				rd.forward(request, response);
+			} else {
+				RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/login.jsp");
+				rd.forward(request, response);
+			}
 		}
 	}
 }

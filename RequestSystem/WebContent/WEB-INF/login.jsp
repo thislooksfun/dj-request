@@ -17,14 +17,19 @@
 
 		<%
 			int attempt = LoginHelper.instance.getLoginAttempt(session);
-			int maxAttemps = 5;
+			int maxAttemps = LoginHelper.maxAttemps;
 			int remaining = maxAttemps - attempt;
 			
-			if (attempt > 0) {
+			if (attempt > -1) {
 				out.println("<font color=\"red\">Username or password is incorrect</font><br>");
-				out.println(String
-						.format("<font color=\"red\">You have %s attempt%s left</font><br>",
-								remaining, remaining == 1 ? "" : "s"));
+				
+				if (remaining == 1) {
+					out.println("<font color=\"red\">This is your final attempt</font><br>");
+				} else {
+					out.println(String
+							.format("<font color=\"red\">You have %s attempts left</font><br>",
+									remaining));
+				}
 			}
 		%>
 

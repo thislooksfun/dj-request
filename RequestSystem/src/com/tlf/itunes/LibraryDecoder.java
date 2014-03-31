@@ -101,7 +101,6 @@ public class LibraryDecoder
 					} else if (((Element)nNode).getElementsByTagName("key").item(0).getTextContent().equals("Track ID")) {
 						Song song = new Song((Element)nNode);
 						if (song.isSong) {
-							System.out.println("Adding song #" + song.trackID());
 							songs.put(song.trackID(), song);
 							if (!song.explicit()) {
 								notExplicit.put(song.trackID(), song);

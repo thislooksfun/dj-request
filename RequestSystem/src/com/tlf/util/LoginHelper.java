@@ -12,6 +12,8 @@ public class LoginHelper
 {
 	public static final LoginHelper instance = new LoginHelper();
 	
+	public static final int maxAttemps = 5;
+	
 	private BiMap<String, String> users = Maps.synchronizedBiMap(HashBiMap.create(new HashMap<String, String>()));
 	private BiMap<HttpSession, String> loggedIn = Maps.synchronizedBiMap(HashBiMap.create(new HashMap<HttpSession, String>()));
 	private BiMap<HttpSession, Integer> failedAttemps = Maps.synchronizedBiMap(HashBiMap.create(new HashMap<HttpSession, Integer>()));
@@ -33,18 +35,19 @@ public class LoginHelper
 			}
 			
 			this.loggedIn.put(session, username);
+			this.failedAttemps.remove(session);
 			return true;
 		}
 		
-		Object temp = this.failedAttemps.get(session.getId());
+		Object temp = this.failedAttemps.get(session);
 		int attempt = (temp != null ? (int)temp+1 : 0);
 		this.failedAttemps.put(session, attempt);
-		System.out.println(""+temp);
+		System.out.println(""+attempt);
 		return false;
 	}
 	
 	public int getLoginAttempt(HttpSession session) {
-		Object temp = this.failedAttemps.get(session.getId());
+		Object temp = this.failedAttemps.get(session);
 		return (temp != null ? (int)temp : -1);
 	}
 	
