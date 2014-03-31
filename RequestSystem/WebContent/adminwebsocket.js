@@ -5,8 +5,7 @@ var websocket = 'WebSocket' in window;
 
 var reconnecting = false;
 
-function connect()
-{
+function connect() {
 	if (!websocket) {
 		chatlog += "WebSockets aren't supported in your browser, sorry";
 		return;
@@ -97,11 +96,12 @@ function onMessage(message)
 		currentSong++;
 		if (totalSongCount > 0) {
 			if (currentSong < totalSongCount) {
-				document.getElementById("tableHeader").textContent = "Loading " + (totalSongCount - currentSong) + " items. Please wait.";
+				document.getElementById("tableHeader").textContent = Math.round((currentSong/totalSongCount)*100) + "% loaded  (" + currentSong + "/" + totalSongCount + ")";
+				document.getElementById("textBoxSearch").disabled = true;
 			} else {
 				tableSearch.init();
 				document.getElementById("tableHeader").textContent = "Please select a song";
-				
+				document.getElementById("textBoxSearch").disabled = false;
 				var buttons = document.getElementsByName("playButtons");
 				for (var i = 0; i < buttons.length; i++) {
 					buttons[i].disabled = false;

@@ -15,13 +15,13 @@ import com.tlf.util.LoginHelper;
  * Servlet implementation class Admin
  */
 @WebServlet(urlPatterns = {"/Admin", "/admin"})
-public class Admin extends HttpServlet {
+public class AdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Admin() {
+	public AdminServlet() {
 		super();
 	}
 	
