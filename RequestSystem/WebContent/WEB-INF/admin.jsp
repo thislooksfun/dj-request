@@ -46,6 +46,7 @@ body {
 </style>
 </head>
 <body bgcolor="black" onload="connect();">
+	<noscript><center><font color="red" size="6">This site requires javascript in order to function, please turn it on then try again</font></center></noscript>
 	<form action="LogoutServlet" method="get">
 		<p align="right">
 			<input type="submit" value="Logout">
