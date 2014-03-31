@@ -92,7 +92,6 @@ sorttable = {
 					if (headrow[i].style.cursor == "") {
 						headrow[i].style.cursor = "pointer";
 					}
-					log("cursor: " + headrow[i].style.cursor);
 					
 					dean_addEvent(headrow[i],"click", sorttable.innerSortFunction = function(e) {
 
