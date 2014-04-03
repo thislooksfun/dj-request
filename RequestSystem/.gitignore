@@ -2,9 +2,10 @@
 /.classpath
 /.DS_Store
 /.project
+/.settings
 /src/.DS_Store
 /src/com/.DS_Store
 /src/com/tlf/.DS_Store
+/src/com/tlf/servlets/.DS_Store
 /WebContent/WEB-INF/lib
 /WebContent/META-INF
-/.settings
