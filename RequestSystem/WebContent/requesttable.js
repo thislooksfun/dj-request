@@ -8,7 +8,7 @@ function addSong(song)
 	var info = [];
 
 	for (var i = 0; i < posisions.length; i++) {
-		info[i] = song.substring(song.indexOf("'", posisions[i])+1, song.indexOf("'", song.indexOf("'", posisions[i])+1));
+		info[i] = song.substring(song.indexOf("&^&", posisions[i])+3, song.indexOf("&^&", song.indexOf("&^&", posisions[i])+3));
 	}
 
 	var rowCount = table.rows.length;

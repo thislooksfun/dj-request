@@ -21,9 +21,17 @@ tableSearch.runSearch = function() {
 	
 	var count = 0;
 	
+	var invertSearch = (this.Term.length > 0 && this.Term.indexOf("-") == 0);
+	
 	//loop through the rows and hide rows that do not match the search query
-	for (var i = 0, row; row = this.Rows[i], rowText = this.RowsText[i]; i++) {
-		row.style.display = ((rowText.indexOf(this.Term) != -1) || this.Term === '') ? '': 'none';
+	for (var i = 0, row; row = this.Rows[i], rowText = this.RowsText[i]; i++)
+	{
+		if (invertSearch) {
+			row.style.display = ((rowText.indexOf(this.Term.substring(1)) == -1) || this.Term === '-') ? '' : 'none';
+		} else {
+			row.style.display = ((rowText.indexOf(this.Term) != -1) || this.Term === '') ? '' : 'none';
+		}
+		
 		if (row.style.display == '') {
 			count++;
 		}
@@ -33,7 +41,7 @@ tableSearch.runSearch = function() {
 	
 	var searchResult = document.getElementById("searchResult");
 	
-	if (count == this.Rows.length) {
+	if (count == this.Rows.length || (invertSearch && this.Term.length == 1)) {
 		searchResult.textContent = "";
 	} else {
 		searchResult.textContent = (count == 0 ? "No" : count) + " results found";
