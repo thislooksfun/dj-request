@@ -30,7 +30,11 @@ public class Main extends HttpServlet
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/main.jsp");
-		rd.forward(request, response);
+		if (request.getContextPath().equalsIgnoreCase("/RequestSystem")) {
+			response.sendRedirect("../");
+		} else {
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/main.jsp");
+			rd.forward(request, response);
+		}
 	}
 }
