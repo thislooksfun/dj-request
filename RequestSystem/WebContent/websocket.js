@@ -108,13 +108,16 @@ function onMessage(message)
 			if (currentSong < totalSongCount) {
 				document.getElementById("tableHeader").textContent = Math.round((currentSong/totalSongCount)*100) + "% loaded  (" + currentSong + "/" + totalSongCount + ")";
 				document.getElementById("textBoxSearch").disabled = true;
+				document.getElementById("textBoxSearch").style.cursor = "not-allowed";
 			} else {
 				tableSearch.init();
 				document.getElementById("tableHeader").textContent = "Please select a song";
 				document.getElementById("textBoxSearch").disabled = false;
+				document.getElementById("textBoxSearch").style.cursor = "";
 				var buttons = document.getElementsByName("requestButtons");
 				for (var i = 0; i < buttons.length; i++) {
 					buttons[i].disabled = false;
+					buttons[i].style.cursor = "pointer";
 				}
 			}
 		}

@@ -105,6 +105,7 @@ function onMessage(message)
 				var buttons = document.getElementsByName("playButtons");
 				for (var i = 0; i < buttons.length; i++) {
 					buttons[i].disabled = false;
+					buttons[i].style.cursor = "pointer";
 				}
 			}
 		}

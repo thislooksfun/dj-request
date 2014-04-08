@@ -22,7 +22,7 @@ function addSong(song)
 	button.name = "selectedSong";
 	cell0.appendChild(button);
 	*/
-	cell0.innerHTML = "<input type=\"button\" value=\"Request\" name=\"requestButtons\" onclick=\"requestSong('id=\\'"+info[0]+"\\', name=\\'"+info[2]+"\\', artist=\\'"+info[4]+"\\'')\" disabled=\"true\">";
+	cell0.innerHTML = "<input type=\"button\" value=\"Request\" name=\"requestButtons\" onclick=\"requestSong('id=\\'"+info[0]+"\\', name=\\'"+info[2]+"\\', artist=\\'"+info[4]+"\\'')\" style=\"cursor:not-allowed\" disabled=\"true\">";
 	
 	for (i = 1; i < info.length; i++) {
 		var cell = row.insertCell(i);
