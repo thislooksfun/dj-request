@@ -2,6 +2,7 @@ package com.tlf.servlets;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,8 +32,11 @@ public class LoginServlet extends HttpServlet
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		LoginHelper.instance.login(request.getSession(), request.getParameter("user"), request.getParameter("pwd"));
-		
-		response.sendRedirect("/admin");
+		if (LoginHelper.instance.login(request.getSession(), request.getParameter("user"), request.getParameter("pwd"))) {
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/upload.jsp");
+			rd.forward(request, response);
+		} else {
+			response.sendRedirect("/admin");
+		}
 	}
 }

@@ -11,8 +11,9 @@ import org.w3c.dom.NodeList;
 public class Song
 {
 	public static Set<String> unrecognizedKeys = Collections.synchronizedSet(new HashSet<String>());
+	private static int songNumber = 0;
 	
-	private int trackID;
+	public final int UUID = songNumber++;
 	
 	private String name;
 	private String artist;
@@ -51,9 +52,6 @@ public class Song
 		boolean temp;
 		
 		switch (item.getTextContent()) {
-		case "Track ID":
-			this.trackID = Integer.parseInt(next.getTextContent());
-			break;
 		case "Name":
 			this.name = next.getTextContent();
 			break;
@@ -121,10 +119,6 @@ public class Song
 		}
 		
 		this.time = (hours > 0 ? hours + ":" : "") + (hours > 0 && minutes < 10 ? "0" + (int)minutes : (int)minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
-	}
-	
-	public int trackID() {
-		return this.trackID;
 	}
 	public String name() {
 		return this.name;

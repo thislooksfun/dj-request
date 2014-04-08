@@ -35,9 +35,9 @@ public class RequestEndpoint
 		try {
 			if (msg.indexOf("REQUEST:") == 0) {
 				System.out.println("Request!");
-				Song song = LibraryDecoder.getSong(Integer.parseInt(msg.substring(8)));
+				Song song = LibraryDecoder.instance.getSong(Integer.parseInt(msg.substring(8)));
 				song.requests++;
-				WebsocketHelper.sendRequestUpdate(song.trackID(), song.requests);
+				WebsocketHelper.sendRequestUpdate(song.UUID, song.requests);
 			}
 			session.getBasicRemote().sendText(msg);
 		} catch (IOException | NumberFormatException e) {

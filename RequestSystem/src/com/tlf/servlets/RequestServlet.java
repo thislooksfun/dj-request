@@ -39,7 +39,7 @@ public class RequestServlet extends HttpServlet
 	{
 		System.out.println("Request received!");
 		try {
-			LibraryDecoder.songs.get(Integer.parseInt(request.getParameter("selectedSong"))).requests++;
+			LibraryDecoder.instance.getSong(Integer.parseInt(request.getParameter("selectedSong"))).requests++;
 		} catch (NumberFormatException | StringIndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}

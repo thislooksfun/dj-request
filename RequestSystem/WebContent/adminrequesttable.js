@@ -4,7 +4,7 @@ function addSong(song)
 {
 	var table = document.getElementById("songList");
 
-	var posisions = [song.indexOf("id="), song.indexOf("requests="), song.indexOf("name="), song.indexOf("time="), song.indexOf("artist="), song.indexOf("album="), song.indexOf("albumartist="), song.indexOf("composer="), song.indexOf("genre=")];
+	var posisions = [song.indexOf("uuid="), song.indexOf("requests="), song.indexOf("name="), song.indexOf("time="), song.indexOf("artist="), song.indexOf("album="), song.indexOf("albumartist="), song.indexOf("composer="), song.indexOf("genre=")];
 	var info = [];
 
 	for (var i = 0; i < posisions.length; i++) {
