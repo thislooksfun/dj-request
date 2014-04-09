@@ -82,5 +82,7 @@ body {
 		</tbody>
 		<tfoot></tfoot>
 	</table>
+	<div id="noResultBar" style="display:none; width:100%"><center><h2>No results found! <a href="/admin">Click here</a> if you have the song on your device</h2></center></div>
+	<div id="noItemsBar" style="display:none; width:100%"><center><h2>No items found. Try reloading the page, or asking the DJ</h2></center></div>
 </body>
 </html>

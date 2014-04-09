@@ -119,6 +119,7 @@ function onMessage(message)
 					buttons[i].disabled = false;
 					buttons[i].style.cursor = "pointer";
 				}
+				checkForEmpty();
 			}
 		}
 	} else if (data.length > 14 && data.substring(0, 14) == "REQUESTUPDATE:") {

@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -20,6 +22,7 @@ public class LibraryDecoder
 {
 	public Map<Integer, Song> songs = Collections.synchronizedMap(new HashMap<Integer, Song>());
 	public Map<Integer, Song> notExplicit = Collections.synchronizedMap(new HashMap<Integer, Song>());
+	public Set<String> songInfo = Collections.synchronizedSet(new HashSet<String>());
 	
 	public boolean allowExplicit = true;
 	
@@ -55,8 +58,10 @@ public class LibraryDecoder
 					break;
 				} else if (((Element)nNode).getElementsByTagName("key").item(0).getTextContent().equals("Track ID")) {
 					Song song = new Song((Element)nNode);
-					if (song.isSong && !songs.containsKey(song.name())) {
+					
+					if (song.isSong && !this.songInfo.contains(song.name() + song.album() + song.artist())) {
 						this.songs.put(song.UUID, song);
+						this.songInfo.add(song.name() + song.album() + song.artist());
 						if (!song.explicit()) {
 							this.notExplicit.put(song.UUID, song);
 						}

@@ -46,7 +46,11 @@ body {
 </style>
 </head>
 <body bgcolor="black" onload="connect();">
-	<noscript><center><font color="red" size="6">This site requires javascript in order to function, please turn it on then try again</font></center></noscript>
+	<noscript>
+		<center>
+			<font color="red" size="6">This site requires javascript in order to function, please turn it on then try again</font>
+		</center>
+	</noscript>
 	<form action="LogoutServlet" method="get">
 		<p align="right">
 			<input type="submit" value="Logout">
@@ -62,7 +66,7 @@ body {
 			<%=LoginHelper.instance.getUserForSession(session)%>
 		</h2>
 		<textarea id="chatlog" readonly style="height: 250px; width: 500px"></textarea>
-		<br> <font size="6" id="tableHeader">Please select a song</font><br> <font size="4" id="tableHeader">Select a song with the buttons on the left, then click request. You can also click the headers to sort.</font> <br> <label>Search: </label><input type="text" size="50" id="textBoxSearch" onkeyup="tableSearch.runSearch();">
+		<br> <font size="6" id="tableHeader">Please select a song</font><br> <font size="4" id="tableHeader">Select a song with the buttons on the left, then click request. You can also click the headers to sort.</font> <br> <label>Search: </label><input type="text" size="50" id="textBoxSearch" onkeyup="tableSearch.runSearch();"><br> <label id="searchResult" style=""> </label>
 	</center>
 
 	<table class="sortable" id="songList" width="100%">
@@ -87,5 +91,17 @@ body {
 		</tbody>
 		<tfoot></tfoot>
 	</table>
+	<div id="noResultBar" style="display: none; width: 100%">
+		<center>
+			<h2>
+				No results found!
+			</h2>
+		</center>
+	</div>
+	<div id="noItemsBar" style="display: none; width: 100%">
+		<center>
+			<h2>No items found. <a href="/upload">Click here</a> to upload your library</h2>
+		</center>
+	</div>
 </body>
 </html>

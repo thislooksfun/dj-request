@@ -14,6 +14,7 @@ function log(message) {
 function onLoad() {
 	connect();
 	tableSearch.init();
+	checkForEmpty();
 }
 
 function resortRequests()
@@ -55,3 +56,13 @@ function colorTable()
 String.prototype.endsWith = function(suffix) {
 	return this.indexOf(suffix, this.length - suffix.length) !== -1;
 };
+
+function checkForEmpty()
+{
+	if (tableSearch.RowsText[0] == ("empty".toUpperCase())) {
+		tableSearch.Rows[0].style.display = "none";
+		document.getElementById("noItemsBar").style.display = "";
+	} else {
+		document.getElementById("noItemsBar").style.display = "none";
+	}
+}

@@ -6,6 +6,14 @@
 <title>Login</title>
 <script type="text/javascript" src="util.js"></script>
 <style type="text/css">
+A:link {
+	color: #FFFFFF
+}
+
+A:visited {
+	color: #FFFFFF
+}
+
 body {
 	color: #FFFFFF
 }
@@ -22,6 +30,7 @@ body {
 		<form action="UploadServlet" method="post" enctype="multipart/form-data">
 			<input type="file" id="uploadFile" name="file" onchange="checkUploadedFile()"><br> <input type="submit" id="submitFile" name="submit" value="Upload" disabled="disabled">
 		</form>
+		<a href="/admin">Click here bypass this screen</a>
 	</center>
 	<script type="text/javascript">
 		function checkUploadedFile() {

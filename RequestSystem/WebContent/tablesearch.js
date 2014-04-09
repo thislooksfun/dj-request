@@ -40,10 +40,18 @@ tableSearch.runSearch = function() {
 	colorTable();
 	
 	var searchResult = document.getElementById("searchResult");
+	var noResults = document.getElementById("noResultBar");
 	
 	if (count == this.Rows.length || (invertSearch && this.Term.length == 1)) {
 		searchResult.textContent = "";
+		noResults.style.display = "none";
 	} else {
-		searchResult.textContent = (count == 0 ? "No" : count) + " results found";
+		if (count == 0) {
+			searchResult.textContent = "";
+			noResults.style.display = "";
+		} else {
+			searchResult.textContent = count + " results found";
+			noResults.style.display = "none";
+		}
 	}
 };
