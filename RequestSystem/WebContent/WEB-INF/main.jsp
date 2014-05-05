@@ -11,23 +11,22 @@
 <script type="text/javascript" src="removediacritics.js"></script>
 <script type="text/javascript" src="util.js"></script>
 <style type="text/css">
-/* Sortable tables */
-table.sortable thead {
+table thead {
 	background-color: #676767;
 	color: #cccccc;
 	font-weight: bold;
 	cursor: default;
 }
 
-table.sortable tbody tr:nth-child(2n) td {
+table tbody tr:nth-child(2n) td {
 	background: #242424;
 }
 
-table.sortable tbody tr:nth-child(2n+1) td {
+table tbody tr:nth-child(2n+1) td {
 	background: #424242;
 }
 
-table.sortable tr {
+table tr {
 	color: #FFFFFF
 }
 
@@ -45,7 +44,11 @@ body {
 </style>
 </head>
 <body bgcolor="black" onload="onLoad()">
-	<noscript><center><font color="red" size="6">This site requires javascript in order to function, please turn it on then try again</font></center></noscript>
+	<noscript>
+		<center>
+			<font color="red" size="6">This site requires javascript in order to function, please turn it on then try again</font>
+		</center>
+	</noscript>
 	<p align="right">
 		<a href="/admin"><font size="5">Admin site</font></a>
 	</p>
@@ -56,8 +59,33 @@ body {
 		<button type="button" id="connectButton" onclick="connect()">Connect</button>
 		<input type="text" id="msg" onkeydown="chatKeyPress(event)" />
 		<button type="button" id="sendButton" onclick="postToServer()">Send!</button>
-		<br> <font size="6" id="tableHeader">Please select a song</font> <br> <font size="4" id="tableHeader">Select a song with the buttons on the left, then click request. You can also click the headers to sort.</font><br> <label>Search: </label><input type="text" size="50" id="textBoxSearch" onkeyup="tableSearch.runSearch();"><br>
-		<label id="searchResult" style=""> </label>
+		<br>
+		<font size="6" id="tableHeader">Please select a song</font><br> <font size="4" id="tableHeader">Select a song with the buttons on the left, then click request. You can also click the headers to sort.</font>
+	</center>
+
+	<table id="manualRequests" width="100%">
+		<thead>
+			<tr>
+				<th width="25%">Requested by</th>
+				<th width="25%">Name</th>
+				<th width="25%">Artist</th>
+				<th width="25%">Album</th>
+			</tr>
+		</thead>
+		<tbody id="manualSubmits">
+			<tr>
+				<td>empty</td>
+			</tr>
+		</tbody>
+		<tfoot></tfoot>
+	</table>
+	<div id="noManualRequestBar" style="display: none; width: 100%">
+		<center>
+			<h2>No manual requests found.</h2>
+		</center>
+	</div>
+	<center>
+		<label>Search: </label> <input type="text" size="50" id="textBoxSearch" onkeyup="tableSearch.runSearch();"> <br> <label id="searchResult" style=""> </label>
 	</center>
 
 	<table class="sortable" id="songList" width="100%">
@@ -82,7 +110,17 @@ body {
 		</tbody>
 		<tfoot></tfoot>
 	</table>
-	<div id="noResultBar" style="display:none; width:100%"><center><h2>No results found! <a href="/admin">Click here</a> if you have the song on your device</h2></center></div>
-	<div id="noItemsBar" style="display:none; width:100%"><center><h2>No items found. Try reloading the page, or asking the DJ</h2></center></div>
+	<div id="noResultBar" style="display: none; width: 100%">
+		<center>
+			<h2>
+				No results found! <a href="/admin">Click here</a> if you have the song on your device
+			</h2>
+		</center>
+	</div>
+	<div id="noItemsBar" style="display: none; width: 100%">
+		<center>
+			<h2>No items found. Try reloading the page, or asking the DJ</h2>
+		</center>
+	</div>
 </body>
 </html>

@@ -57,8 +57,22 @@ String.prototype.endsWith = function(suffix) {
 	return this.indexOf(suffix, this.length - suffix.length) !== -1;
 };
 
+window.onunload = function() {
+	ws.close();
+};
+
 function checkForEmpty()
 {
+	var row1 = document.getElementById('manualSubmits').getElementsByTagName('TR')[0];
+	var row1Text = removeDiacritics((row1.innerText) ? row1.innerText.toUpperCase() : row1.textContent.toUpperCase()).trim();
+
+	if (row1Text == ("empty".toUpperCase())) {
+		row1.style.display = "none";
+		document.getElementById("noManualRequestBar").style.display = "";
+	} else {
+		document.getElementById("noManualRequestBar").style.display = "none";
+	}
+	
 	if (tableSearch.RowsText[0] == ("empty".toUpperCase())) {
 		tableSearch.Rows[0].style.display = "none";
 		document.getElementById("noItemsBar").style.display = "";

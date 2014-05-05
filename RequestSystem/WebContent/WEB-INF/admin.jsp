@@ -12,23 +12,22 @@
 <script type="text/javascript" src="removediacritics.js"></script>
 <script type="text/javascript" src="util.js"></script>
 <style type="text/css">
-/* Sortable tables */
-table.sortable thead {
+table thead {
 	background-color: #676767;
 	color: #cccccc;
 	font-weight: bold;
 	cursor: default;
 }
 
-table.sortable tbody tr:nth-child(2n) td {
+table tbody tr:nth-child(2n) td {
 	background: #242424;
 }
 
-table.sortable tbody tr:nth-child(2n+1) td {
+table tbody tr:nth-child(2n+1) td {
 	background: #424242;
 }
 
-table.sortable tr {
+table tr {
 	color: #FFFFFF
 }
 
