@@ -1,4 +1,4 @@
-var wsUri = "ws://" + document.location.host + "/RequestSystem/websocket/request";
+var wsUri = ((document.location.protocol === 'https:') ? "wss://" : "ws://") + document.location.host + "/RequestSystem/websocket/request";
 var ws;
 
 var websocket = 'WebSocket' in window;
@@ -7,7 +7,7 @@ var reconnecting = false;
 
 function connect() {
 	if (!websocket) {
-		chatlog += "WebSockets aren't supported in your browser, sorry";
+		alert("WebSockets aren't supported in your browser, sorry");
 		return;
 	} else {
 

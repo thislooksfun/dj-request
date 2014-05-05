@@ -1,4 +1,4 @@
-var wsUri = "ws://" + document.location.host + "/RequestSystem/websocket/admin";
+var wsUri = ((document.location.protocol === 'https:') ? "wss://" : "ws://") + document.location.host + "/RequestSystem/websocket/admin";
 var ws;
 
 var websocket = 'WebSocket' in window;
@@ -7,7 +7,7 @@ var reconnecting = false;
 
 function connect() {
 	if (!websocket) {
-		chatlog += "WebSockets aren't supported in your browser, sorry";
+		alert("WebSockets aren't supported in your browser, sorry");
 		return;
 	} else {
 
@@ -109,8 +109,12 @@ function onMessage(message)
 				}
 			}
 		}
-	} else if (data.length > 14 && data.substring(0, 14) == "REQUESTUPDATE:") {
-		updateRequestCount(data.substring(14));
+	} else if (data.length > 14) {
+		if (data.substring(0, 14) == "REQUESTUPDATE:") {
+			updateRequestCount(data.substring(14));
+		} else if (data.substring(0, 14) == "MANUALREQUEST:") {
+			addManualRequest(data.substring(14));
+		}
 	} else if (data.length == 10 && data.substring(0, 10) == "FULLUPDATE") {
 		clearTable();
 	} else {
