@@ -15,7 +15,6 @@ function onLoad() {
 	connect();
 	tableSearch.init();
 	checkForEmpty();
-	alert(alert);
 }
 
 function resortRequests()
