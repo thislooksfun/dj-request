@@ -32,6 +32,35 @@ function addSong(song)
 	}
 }
 
+function addManualRequest(song)
+{
+	var table = document.getElementById("manualRequests");
+
+	var posisions = [song.indexOf("requestedBy="), song.indexOf("name="), song.indexOf("artist="), song.indexOf("album=")];
+	var info = [];
+
+	for (var i = 0; i < posisions.length; i++) {
+		info[i] = song.substring(song.indexOf("&^&", posisions[i])+3, song.indexOf("&^&", song.indexOf("&^&", posisions[i])+3));
+	}
+
+	var rowCount = table.rows.length;
+	var row = table.insertRow(rowCount);
+	
+	for (i = 0; i < info.length; i++) {
+		var cell = row.insertCell(i);
+		cell.innerHTML = (info[i] == "null" || info[i] == "Not Documented" ? "" : info[i]);
+	}
+	
+	var cellID = row.insertCell(info.length);
+	cellID.innerHTML = info[0];
+	cellID.style.display = "none";
+
+	if (hasPlaceholder) {
+		table.deleteRow(1);
+		hasPlaceholder = false;
+	}
+}
+
 function updateRequestCount(data) {
 	var posisions = [data.indexOf("id="), data.indexOf("newCount=")];
 	var info = [];

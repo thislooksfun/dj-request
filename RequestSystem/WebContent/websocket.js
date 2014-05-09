@@ -122,8 +122,12 @@ function onMessage(message)
 				checkForEmpty();
 			}
 		}
-	} else if (data.length > 14 && data.substring(0, 14) == "REQUESTUPDATE:") {
-		updateRequestCount(data.substring(14));
+	} else if (data.length > 14) {
+		if (data.substring(0, 14) == "REQUESTUPDATE:") {
+			updateRequestCount(data.substring(14));
+		} else if (data.substring(0, 14) == "MANUALREQUEST:") {
+			addManualRequest(data.substring(14));
+		}
 	} else if (data.length == 10 && data.substring(0, 10) == "FULLUPDATE") {
 		clearTable();
 	} else {

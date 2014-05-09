@@ -21,9 +21,6 @@ body {
 </style>
 </head>
 <body bgcolor="black">
-	<p align="right">
-		<a href=".."><font color="white" size="5">Upload library</font></a>
-	</p>
 	<center>
 		<h2>
 			<%
@@ -35,9 +32,6 @@ body {
 				String macMessage = "/Music/iTunes/";
 				String XPMessage = "\\My Documents\\My Music\\iTunes\\";
 				String VistaPlusMessage = "\\Music\\iTunes\\";
-
-				System.out.println("User Agent for the request is===> "
-						+ browserDetails);
 				//=================OS=======================
 				if (user.indexOf("windows") >= 0) {
 					if (user.indexOf("windows nt 5.1") >= 0) {
@@ -52,8 +46,8 @@ body {
 				}
 			%>
 		</h2>
-		<form action="UploadServlet" method="post" enctype="multipart/form-data">
-			<input type="file" id="uploadFile" name="file" onchange="checkUploadedFile()"><br> <input type="submit" id="submitFile" name="submit" value="Upload" disabled="disabled">
+		<form id="uploadForm" action="UploadServlet" method="post" enctype="multipart/form-data">
+			<input type="file" id="uploadFile" name="file" onchange="checkUploadedFile()">
 		</form>
 		<a href="/admin">Click here bypass this screen</a>
 	</center>
@@ -63,9 +57,7 @@ body {
 					.endsWith("iTunes Library.xml")
 					|| document.getElementById("uploadFile").value
 							.endsWith("iTunes Music Library.xml")) {
-				document.getElementById("submitFile").disabled = false;
-			} else {
-				document.getElementById("submitFile").disabled = true;
+				document.getElementById("uploadForm").submit();
 			}
 		}
 	</script>

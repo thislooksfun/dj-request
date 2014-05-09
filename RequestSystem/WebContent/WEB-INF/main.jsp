@@ -60,7 +60,7 @@ body {
 		<input type="text" id="msg" onkeydown="chatKeyPress(event)" />
 		<button type="button" id="sendButton" onclick="postToServer()">Send!</button>
 		<br>
-		<font size="6" id="tableHeader">Please select a song</font><br> <font size="4" id="tableHeader">Select a song with the buttons on the left, then click request. You can also click the headers to sort.</font>
+		<font size="6" id="tableHeader">Please select a song</font><br> <font size="4" id="tableHeader">To request a song, simply click "request" on the song you want. If your song isn't listed, and you have it on your device, click the "manual request" button. You can also click the headers to sort.</font>
 	</center>
 
 	<table id="manualRequests" width="100%">
@@ -84,10 +84,10 @@ body {
 			<h2>No manual requests found.</h2>
 		</center>
 	</div>
+	
 	<center>
 		<label>Search: </label> <input type="text" size="50" id="textBoxSearch" onkeyup="tableSearch.runSearch();"> <br> <label id="searchResult" style=""> </label>
 	</center>
-
 	<table class="sortable" id="songList" width="100%">
 		<thead>
 			<tr>

@@ -12,10 +12,15 @@ public class SongSystem
 	/** Final Decoder */
 	public final LibraryDecoder decoder;
 	
-	/** List of all loaded songs */
+	
+	/** List of all songs loaded by a DJ */
 	public Map<Integer, Song> songs = Collections.synchronizedMap(new HashMap<Integer, Song>());
-	/** List of all loaded non-explicit songs */
+	/** List of all non-explicit songs loaded by a DJ */
 	public Map<Integer, Song> notExplicit = Collections.synchronizedMap(new HashMap<Integer, Song>());
+	/** List of all manually requested songs */
+	public Map<Integer, Song> manual = Collections.synchronizedMap(new HashMap<Integer, Song>());
+	/** List of all manually requested non-explicit songs */
+	public Map<Integer, Song> manualNotExplicit = Collections.synchronizedMap(new HashMap<Integer, Song>());
 	
 	public boolean allowExplicit = true;
 	
@@ -24,7 +29,9 @@ public class SongSystem
 		this.decoder = new LibraryDecoder(this);
 	}
 	
-	public Song getSong(int UUID) {
-		return this.allowExplicit ? this.songs.get(UUID) : this.notExplicit.get(UUID);
+	public Song getSong(int UUID)
+	{
+		boolean manual = (""+UUID).substring(0, 1).equals("1");
+		return this.allowExplicit ? (manual ? this.manual.get(UUID) : this.songs.get(UUID)) : (manual ? this.manualNotExplicit.get(UUID) : this.notExplicit.get(UUID));
 	}
 }

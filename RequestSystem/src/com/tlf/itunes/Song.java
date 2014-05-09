@@ -1,8 +1,8 @@
 package com.tlf.itunes;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -10,10 +10,9 @@ import org.w3c.dom.NodeList;
 
 public class Song
 {
-	public static Set<String> unrecognizedKeys = Collections.synchronizedSet(new HashSet<String>());
 	private static int songNumber = 0;
 	
-	public final int UUID = songNumber++;
+	public final int UUID;
 	
 	private String name;
 	private String artist;
@@ -24,10 +23,6 @@ public class Song
 	private String time;
 	
 	private int totalTime;
-	private int diskNumber;
-	private int diskCount;
-	private int trackNumber;
-	private int trackCount;
 	private int year;
 	
 	public int requests = 0;
@@ -38,11 +33,57 @@ public class Song
 	
 	public Song(Element song)
 	{
+		this.UUID = Integer.parseInt("0"+(songNumber++));
 		NodeList keys = song.getElementsByTagName("key");
 		
 		for (int i = 0; i < keys.getLength(); i++)
 		{
 			this.parseElement(keys.item(i));
+		}
+	}
+	
+	public Song(Map<String, String> data) {
+		this.UUID = Integer.parseInt("1"+(songNumber++));
+		this.parseMap(data);
+	}
+	
+	private void parseMap(Map<String, String> data)
+	{
+		Iterator<Entry<String, String>> iterator = data.entrySet().iterator();
+		
+		while (iterator.hasNext())
+		{
+			Entry<String, String> entry = iterator.next();
+			switch (entry.getKey()) {
+			case "Name":
+				this.name = entry.getValue();
+				break;
+			case "Artist":
+				this.artist = entry.getValue();
+				break;
+			case "Album Artist":
+				this.albumArtist = entry.getValue();
+				break;
+			case "Composer":
+				this.composer = entry.getValue();
+				break;
+			case "Album":
+				this.album = entry.getValue();
+				break;
+			case "Explicit":
+				this.explicit = Boolean.parseBoolean(entry.getValue());
+				break;
+			case "Genre":
+				this.genre = entry.getValue();
+				break;
+			case "Year":
+				this.year = Integer.parseInt(entry.getValue());
+				break;
+			case "Total Time":
+				this.totalTime = Integer.parseInt(entry.getValue());
+				this.parseTime();
+				break;
+			}
 		}
 	}
 	
@@ -76,18 +117,6 @@ public class Song
 		case "Year":
 			this.year = Integer.parseInt(next.getTextContent());
 			break;
-		case "Disk Count":
-			this.diskCount = Integer.parseInt(next.getTextContent());
-			break;
-		case "Disk Number":
-			this.diskNumber = Integer.parseInt(next.getTextContent());
-			break;
-		case "Track Number":
-			this.trackNumber = Integer.parseInt(next.getTextContent());
-			break;
-		case "Track Count":
-			this.trackCount = Integer.parseInt(next.getTextContent());
-			break;
 		case "Total Time":
 			this.totalTime = Integer.parseInt(next.getTextContent());
 			this.parseTime();
@@ -101,8 +130,6 @@ public class Song
 			temp = next.getTextContent().equals("Remote") || next.getTextContent().equals("URL");
 			this.isSong = (temp ? false : this.isSong);
 			break;
-		default:
-			unrecognizedKeys.add(item.getTextContent());
 		}
 	}
 	
@@ -143,18 +170,6 @@ public class Song
 	}
 	public int totalTime() {
 		return this.totalTime;
-	}
-	public int diskNumber() {
-		return this.diskNumber;
-	}
-	public int diskCount() {
-		return this.diskCount;
-	}
-	public int trackNumber() {
-		return this.trackNumber;
-	}
-	public int trackCount() {
-		return this.trackCount;
 	}
 	public int year() {
 		return this.year;

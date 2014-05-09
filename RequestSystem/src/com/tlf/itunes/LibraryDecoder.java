@@ -41,12 +41,9 @@ public class LibraryDecoder
 	
 	private void parseLibrary(Document doc)
 	{
-		System.out.println("Parsing xml");
 		doc.getDocumentElement().normalize();
 		
 		NodeList nList = doc.getElementsByTagName("dict");
-		
-		System.out.println("----------------------------");
 		
 		for (int temp = 0; temp < nList.getLength(); temp++) {
 			
@@ -67,14 +64,6 @@ public class LibraryDecoder
 					}
 				}
 			}
-		}
-		
-		System.out.println(String.format("Loaded %s songs", this.songSystem.songs.size()));
-		
-		String[] keys = Song.unrecognizedKeys.toArray(new String[0]);
-		
-		for (int i = 0; i < keys.length; i++) {
-			System.out.println("Unrecognized key '" + keys[i] + "'");
 		}
 	}
 }
