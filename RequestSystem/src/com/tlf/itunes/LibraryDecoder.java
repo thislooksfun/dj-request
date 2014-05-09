@@ -3,9 +3,7 @@ package com.tlf.itunes;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -20,13 +18,14 @@ import org.xml.sax.SAXException;
 
 public class LibraryDecoder
 {
-	public Map<Integer, Song> songs = Collections.synchronizedMap(new HashMap<Integer, Song>());
-	public Map<Integer, Song> notExplicit = Collections.synchronizedMap(new HashMap<Integer, Song>());
-	public Set<String> songInfo = Collections.synchronizedSet(new HashSet<String>());
+	private SongSystem songSystem;
 	
-	public boolean allowExplicit = true;
+	private Set<String> songInfo = Collections.synchronizedSet(new HashSet<String>());
 	
-	public static LibraryDecoder instance = new LibraryDecoder();
+	public LibraryDecoder(SongSystem songSystem)
+	{
+		this.songSystem = songSystem;
+	}
 	
 	public void parseLibrary(InputStream is) {
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -60,26 +59,22 @@ public class LibraryDecoder
 					Song song = new Song((Element)nNode);
 					
 					if (song.isSong && !this.songInfo.contains(song.name() + song.album() + song.artist())) {
-						this.songs.put(song.UUID, song);
+						this.songSystem.songs.put(song.UUID, song);
 						this.songInfo.add(song.name() + song.album() + song.artist());
 						if (!song.explicit()) {
-							this.notExplicit.put(song.UUID, song);
+							this.songSystem.notExplicit.put(song.UUID, song);
 						}
 					}
 				}
 			}
 		}
 		
-		System.out.println(String.format("Loaded %s songs", this.songs.size()));
+		System.out.println(String.format("Loaded %s songs", this.songSystem.songs.size()));
 		
 		String[] keys = Song.unrecognizedKeys.toArray(new String[0]);
 		
 		for (int i = 0; i < keys.length; i++) {
 			System.out.println("Unrecognized key '" + keys[i] + "'");
 		}
-	}
-	
-	public Song getSong(int UUID) {
-		return this.allowExplicit ? this.songs.get(UUID) : this.notExplicit.get(UUID);
 	}
 }

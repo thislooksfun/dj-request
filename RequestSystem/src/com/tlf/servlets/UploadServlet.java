@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.tlf.itunes.LibraryDecoder;
+import com.tlf.itunes.SongSystem;
 
 /**
  * Servlet implementation class UploadServlet
@@ -33,7 +33,7 @@ public class UploadServlet extends HttpServlet
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		LibraryDecoder.instance.parseLibrary(request.getPart("file").getInputStream());
+		SongSystem.instance.decoder.parseLibrary(request.getPart("file").getInputStream());
 		
 		response.sendRedirect("/admin");
 	}

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.tlf.itunes.LibraryDecoder;
+import com.tlf.itunes.SongSystem;
 
 /**
  * Servlet implementation class RequestServlet
@@ -39,7 +39,7 @@ public class RequestServlet extends HttpServlet
 	{
 		System.out.println("Request received!");
 		try {
-			LibraryDecoder.instance.getSong(Integer.parseInt(request.getParameter("selectedSong"))).requests++;
+			SongSystem.instance.getSong(Integer.parseInt(request.getParameter("selectedSong"))).requests++;
 		} catch (NumberFormatException | StringIndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}

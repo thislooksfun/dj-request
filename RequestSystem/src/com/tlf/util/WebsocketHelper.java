@@ -10,8 +10,8 @@ import javax.websocket.CloseReason;
 import javax.websocket.EncodeException;
 import javax.websocket.Session;
 
-import com.tlf.itunes.LibraryDecoder;
 import com.tlf.itunes.Song;
+import com.tlf.itunes.SongSystem;
 
 public class WebsocketHelper
 {
@@ -41,16 +41,16 @@ public class WebsocketHelper
 				session.getBasicRemote().sendText("FULLUPDATE");
 				Iterator<Integer> iterator;
 				
-				if (LibraryDecoder.instance.allowExplicit) {
-					iterator = LibraryDecoder.instance.songs.keySet().iterator();
-					session.getBasicRemote().sendText("SONGCOUNT:"+LibraryDecoder.instance.songs.size());
+				if (SongSystem.instance.allowExplicit) {
+					iterator = SongSystem.instance.songs.keySet().iterator();
+					session.getBasicRemote().sendText("SONGCOUNT:"+SongSystem.instance.songs.size());
 				} else {
-					iterator = LibraryDecoder.instance.notExplicit.keySet().iterator();
-					session.getBasicRemote().sendText("SONGCOUNT:"+LibraryDecoder.instance.notExplicit.size());
+					iterator = SongSystem.instance.notExplicit.keySet().iterator();
+					session.getBasicRemote().sendText("SONGCOUNT:"+SongSystem.instance.notExplicit.size());
 				}
 				
 				while (iterator.hasNext()) {
-					Song song = LibraryDecoder.instance.songs.get(iterator.next());
+					Song song = SongSystem.instance.songs.get(iterator.next());
 					session.getBasicRemote().sendObject(song);
 				}
 			} catch (IOException | EncodeException e) {
@@ -67,16 +67,16 @@ public class WebsocketHelper
 			session.getBasicRemote().sendText("Welcome!");
 			Iterator<Integer> iterator;
 			
-			if (LibraryDecoder.instance.allowExplicit) {
-				iterator = LibraryDecoder.instance.songs.keySet().iterator();
-				session.getBasicRemote().sendText("SONGCOUNT:"+LibraryDecoder.instance.songs.size());
+			if (SongSystem.instance.allowExplicit) {
+				iterator = SongSystem.instance.songs.keySet().iterator();
+				session.getBasicRemote().sendText("SONGCOUNT:"+SongSystem.instance.songs.size());
 			} else {
-				iterator = LibraryDecoder.instance.notExplicit.keySet().iterator();
-				session.getBasicRemote().sendText("SONGCOUNT:"+LibraryDecoder.instance.notExplicit.size());
+				iterator = SongSystem.instance.notExplicit.keySet().iterator();
+				session.getBasicRemote().sendText("SONGCOUNT:"+SongSystem.instance.notExplicit.size());
 			}
 			
 			while (iterator.hasNext()) {
-				Song song = LibraryDecoder.instance.songs.get(iterator.next());
+				Song song = SongSystem.instance.songs.get(iterator.next());
 				session.getBasicRemote().sendObject(song);
 			}
 		} catch (IOException | EncodeException e) {

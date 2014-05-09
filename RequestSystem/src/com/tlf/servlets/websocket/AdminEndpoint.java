@@ -10,8 +10,8 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-import com.tlf.itunes.LibraryDecoder;
 import com.tlf.itunes.Song;
+import com.tlf.itunes.SongSystem;
 import com.tlf.servlets.websocket.encoders.SongEncoder;
 import com.tlf.util.WebsocketHelper;
 
@@ -38,7 +38,7 @@ public class AdminEndpoint
 		try {
 			if (msg.indexOf("PLAYED:") == 0) {
 				System.out.println("Request!");
-				Song song = LibraryDecoder.instance.getSong(Integer.parseInt(msg.substring(7)));
+				Song song = SongSystem.instance.getSong(Integer.parseInt(msg.substring(7)));
 				song.requests = 0;
 				WebsocketHelper.sendRequestUpdate(song.UUID, song.requests);
 			}
