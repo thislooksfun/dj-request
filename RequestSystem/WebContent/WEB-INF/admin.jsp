@@ -72,7 +72,7 @@ body {
 		<thead>
 			<tr>
 				<th width="4%" class="sorttable_nosort"></th>
-				<th width="3.9%" id="requestColumn" class="sorttable_reverse">Requests</th>
+				<th width="3.9%" id="requestColumn" class="sorttable_reverse sorttable_stable">Requests</th>
 				<th width="23.9%">Name</th>
 				<th width="3.2%">Time</th>
 				<th width="9.1%">Artist</th>

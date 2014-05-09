@@ -15,7 +15,8 @@ import com.tlf.util.LoginHelper;
  * Servlet implementation class UploadRedirect
  */
 @WebServlet("/upload")
-public class UploadRedirect extends HttpServlet {
+public class UploadRedirect extends HttpServlet
+{
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -23,7 +24,6 @@ public class UploadRedirect extends HttpServlet {
      */
     public UploadRedirect() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**

@@ -26,19 +26,19 @@ sorttable = {
 			arguments.callee.done = true;
 			// kill the timer
 			if (_timer) clearInterval(_timer);
-
+			
 			if (!document.createElement || !document.getElementsByTagName) return;
-
+			
 			sorttable.DATE_RE = /^(\d\d?)[\/\.-](\d\d?)[\/\.-]((\d\d)?\d\d)$/;
-
+			
 			forEach(document.getElementsByTagName('table'), function(table) {
 				if (table.className.search(/\bsortable\b/) != -1) {
 					sorttable.makeSortable(table);
 				}
 			});
-
+			
 		},
-
+		
 		makeSortable: function(table) {
 			if (table.getElementsByTagName('thead').length == 0) {
 				// table doesn't have a tHead. Since it should have, create one and
@@ -49,9 +49,9 @@ sorttable = {
 			}
 			// Safari doesn't support table.tHead, sigh
 			if (table.tHead == null) table.tHead = table.getElementsByTagName('thead')[0];
-
+			
 			if (table.tHead.rows.length != 1) return; // can't cope with two header rows
-
+			
 			// Sorttable v1 put rows with a class of "sortbottom" at the bottom (as
 			// "total" rows, for example). This is B&R, since what you're supposed
 			// to do is put them in a tfoot. So, if there are sortbottom rows,
@@ -73,7 +73,7 @@ sorttable = {
 				}
 				delete sortbottomrows;
 			}
-
+			
 			// work through each column and calculate its type
 			headrow = table.tHead.rows[0].cells;
 			for (var i=0; i<headrow.length; i++) {
@@ -94,7 +94,7 @@ sorttable = {
 					}
 					
 					dean_addEvent(headrow[i],"click", sorttable.innerSortFunction = function(e) {
-
+						
 						if (this.className.search(/\bsorttable_sorted\b/) != -1) {
 							// if we're already sorted by this column, just
 							// reverse the table, which is quicker
@@ -141,13 +141,13 @@ sorttable = {
 						if (sortfwdind) { sortfwdind.parentNode.removeChild(sortfwdind); }
 						sortrevind = document.getElementById('sorttable_sortrevind');
 						if (sortrevind) { sortrevind.parentNode.removeChild(sortrevind); }
-
+						
 						this.className += ' sorttable_sorted';
 						sortfwdind = document.createElement('span');
 						sortfwdind.id = shouldReverse ? "sorttable_sortrevind" : "sorttable_sortfwdind";
 						sortfwdind.innerHTML = shouldReverse ? (stIsIE ? '&nbsp<font face="webdings">5</font>' : '&nbsp;&#x25B4;') : (stIsIE ? '&nbsp<font face="webdings">6</font>' : '&nbsp;&#x25BE;');
 						this.appendChild(sortfwdind);
-
+						
 						// build an array to sort. This is a Schwartzian transform thing,
 						// i.e., we "decorate" each row with the actual sort key,
 						// sort based on the sort keys, and then put the rows back in order
@@ -158,31 +158,38 @@ sorttable = {
 						for (var j=0; j<rows.length; j++) {
 							row_array[row_array.length] = [sorttable.getInnerText(rows[j].cells[col]), rows[j]];
 						}
-						/* If you want a stable sort, uncomment the following line */
-						//sorttable.shaker_sort(row_array, this.sorttable_sortfunction);
-						/* and comment out this one */
-						row_array.sort(this.sorttable_sortfunction);
-
+						
+						if (this.className.search(/\bsorttable_stable\b/) != -1) {
+							if (this.className.search(/\bsorttable_stable_temp\b/) != -1) {
+								this.className.replace('sorttable_stable_temp', '');
+								this.className.replace('sorttable_stable', '');
+							}
+							sorttable.shaker_sort(row_array, this.sorttable_sortfunction);
+						} else {
+							row_array.sort(this.sorttable_sortfunction);
+						}
+						
+						
 						if (shouldReverse) {
 							row_array.reverse();
 							this.className = this.className.replace('sorttable_sorted', 'sorttable_sorted_reverse');
 						}
-
+						
 						tb = this.sorttable_tbody;
 						for (var j=0; j<row_array.length; j++) {
 							tb.appendChild(row_array[j][1]);
 						}
-
+						
 						delete row_array;
-
-
+						
+						
 						colorTable();
 						tableSearch.init();
 					});
 				}
 			}
 		},
-
+		
 		guessType: function(table, column) {
 			// guess the type of a column based on its first non-blank row
 			sortfn = sorttable.sort_alpha;
@@ -215,19 +222,19 @@ sorttable = {
 			}
 			return sortfn;
 		},
-
+		
 		getInnerText: function(node) {
 			// gets the text we want to use for sorting for a cell.
 			// strips leading and trailing whitespace.
 			// this is *not* a generic getInnerText function; it's special to sorttable.
 			// for example, you can override the cell text with a customkey attribute.
 			// it also gets .value for <input> fields.
-
+			
 			if (!node) return "";
-
+			
 			hasInputs = (typeof node.getElementsByTagName == 'function') &&
 			node.getElementsByTagName('input').length;
-
+			
 			if (node.getAttribute("sorttable_customkey") != null) {
 				return node.getAttribute("sorttable_customkey");
 			}
@@ -262,7 +269,7 @@ sorttable = {
 				}
 			}
 		},
-
+		
 		reverse: function(tbody) {
 			// reverse the rows in a tbody
 			newrows = [];
@@ -274,7 +281,7 @@ sorttable = {
 			}
 			delete newrows;
 		},
-
+		
 		/* sort functions
      each sort function takes two parameters, a and b
      you are comparing a[0] and b[0] */
@@ -320,7 +327,7 @@ sorttable = {
 			if (dt1<dt2) return -1;
 			return 1;
 		},
-
+		
 		shaker_sort: function(list, comp_func) {
 			// A stable sort function to allow multi-level sorting of data
 			// see: http://en.wikipedia.org/wiki/Cocktail_sort
@@ -328,7 +335,7 @@ sorttable = {
 			var b = 0;
 			var t = list.length - 1;
 			var swap = true;
-
+			
 			while(swap) {
 				swap = false;
 				for(var i = b; i < t; ++i) {
@@ -338,9 +345,9 @@ sorttable = {
 					}
 				} // for
 				t--;
-
+				
 				if (!swap) break;
-
+				
 				for(var i = t; i > b; --i) {
 					if ( comp_func(list[i], list[i-1]) < 0 ) {
 						var q = list[i]; list[i] = list[i-1]; list[i-1] = q;
@@ -348,7 +355,7 @@ sorttable = {
 					}
 				} // for
 				b++;
-
+				
 			} // while(swap)
 		}
 };

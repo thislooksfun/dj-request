@@ -1,3 +1,4 @@
+<%@page import="java.util.StringTokenizer"%>
 <%@ page language="java" contentType="text/html; charset=US-ASCII" pageEncoding="US-ASCII"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -25,7 +26,31 @@ body {
 	</p>
 	<center>
 		<h2>
-			Please navigate to your iTunes library and upload the file "iTunes Library.xml" or "iTunes Music Library.xml"<br>Windows XP: \\My Documents\\My Music\\iTunes\\<br> Windows Vista+: \\Music\\iTunes\\<br>OS X: /Music/iTunes/
+			<%
+				String browserDetails = request.getHeader("User-Agent");
+				String userAgent = browserDetails;
+				String user = userAgent.toLowerCase();
+
+				String message = "Please navigate to %s and upload the file \"iTunes Library.xml\" or \"iTunes Music Library.xml\"";
+				String macMessage = "/Music/iTunes/";
+				String XPMessage = "\\My Documents\\My Music\\iTunes\\";
+				String VistaPlusMessage = "\\Music\\iTunes\\";
+
+				System.out.println("User Agent for the request is===> "
+						+ browserDetails);
+				//=================OS=======================
+				if (user.indexOf("windows") >= 0) {
+					if (user.indexOf("windows nt 5.1") >= 0) {
+						out.print(String.format(message, XPMessage));
+					} else if (user.indexOf("windows nt 6.") >= 0) {
+						out.print(String.format(message, VistaPlusMessage));
+					}
+				} else if (user.indexOf("mac") >= 0) {
+					out.print(String.format(message, macMessage));
+				} else {
+					response.sendRedirect("/admin"); //Unknown/unsupported OS redirect
+				}
+			%>
 		</h2>
 		<form action="UploadServlet" method="post" enctype="multipart/form-data">
 			<input type="file" id="uploadFile" name="file" onchange="checkUploadedFile()"><br> <input type="submit" id="submitFile" name="submit" value="Upload" disabled="disabled">
@@ -34,9 +59,13 @@ body {
 	</center>
 	<script type="text/javascript">
 		function checkUploadedFile() {
-			if (document.getElementById("uploadFile").value.endsWith("iTunes Library.xml")
-					|| document.getElementById("uploadFile").value.endsWith("iTunes Music Library.xml")) {
+			if (document.getElementById("uploadFile").value
+					.endsWith("iTunes Library.xml")
+					|| document.getElementById("uploadFile").value
+							.endsWith("iTunes Music Library.xml")) {
 				document.getElementById("submitFile").disabled = false;
+			} else {
+				document.getElementById("submitFile").disabled = true;
 			}
 		}
 	</script>
