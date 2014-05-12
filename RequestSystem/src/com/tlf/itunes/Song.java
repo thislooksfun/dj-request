@@ -55,32 +55,32 @@ public class Song
 		while (iterator.hasNext())
 		{
 			Entry<String, String> entry = iterator.next();
-			switch (entry.getKey()) {
-			case "Name":
+			switch (entry.getKey().toLowerCase()) {
+			case "name":
 				this.name = entry.getValue();
 				break;
-			case "Artist":
+			case "artist":
 				this.artist = entry.getValue();
 				break;
-			case "Album Artist":
+			case "album artist":
 				this.albumArtist = entry.getValue();
 				break;
-			case "Composer":
+			case "composer":
 				this.composer = entry.getValue();
 				break;
-			case "Album":
+			case "album":
 				this.album = entry.getValue();
 				break;
-			case "Explicit":
+			case "explicit":
 				this.explicit = Boolean.parseBoolean(entry.getValue());
 				break;
-			case "Genre":
+			case "genre":
 				this.genre = entry.getValue();
 				break;
-			case "Year":
+			case "year":
 				this.year = Integer.parseInt(entry.getValue());
 				break;
-			case "Total Time":
+			case "total time":
 				this.totalTime = Integer.parseInt(entry.getValue());
 				this.parseTime();
 				break;
@@ -93,41 +93,41 @@ public class Song
 		Node next = item.getNextSibling();
 		boolean temp;
 		
-		switch (item.getTextContent()) {
-		case "Name":
+		switch (item.getTextContent().toLowerCase()) {
+		case "name":
 			this.name = next.getTextContent();
 			break;
-		case "Artist":
+		case "artist":
 			this.artist = next.getTextContent();
 			break;
-		case "Album Artist":
+		case "album artist":
 			this.albumArtist = next.getTextContent();
 			break;
-		case "Composer":
+		case "composer":
 			this.composer = next.getTextContent();
 			break;
-		case "Album":
+		case "album":
 			this.album = next.getTextContent();
 			break;
-		case "Explicit":
+		case "explicit":
 			this.explicit = Boolean.parseBoolean(next.getNodeName());
 			break;
-		case "Genre":
+		case "genre":
 			this.genre = next.getTextContent();
 			break;
-		case "Year":
+		case "year":
 			this.year = Integer.parseInt(next.getTextContent());
 			break;
-		case "Total Time":
+		case "total time":
 			this.totalTime = Integer.parseInt(next.getTextContent());
 			this.parseTime();
 			break;
-		case "Has Video":
-		case "Movie":
+		case "has video":
+		case "movie":
 			temp = Boolean.parseBoolean(next.getNodeName());
 			this.isSong = (temp ? false : this.isSong);
 			break;
-		case "Track Type":
+		case "track type":
 			temp = next.getTextContent().equals("Remote") || next.getTextContent().equals("URL");
 			this.isSong = (temp ? false : this.isSong);
 			break;
