@@ -11,6 +11,13 @@
 <script type="text/javascript" src="removediacritics.js"></script>
 <script type="text/javascript" src="util.js"></script>
 <link rel="stylesheet" href="/request.css" id="Stylesheet">
+<script type="text/javascript">
+	var link = "/request?searchContents=";
+	function updateLink() {
+		var param = document.getElementById('textBoxSearch').value;
+		document.getElementById('requestLink').href = link + param;
+	}
+</script>
 </head>
 <body bgcolor="black" onload="onLoad()">
 	<noscript>
@@ -55,7 +62,7 @@
 	</div>
 	
 	<center>
-		<label>Search: </label> <input type="text" size="50" id="textBoxSearch" onkeyup="tableSearch.runSearch();"> <br> <label id="searchResult" style=""> </label>
+		<label>Search: </label> <input type="text" size="50" id="textBoxSearch" onkeyup="tableSearch.runSearch();" onChange="updateLink(); if(this.value=='') {checkForEmpty();}"> <br> <label id="searchResult" style=""> </label>
 	</center>
 	<table class="sortable" id="songList" width="100%">
 		<thead>
@@ -82,7 +89,7 @@
 	<div id="noResultBar" style="display: none; width: 100%">
 		<center>
 			<h2>
-				No results found! <a href="/admin">Click here</a> if you have the song on your device
+				No results found! <a href="/request" id="requestLink">Click here</a> if you have the song on your device
 			</h2>
 		</center>
 	</div>
