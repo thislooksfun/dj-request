@@ -16,6 +16,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.tlf.util.WebsocketHelper;
+
 public class LibraryDecoder
 {
 	private SongSystem songSystem;
@@ -33,6 +35,7 @@ public class LibraryDecoder
 		try {
 			dBuilder = dbFactory.newDocumentBuilder();
 			this.parseLibrary(dBuilder.parse(is));
+			WebsocketHelper.sendFullUpdate();
 		} catch (ParserConfigurationException | SAXException | IOException e) {
 			System.out.println("Error parsing xml");
 			e.printStackTrace();
