@@ -12,8 +12,12 @@ public class Song
 {
 	private static int songNumber = 0;
 	
+	/** This song's unique identifier. If the first digit is a 0, it's from a DJ's library. If it starts with a 1, it's a manual request. */
 	public final int UUID;
 	
+	public boolean isSong = true;
+	
+	//Song information
 	private String name;
 	private String artist;
 	private String albumArtist;
@@ -21,15 +25,12 @@ public class Song
 	private String album;
 	private String genre;
 	private String time;
-	
 	private int totalTime;
 	private int year;
-	
-	public int requests = 0;
-	
 	private boolean explicit;
 	
-	public boolean isSong = true;
+	/** Number of requests this song currently has */
+	public int requests = 0;
 	
 	public Song(Element song)
 	{

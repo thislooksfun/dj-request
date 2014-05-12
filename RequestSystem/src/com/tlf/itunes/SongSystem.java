@@ -34,4 +34,13 @@ public class SongSystem
 		boolean manual = (""+UUID).substring(0, 1).equals("1");
 		return this.allowExplicit ? (manual ? this.manual.get(UUID) : this.songs.get(UUID)) : (manual ? this.manualNotExplicit.get(UUID) : this.notExplicit.get(UUID));
 	}
+	
+	public void manualRequest(Map<String, String> data)
+	{
+		Song song = new Song(data);
+		this.manual.put(song.UUID, song);
+		if (!song.explicit()) {
+			this.manualNotExplicit.put(song.UUID, song);
+		}
+	}
 }
