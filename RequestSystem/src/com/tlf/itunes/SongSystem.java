@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.tlf.util.WebsocketHelper;
+
 public class SongSystem
 {
 	/** Final instance */
@@ -42,5 +44,7 @@ public class SongSystem
 		if (!song.explicit()) {
 			this.manualNotExplicit.put(song.UUID, song);
 		}
+		
+		WebsocketHelper.sendManualRequest(song);
 	}
 }

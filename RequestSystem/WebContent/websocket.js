@@ -10,17 +10,17 @@ function connect() {
 		alert("WebSockets aren't supported in your browser, sorry");
 		return;
 	} else {
-
+		
 		if (ws != null && ws.readyState == ws.OPEN) {
 			ws.close();
 		}
-
+		
 		ws = new WebSocket(wsUri);
-
+		
 		if (ws != null) {
 			log("CONNECTING TO " + wsUri);
 		}
-
+		
 		ws.onopen = function(evt) {
 			log("CONNECTED");
 			reconnecting = false;
@@ -122,12 +122,8 @@ function onMessage(message)
 				checkForEmpty();
 			}
 		}
-	} else if (data.length > 14) {
-		if (data.substring(0, 14) == "REQUESTUPDATE:") {
-			updateRequestCount(data.substring(14));
-		} else if (data.substring(0, 14) == "MANUALREQUEST:") {
-			addManualRequest(data.substring(14));
-		}
+	} else if (data.length > 14 && data.substring(0, 14) == "REQUESTUPDATE:") {
+		updateRequestCount(data.substring(14));
 	} else if (data.length == 10 && data.substring(0, 10) == "FULLUPDATE") {
 		clearTable();
 	} else {

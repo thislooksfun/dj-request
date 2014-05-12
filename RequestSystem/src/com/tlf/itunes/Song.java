@@ -18,6 +18,7 @@ public class Song
 	public boolean isSong = true;
 	
 	//Song information
+	private String requestedBy;
 	private String name;
 	private String artist;
 	private String albumArtist;
@@ -25,7 +26,6 @@ public class Song
 	private String album;
 	private String genre;
 	private String time;
-	private int totalTime;
 	private int year;
 	private boolean explicit;
 	
@@ -56,6 +56,9 @@ public class Song
 		{
 			Entry<String, String> entry = iterator.next();
 			switch (entry.getKey().toLowerCase()) {
+			case "rname":
+				this.requestedBy = entry.getValue();
+				break;
 			case "name":
 				this.name = entry.getValue();
 				break;
@@ -80,9 +83,8 @@ public class Song
 			case "year":
 				this.year = Integer.parseInt(entry.getValue());
 				break;
-			case "total time":
-				this.totalTime = Integer.parseInt(entry.getValue());
-				this.parseTime();
+			case "time":
+				this.time = entry.getValue();
 				break;
 			}
 		}
@@ -119,8 +121,7 @@ public class Song
 			this.year = Integer.parseInt(next.getTextContent());
 			break;
 		case "total time":
-			this.totalTime = Integer.parseInt(next.getTextContent());
-			this.parseTime();
+			this.parseTime(Integer.parseInt(next.getTextContent()));
 			break;
 		case "has video":
 		case "movie":
@@ -134,9 +135,9 @@ public class Song
 		}
 	}
 	
-	private void parseTime()
+	private void parseTime(int time)
 	{
-		float minutes = (float)this.totalTime/60000;
+		float minutes = (float)time/60000;
 		
 		int seconds = (int)Math.round((minutes - (int)minutes)*60);
 		
@@ -147,6 +148,9 @@ public class Song
 		}
 		
 		this.time = (hours > 0 ? hours + ":" : "") + (hours > 0 && minutes < 10 ? "0" + (int)minutes : (int)minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+	}
+	public String requestedBy() {
+		return this.requestedBy;
 	}
 	public String name() {
 		return this.name;
@@ -169,13 +173,13 @@ public class Song
 	public String time() {
 		return this.time;
 	}
-	public int totalTime() {
-		return this.totalTime;
-	}
 	public int year() {
 		return this.year;
 	}
 	public boolean explicit() {
 		return this.explicit;
+	}
+	public boolean isManual() {
+		return (this.UUID+"").substring(0, 1).equals("1");
 	}
 }

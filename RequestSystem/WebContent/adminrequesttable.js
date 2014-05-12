@@ -3,7 +3,14 @@ var hasPlaceholder = true;
 function addSong(song)
 {
 	var table = document.getElementById("songList");
-
+	
+	var manualIndex = song.indexOf("manual=")
+	var isManual = song.substring(song.indexOf("&^&", manualIndex)+3, song.indexOf("&^&", song.indexOf("&^&", manualIndex)+3));
+	if (isManual === "true") {
+		addManualRequest(song);
+		return;
+	}
+	
 	var posisions = [song.indexOf("uuid="), song.indexOf("requests="), song.indexOf("name="), song.indexOf("time="), song.indexOf("artist="), song.indexOf("album="), song.indexOf("albumartist="), song.indexOf("composer="), song.indexOf("genre=")];
 	var info = [];
 

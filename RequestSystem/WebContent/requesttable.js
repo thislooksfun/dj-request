@@ -4,6 +4,13 @@ function addSong(song)
 {
 	var table = document.getElementById("songList");
 
+	var manualIndex = song.indexOf("manual=")
+	var isManual = song.substring(song.indexOf("&^&", manualIndex)+3, song.indexOf("&^&", song.indexOf("&^&", manualIndex)+3));
+	if (isManual === "true") {
+		addManualRequest(song);
+		return;
+	}
+	
 	var posisions = [song.indexOf("uuid="), song.indexOf("requests="), song.indexOf("name="), song.indexOf("time="), song.indexOf("artist="), song.indexOf("album="), song.indexOf("albumartist="), song.indexOf("composer="), song.indexOf("genre=")];
 	var info = [];
 
@@ -36,11 +43,12 @@ function addManualRequest(song)
 {
 	var table = document.getElementById("manualRequests");
 
-	var posisions = [song.indexOf("requestedBy="), song.indexOf("name="), song.indexOf("artist="), song.indexOf("album=")];
+	var posisions = [song.indexOf("requestedby="), song.indexOf("name="), song.indexOf("artist="), song.indexOf("time=")];
 	var info = [];
 
 	for (var i = 0; i < posisions.length; i++) {
 		info[i] = song.substring(song.indexOf("&^&", posisions[i])+3, song.indexOf("&^&", song.indexOf("&^&", posisions[i])+3));
+		console.log(info[i]);
 	}
 
 	var rowCount = table.rows.length;

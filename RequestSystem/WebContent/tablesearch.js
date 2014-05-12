@@ -54,4 +54,8 @@ tableSearch.runSearch = function() {
 			noResults.style.display = "none";
 		}
 	}
+	
+	if (this.Term == "") {
+		checkForEmpty();
+	}
 };

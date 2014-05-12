@@ -12,7 +12,7 @@
 <script type="text/javascript" src="util.js"></script>
 <link rel="stylesheet" href="/request.css" id="Stylesheet">
 <script type="text/javascript">
-	var link = "/request?searchContents=";
+	var link = "/request?search=";
 	function updateLink() {
 		var param = document.getElementById('textBoxSearch').value;
 		document.getElementById('requestLink').href = link + param;
@@ -62,7 +62,7 @@
 	</div>
 	
 	<center>
-		<label>Search: </label> <input type="text" size="50" id="textBoxSearch" onkeyup="tableSearch.runSearch();" onChange="updateLink(); if(this.value=='') {checkForEmpty();}"> <br> <label id="searchResult" style=""> </label>
+		<label>Search: </label> <input type="text" size="50" id="textBoxSearch" onkeyup="tableSearch.runSearch();" onChange="updateLink();"> <br> <label id="searchResult" style=""> </label>
 	</center>
 	<table class="sortable" id="songList" width="100%">
 		<thead>

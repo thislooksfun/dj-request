@@ -41,17 +41,27 @@ public class ManualServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		Map<String, String> data = new HashMap<String, String>();
-		String[] parts = request.getParameter("songData").split("\\b&^&\\b");
-		for (int i = 0; i < parts.length; i++) {
-			String part = parts[i];
-			int split = part.indexOf(", ");
-			String pre = part.substring(0, split);
-			String post = part.substring(split+2);
-			data.put(pre, post);
-			System.out.println(part);
-			System.out.println(pre + ", " + post);
-			System.out.println();
+		String rName = request.getParameter("RName");
+		String name = request.getParameter("Name");
+		String time = request.getParameter("Time");
+		String artist = request.getParameter("Artist");
+		
+		if (time.length() > 0) {
+			int minutes = Integer.parseInt(time.substring(0, time.indexOf(":")));
+			int hours = 0;
+			while (minutes > 60) {
+				hours++;
+				minutes -= 60;
+			}
+			time = (hours > 0 ? hours + ":" : "") + (hours > 0 && minutes < 10 ? "0" + (int)minutes : (int)minutes) + time.substring(time.indexOf(":"));
 		}
+		
+		data.put("rName", rName);
+		data.put("Name", name);
+		data.put("Time", time);
+		data.put("Artist", artist);
+		
 		SongSystem.instance.manualRequest(data);
+		response.sendRedirect("/");
 	}
 }
