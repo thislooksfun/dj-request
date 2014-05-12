@@ -11,38 +11,7 @@
 <script type="text/javascript" src="tablesearch.js"></script>
 <script type="text/javascript" src="removediacritics.js"></script>
 <script type="text/javascript" src="util.js"></script>
-<style type="text/css">
-table thead {
-	background-color: #676767;
-	color: #cccccc;
-	font-weight: bold;
-	cursor: default;
-}
-
-table tbody tr:nth-child(2n) td {
-	background: #242424;
-}
-
-table tbody tr:nth-child(2n+1) td {
-	background: #424242;
-}
-
-table tr {
-	color: #FFFFFF
-}
-
-A:link {
-	color: #FFFFFF
-}
-
-A:visited {
-	color: #FFFFFF
-}
-
-body {
-	color: #FFFFFF
-}
-</style>
+<link rel="stylesheet" href="/request.css" id="Stylesheet">
 </head>
 <body bgcolor="black" onload="onLoad();">
 	<noscript>

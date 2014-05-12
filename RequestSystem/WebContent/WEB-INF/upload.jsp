@@ -6,19 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Login</title>
 <script type="text/javascript" src="util.js"></script>
-<style type="text/css">
-A:link {
-	color: #FFFFFF
-}
-
-A:visited {
-	color: #FFFFFF
-}
-
-body {
-	color: #FFFFFF
-}
-</style>
+<link rel="stylesheet" href="/request.css" id="Stylesheet">
 </head>
 <body bgcolor="black">
 	<center>

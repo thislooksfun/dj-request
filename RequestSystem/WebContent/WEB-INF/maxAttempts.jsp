@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Login</title>
+<link rel="stylesheet" href="/request.css" id="Stylesheet">
 </head>
 <body bgcolor="black">
 	<p align="right">
@@ -12,7 +13,7 @@
 	</p>
 	<center>
 		<h2>
-			<font color="white">Please Login</font>
+			Please Login
 		</h2>
 		<font color="red" size="6">You are out of login attempts</font><br>
 	</center>

@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Login</title>
+<link rel="stylesheet" href="/request.css" id="Stylesheet">
 </head>
 <body bgcolor="black">
 	<p align="right">
@@ -34,8 +35,7 @@
 		%>
 
 		<form action="LoginServlet" method="post">
-			<font color="white"> Username: <input type="text" name="user" /> <br> Password: <input type="password" name="pwd" /> <br> <input type="submit" value="Log in">
-			</font>
+			Username: <input type="text" name="user" /> <br> Password: <input type="password" name="pwd" /> <br> <input type="submit" value="Log in">
 		</form>
 	</center>
 </body>
