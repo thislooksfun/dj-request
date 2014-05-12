@@ -1,4 +1,4 @@
-package com.tlf.servlets;
+package com.tlf.servlets.redirects;
 
 import java.io.IOException;
 
