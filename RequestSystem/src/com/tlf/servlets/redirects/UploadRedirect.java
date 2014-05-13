@@ -17,25 +17,28 @@ import com.tlf.util.LoginHelper;
 @WebServlet("/upload")
 public class UploadRedirect extends HttpServlet
 {
-	private static final long serialVersionUID = 1L;
-       
+    private static final long serialVersionUID = 1L;
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UploadRedirect() {
+    public UploadRedirect()
+    {
         super();
     }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+    
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+     *      response)
+     */
     @Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (LoginHelper.instance.isSessionLoggedIn(request.getSession())) {
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/upload.jsp");
-			rd.forward(request, response);
-		} else {
-			response.sendRedirect("/admin");
-		}
-	}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        if (LoginHelper.instance.isSessionLoggedIn(request.getSession())) {
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/upload.jsp");
+            rd.forward(request, response);
+        } else {
+            response.sendRedirect("/admin");
+        }
+    }
 }

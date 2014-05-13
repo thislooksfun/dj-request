@@ -22,50 +22,53 @@ import com.tlf.util.WebsocketHelper;
 /**
  * Servlet implementation class AdminEndpoint
  */
-@ServerEndpoint(value = "/websocket/admin",
-encoders = {SongEncoder.class},
-configurator = GetHttpSessionConfigurator.class)
+@ServerEndpoint(
+        value = "/websocket/admin",
+        encoders = {SongEncoder.class},
+        configurator = GetHttpSessionConfigurator.class)
 public class AdminEndpoint
 {
-	@OnOpen
-	public void onOpen(Session session, EndpointConfig config) {
-		HttpSession httpSession = (HttpSession)config.getUserProperties().get(HttpSession.class.getName());
-		if (LoginHelper.instance.isSessionLoggedIn(httpSession)) {
-			WebsocketHelper.openSession(session);
-		} else {
-			try {
-				session.close(new CloseReason(CloseReason.CloseCodes.VIOLATED_POLICY, "User tried to open a restricted connection without being logged in!"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	@OnClose
-	public void onClose(Session session, CloseReason reason) {
-		WebsocketHelper.closeSession(session, reason);
-	}
-	
-	@OnMessage
-	public void onMessage(Session session, String msg)
-	{
-		try {
-			if (msg.indexOf("PLAYED:") == 0) {
-				System.out.println("Request!");
-				Song song = SongSystem.instance.getSong(Integer.parseInt(msg.substring(7)));
-				song.requests = 0;
-				WebsocketHelper.sendRequestUpdate(song.UUID, song.requests);
-			}
-			session.getBasicRemote().sendText(msg);
-		} catch (IOException | NumberFormatException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	@OnError
-	public void error(Session session, Throwable throwable)
-	{
-		System.err.println("ERROR:");
-		throwable.printStackTrace();
-	}
+    @OnOpen
+    public void onOpen(Session session, EndpointConfig config)
+    {
+        HttpSession httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
+        if (LoginHelper.instance.isSessionLoggedIn(httpSession)) {
+            WebsocketHelper.openSession(session);
+        } else {
+            try {
+                session.close(new CloseReason(CloseReason.CloseCodes.VIOLATED_POLICY, "User tried to open a restricted connection without being logged in!"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    @OnClose
+    public void onClose(Session session, CloseReason reason)
+    {
+        WebsocketHelper.closeSession(session, reason);
+    }
+    
+    @OnMessage
+    public void onMessage(Session session, String msg)
+    {
+        try {
+            if (msg.indexOf("PLAYED:") == 0) {
+                System.out.println("Request!");
+                Song song = SongSystem.instance.getSong(Integer.parseInt(msg.substring(7)));
+                song.requests = 0;
+                WebsocketHelper.sendRequestUpdate(song.UUID, song.requests);
+            }
+            session.getBasicRemote().sendText(msg);
+        } catch (IOException | NumberFormatException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @OnError
+    public void error(Session session, Throwable throwable)
+    {
+        System.err.println("ERROR:");
+        throwable.printStackTrace();
+    }
 }

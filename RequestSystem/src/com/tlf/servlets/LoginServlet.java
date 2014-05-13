@@ -16,25 +16,27 @@ import com.tlf.util.LoginHelper;
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet
 {
-	private static final long serialVersionUID = 1L;
-	
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public LoginServlet() {
-		super();
-	}
-	
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{
-		if (LoginHelper.instance.login(request.getSession(), request.getParameter("user"), request.getParameter("pwd"))) {
-			response.sendRedirect("/upload");
-		} else {
-			response.sendRedirect("/admin");
-		}
-	}
+    private static final long serialVersionUID = 1L;
+    
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public LoginServlet()
+    {
+        super();
+    }
+    
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+     *      response)
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        if (LoginHelper.instance.login(request.getSession(), request.getParameter("user"), request.getParameter("pwd"))) {
+            response.sendRedirect("/upload");
+        } else {
+            response.sendRedirect("/admin");
+        }
+    }
 }

@@ -15,40 +15,43 @@ import com.tlf.itunes.SongSystem;
 import com.tlf.servlets.websocket.encoders.SongEncoder;
 import com.tlf.util.WebsocketHelper;
 
-@ServerEndpoint(value = "/websocket/request",
-encoders = {SongEncoder.class})
+@ServerEndpoint(
+        value = "/websocket/request",
+        encoders = {SongEncoder.class})
 public class RequestEndpoint
 {
-	@OnOpen
-	public void onOpen(Session session) {
-		WebsocketHelper.openSession(session);
-	}
-	
-	@OnClose
-	public void onClose(Session session, CloseReason reason) {
-		WebsocketHelper.closeSession(session, reason);
-	}
-	
-	@OnMessage
-	public void onMessage(Session session, String msg)
-	{
-		try {
-			if (msg.indexOf("REQUEST:") == 0) {
-				System.out.println("Request!");
-				Song song = SongSystem.instance.getSong(Integer.parseInt(msg.substring(8)));
-				song.requests++;
-				WebsocketHelper.sendRequestUpdate(song.UUID, song.requests);
-			}
-			session.getBasicRemote().sendText(msg);
-		} catch (IOException | NumberFormatException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	@OnError
-	public void error(Session session, Throwable throwable)
-	{
-		System.err.println("ERROR:");
-		throwable.printStackTrace();
-	}
+    @OnOpen
+    public void onOpen(Session session)
+    {
+        WebsocketHelper.openSession(session);
+    }
+    
+    @OnClose
+    public void onClose(Session session, CloseReason reason)
+    {
+        WebsocketHelper.closeSession(session, reason);
+    }
+    
+    @OnMessage
+    public void onMessage(Session session, String msg)
+    {
+        try {
+            if (msg.indexOf("REQUEST:") == 0) {
+                System.out.println("Request!");
+                Song song = SongSystem.instance.getSong(Integer.parseInt(msg.substring(8)));
+                song.requests++;
+                WebsocketHelper.sendRequestUpdate(song.UUID, song.requests);
+            }
+            session.getBasicRemote().sendText(msg);
+        } catch (IOException | NumberFormatException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @OnError
+    public void error(Session session, Throwable throwable)
+    {
+        System.err.println("ERROR:");
+        throwable.printStackTrace();
+    }
 }
