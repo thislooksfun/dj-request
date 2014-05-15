@@ -6,7 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Request</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-<link rel="stylesheet" href="/request.css" id="Stylesheet">
+<link rel="stylesheet" href="/request.css">
+<link rel="stylesheet" href="/arrowbox.css">
 <style type="text/css">
 * {
 	font-size: 30px;
@@ -25,6 +26,9 @@ label {
 }
 
 div.container_page {
+	position: absolute;
+	top: 0px;
+	left: 0px;
 	height: 100%;
 	width: 100%;
 }
@@ -43,9 +47,9 @@ div.container_form {
 	margin: 0 auto;
 	text-decoration: none;
 	display: block;
-	-moz-box-shadow: 3px 3px 8px 7px #111;
-	-webkit-box-shadow: 3px 3px 8px 7px #111;
-	box-shadow: 3px 3px 8px 7px #111;
+	-moz-box-shadow: 5px 5px 8px 7px #111;
+	-webkit-box-shadow: 5px 5px 8px 7px #111;
+	box-shadow: 5px 5px 8px 7px #111;
 }
 span.head {
 	font-size: 50px;
@@ -67,41 +71,60 @@ span.head {
 				</div>
 			</form>
 		</div>
+		<div id="RNameError" class="tip left" style="display: none">This field can't be blank</div>
+		<div id="NameError" class="tip left" style="display: none">This field can't be blank</div>
+		<div id="TimeError" class="tip left" style="display: none">Time must be in a proper format. eg. 1:23</div>
 	</div>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			var max = 0;
 			$("label").each(function() {
-				if ($(this).width() > max)
+				if ($(this).width() > max) {
 					max = $(this).width();
+				}
 			});
 			$("label").width(max + "px");
+			
+			$("#RNameError")[0].style.top = $("#RName").offset().top + "px";
+			$("#RNameError")[0].style.left = ($("#RName").offset().left + $("#RName").width() + 10) + "px";
+			
+			$("#NameError")[0].style.top = $("#Name").offset().top + "px";
+			$("#NameError")[0].style.left = ($("#Name").offset().left + $("#Name").width() + 10) + "px";
+			
+			$("#TimeError")[0].style.top = $("#Time").offset().top + "px";
+			$("#TimeError")[0].style.left = ($("#Time").offset().left + $("#Time").width() + 10) + "px";
 		});
 		
 		function validateForm() {
 			var form = document.forms["uploadForm"];
-			var rName = form["RName"].value;
-			var name = form["Name"].value;
-			var time = form["Time"].value;
+			var rName = form["RName"].value.trim();
+			var name = form["Name"].value.trim();
+			var time = form["Time"].value.trim();
 			var check = true;
 			
 			if (rName == null || rName == "") {
 				check = false;
 				$("#RName").addClass("error");
+				$("#RNameError")[0].style.display = "";
 			} else {
 				$("#RName").removeClass("error");
+				$("#RNameError")[0].style.display = "none";
 			}
 			if (name == null || name == "") {
 				check = false;
 				$("#Name").addClass("error");
+				$("#NameError")[0].style.display = "";
 			} else {
 				$("#Name").removeClass("error");
+				$("#NameError")[0].style.display = "none";
 			}
 			if (time != "" && !(/^[\d]+:[0-5][0-9]$/.test(time))) {
 				check = false;
 				$("#Time").addClass("error");
+				$("#TimeError")[0].style.display = "";
 			} else {
 				$("#Time").removeClass("error");
+				$("#TimeError")[0].style.display = "none";
 			}
 			
 			return check;
