@@ -53,13 +53,22 @@ public class ManualServlet extends HttpServlet
         
         if (time.length() > 0) {
             int minutes = Integer.parseInt(time.substring(0, time.indexOf(":")));
+            int seconds = Integer.parseInt(time.substring(time.indexOf(":")+1));
             int hours = 0;
+            
+            while (seconds > 60) {
+                minutes++;
+                seconds -= 60;
+            }
+            
             while (minutes > 60) {
                 hours++;
                 minutes -= 60;
             }
             time = (hours > 0 ? hours + ":" : "") + (hours > 0 && minutes < 10 ? "0" + (int) minutes : (int) minutes) + time.substring(time.indexOf(":"));
         }
+        
+        System.out.println(String.format("%s requested %s%s%s", rName, name, (!artist.equals("") ? " by " + artist : ""), (!time.equals("") ? " ("+time+")" : "")));
         
         data.put("rName", rName);
         data.put("Name", name);
