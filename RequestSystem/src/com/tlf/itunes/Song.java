@@ -13,8 +13,8 @@ public class Song
     private static int songNumber = 0;
     
     /**
-     * This song's unique identifier. If the first digit is a 0, it's from a
-     * DJ's library. If it starts with a 1, it's a manual request.
+     * This song's unique identifier. If it ends with a 0, it's from a
+     * DJ's library. If it ends with a 1, it's a manual request.
      */
     public final int UUID;
     
@@ -37,7 +37,7 @@ public class Song
     
     public Song(Element song)
     {
-        this.UUID = Integer.parseInt("0" + (songNumber++));
+        this.UUID = Integer.parseInt((songNumber++)+"0");
         NodeList keys = song.getElementsByTagName("key");
         
         for (int i = 0; i < keys.getLength(); i++) {
@@ -47,7 +47,7 @@ public class Song
     
     public Song(Map<String, String> data)
     {
-        this.UUID = Integer.parseInt("1" + (songNumber++));
+        this.UUID = Integer.parseInt((songNumber++)+"1");
         this.parseMap(data);
     }
     
@@ -204,6 +204,7 @@ public class Song
     
     public boolean isManual()
     {
-        return (this.UUID + "").substring(0, 1).equals("1");
+        System.out.println((this.UUID + "").substring((this.UUID+"").length()));
+        return (this.UUID + "").substring((this.UUID+"").length()).equals("1");
     }
 }

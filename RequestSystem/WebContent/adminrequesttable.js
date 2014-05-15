@@ -22,7 +22,7 @@ function addSong(song)
 	var row = table.insertRow(rowCount);
 
 	var cell0 = row.insertCell(0);
-	cell0.innerHTML = "<center><input type=\"button\" value=\"Played\" name=\"playButtons\" onclick=\"playSong('"+info[0]+"')\" style=\"cursor:not-allowed\" disabled=\"true\"></center>";
+	cell0.innerHTML = "<input type=\"button\" class=\"center\" value=\"Played\" name=\"playButtons\" onclick=\"playSong('"+info[0]+"')\" style=\"cursor:not-allowed\" disabled=\"true\">";
 	
 	for (i = 1; i < info.length; i++) {
 		var cell = row.insertCell(i);

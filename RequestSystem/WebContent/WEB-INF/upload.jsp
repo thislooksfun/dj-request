@@ -8,8 +8,8 @@
 <script type="text/javascript" src="util.js"></script>
 <link rel="stylesheet" href="/request.css" id="Stylesheet">
 </head>
-<body bgcolor="black">
-	<center>
+<body>
+	<div class="center">
 		<h2>
 			<%
 				String browserDetails = request.getHeader("User-Agent");
@@ -38,7 +38,7 @@
 			<input type="file" id="uploadFile" name="file" onchange="checkUploadedFile()">
 		</form>
 		<a href="/admin">Click here bypass this screen</a>
-	</center>
+	</div>
 	<script type="text/javascript">
 		function checkUploadedFile() {
 			if (document.getElementById("uploadFile").value

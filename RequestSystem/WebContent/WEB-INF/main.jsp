@@ -19,29 +19,27 @@
 	}
 </script>
 </head>
-<body bgcolor="black" onload="onLoad()">
+<body onload="onLoad()">
 	<noscript>
-		<center>
+		<div class="center">
 			<font color="red" size="6">This site requires javascript in order to function, please turn it on then try again</font>
-		</center>
+		</div>
 	</noscript>
 	<p align="right">
 		<a href="/admin"><font size="5">Admin site</font></a>
 	</p>
-	<center>
-		<font size="7">Welcome!</font> <br>
-		<textarea id="chatlog" readonly style="height: 250px; width: 500px"></textarea>
+	<div class="center">
+		<font size="7">Welcome!</font>
 		<br>
-		<button type="button" id="connectButton" onclick="connect()">Connect</button>
-		<input type="text" id="msg" onkeydown="chatKeyPress(event)" />
-		<button type="button" id="sendButton" onclick="postToServer()">Send!</button>
+		<br>
 		<br>
 		<font size="6" id="tableHeader">Please select a song</font><br> <font size="4" id="tableHeader">To request a song, simply click "request" on the song you want. If your song isn't listed, and you have it on your device, click the "manual request" button. You can also click the headers to sort.</font>
-	</center>
+	</div>
 
 	<table id="manualRequests" width="100%">
 		<thead>
 			<tr>
+				<th width="4%" class="sorttable_nosort"></th>
 				<th width="25%">Requested by</th>
 				<th width="25%">Name</th>
 				<th width="25%">Artist</th>
@@ -56,18 +54,17 @@
 		<tfoot></tfoot>
 	</table>
 	<div id="noManualRequestBar" style="display: none; width: 100%">
-		<center>
+		<div class="center">
 			<h2>No manual requests found.</h2>
-		</center>
+		</div>
 	</div>
-	
-	<center>
+	<div class="center">
 		<label>Search: </label> <input type="text" size="50" id="textBoxSearch" onkeyup="tableSearch.runSearch();" onChange="updateLink();"> <br> <label id="searchResult" style=""> </label>
-	</center>
+	</div>
 	<table class="sortable" id="songList" width="100%">
 		<thead>
 			<tr>
-				<th width="4%" class="sorttable_nosort"></th>
+				<th width="65px" class="sorttable_nosort"></th>
 				<th width="3.9%" id="requestColumn" class="sorttable_reverse sorttable_stable">Requests</th>
 				<th width="23.9%">Name</th>
 				<th width="3.2%">Time</th>
@@ -87,16 +84,16 @@
 		<tfoot></tfoot>
 	</table>
 	<div id="noResultBar" style="display: none; width: 100%">
-		<center>
+		<div class="center">
 			<h2>
 				No results found! <a href="/request" id="requestLink">Click here</a> if you have the song on your device
 			</h2>
-		</center>
+		</div>
 	</div>
 	<div id="noItemsBar" style="display: none; width: 100%">
-		<center>
-			<h2>No items found. Try reloading the page, or asking the DJ</h2>
-		</center>
+		<div class="center">
+			<h2>No items found. Please alert the DJ.</h2>
+		</div>
 	</div>
 </body>
 </html>

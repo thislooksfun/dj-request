@@ -7,11 +7,11 @@
 <title>Login</title>
 <link rel="stylesheet" href="/request.css" id="Stylesheet">
 </head>
-<body bgcolor="black">
+<body>
 	<p align="right">
 		<a href=".."><font color="white" size="5">Main site</font></a>
 	</p>
-	<center>
+	<div class="center">
 		<h2>
 			<font color="white">Please Login</font>
 		</h2>
@@ -37,6 +37,6 @@
 		<form action="LoginServlet" method="post">
 			Username: <input type="text" name="user" /> <br> Password: <input type="password" name="pwd" /> <br> <input type="submit" value="Log in">
 		</form>
-	</center>
+	</div>
 </body>
 </html>

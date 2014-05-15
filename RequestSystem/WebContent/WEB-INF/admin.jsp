@@ -13,11 +13,11 @@
 <script type="text/javascript" src="util.js"></script>
 <link rel="stylesheet" href="/request.css" id="Stylesheet">
 </head>
-<body bgcolor="black" onload="onLoad();">
+<body onload="onLoad();">
 	<noscript>
-		<center>
+		<div class="center">
 			<font color="red" size="6">This site requires javascript in order to function, please turn it on then try again</font>
-		</center>
+		</div>
 	</noscript>
 	<form action="LogoutServlet" method="get">
 		<p align="right">
@@ -27,15 +27,14 @@
 	<p align="right">
 		<a href=".."><font size="5">Main site</font></a>
 	</p>
-	<center>
+	<div class="center">
 		<h1>Admin site</h1>
 		<h2>
 			Logged in as
 			<%=LoginHelper.instance.getUserForSession(session)%>
 		</h2>
-		<textarea id="chatlog" readonly style="height: 250px; width: 500px"></textarea>
 		<br> <font size="6" id="tableHeader">Please select a song</font><br> <font size="4">To clear the requests on a song, simply click "played." You can also click the headers to sort.</font>
-	</center>
+	</div>
 
 	<table id="manualRequests" width="100%">
 		<thead>
@@ -54,14 +53,14 @@
 		<tfoot></tfoot>
 	</table>
 	<div id="noManualRequestBar" style="display: none; width: 100%">
-		<center>
+		<div class="center">
 			<h2>No manual requests found.</h2>
-		</center>
+		</div>
 	</div>
 	
-	<center>
+	<div class="center">
 		<label>Search: </label> <input type="text" size="50" id="textBoxSearch" onkeyup="tableSearch.runSearch();"> <br> <label id="searchResult" style=""> </label>
-	</center>
+	</div>
 	<table class="sortable" id="songList" width="100%">
 		<thead>
 			<tr>
@@ -85,16 +84,16 @@
 		<tfoot></tfoot>
 	</table>
 	<div id="noResultBar" style="display: none; width: 100%">
-		<center>
+		<div class="center">
 			<h2>No results found!</h2>
-		</center>
+		</div>
 	</div>
 	<div id="noItemsBar" style="display: none; width: 100%">
-		<center>
+		<div class="center">
 			<h2>
 				No items found. <a href="/upload">Click here</a> to upload your library
 			</h2>
-		</center>
+		</div>
 	</div>
 </body>
 </html>

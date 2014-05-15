@@ -1,6 +1,10 @@
+body {
+	background-color: #000;
+}
+
 table thead {
 	background-color: #676767;
-	color: #cccccc;
+	color: #ccc;
 	font-weight: bold;
 	cursor: default;
 }
@@ -14,5 +18,13 @@ table tbody tr:nth-child(2n+1) td {
 }
 
 table tr, A:link, A:visited, body {
-	color: #FFFFFF
+	color: #fff
+}
+
+.center {
+	 text-align: center;
+}
+span.center {
+	text-align: center;
+	display: inline-block;
 }

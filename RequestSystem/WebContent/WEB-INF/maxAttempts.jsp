@@ -7,15 +7,15 @@
 <title>Login</title>
 <link rel="stylesheet" href="/request.css" id="Stylesheet">
 </head>
-<body bgcolor="black">
+<body>
 	<p align="right">
 		<a href=".."><font color="white" size="5">Main site</font></a>
 	</p>
-	<center>
+	<div class="center">
 		<h2>
 			Please Login
 		</h2>
 		<font color="red" size="6">You are out of login attempts</font><br>
-	</center>
+	</div>
 </body>
 </html>

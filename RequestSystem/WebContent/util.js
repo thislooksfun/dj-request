@@ -1,14 +1,5 @@
-var chatlog;
-
 function log(message) {
-	if (chatlog == null) {
-		chatlog = document.getElementById("chatlog");
-	}
-	
-	if (message == "") {
-		message = "%null%";
-	}
-	chatlog.textContent += message + "\n";
+	console.log(message);
 }
 
 function onLoad() {
