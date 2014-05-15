@@ -17,43 +17,22 @@ import com.tlf.util.LoginHelper;
 @WebServlet("/LogoutServlet")
 public class LogoutServlet extends HttpServlet
 {
-    private static final long serialVersionUID = 1L;
-    
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public LogoutServlet()
-    {
-        super();
-    }
-    
-    /**
-     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-     *      response)
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
-        response.setContentType("text/html");
-        Cookie loginCookie = null;
-        Cookie[] cookies = request.getCookies();
-        
-        LoginHelper.instance.logout(request.getSession());
-        
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("user")) {
-                    loginCookie = cookie;
-                    break;
-                }
-            }
-        }
-        
-        if (loginCookie != null) {
-            loginCookie.setMaxAge(0);
-            response.addCookie(loginCookie);
-        }
-        
-        response.sendRedirect("/admin");
-    }
+	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public LogoutServlet()
+	{
+		super();
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		if (request.getParameter("sessionKey").equals(request.getSession().getId())) {
+			LoginHelper.instance.logout(request.getSession());
+		}
+		response.sendRedirect("/admin");
+	}
 }

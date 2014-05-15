@@ -19,14 +19,13 @@
 			<font color="red" size="6">This site requires javascript in order to function, please turn it on then try again</font>
 		</div>
 	</noscript>
-	<form action="LogoutServlet" method="get">
-		<p align="right">
-			<input type="submit" value="Logout">
-		</p>
+	<form action="LogoutServlet" method="post" id="logoutForm">
+		<input type="hidden" name="sessionKey" value="<%=session.getId() %>">
 	</form>
-	<p align="right">
+	<div id="header" align="right" style="position: absolute; top: 5px; right: 10px; width">
+		<button onclick="document.getElementById('logoutForm').submit();">Logout</button>
 		<a href=".."><font size="5">Main site</font></a>
-	</p>
+	</div>
 	<div class="center">
 		<h1>Admin site</h1>
 		<h2>
@@ -36,13 +35,16 @@
 		<br> <font size="6" id="tableHeader">Please select a song</font><br> <font size="4">To clear the requests on a song, simply click "played." You can also click the headers to sort.</font>
 	</div>
 
-	<table id="manualRequests" width="100%">
+	<table class="sortable" id="manualRequests" width="100%">
 		<thead>
 			<tr>
-				<th width="25%">Requested by</th>
-				<th width="25%">Name</th>
-				<th width="25%">Artist</th>
-				<th width="25%">Album</th>
+				<th width="57px" class="sorttable_nosort"></th>
+				<th width="64px" id="manRequestColumn" class="sorttable_reverse sorttable_stable">Requests</th>
+				<th width="">Requested by</th>
+				<th width="">Name</th>
+				<th width="55px">Time</th>
+				<th width="">Artist</th>
+				<th style="display: none">ID</th>
 			</tr>
 		</thead>
 		<tbody id="manualSubmits">
@@ -57,6 +59,8 @@
 			<h2>No manual requests found.</h2>
 		</div>
 	</div>
+	<div id="spacerBar" style="display: none; width: 100%; height: 50px">
+	</div>
 	
 	<div class="center">
 		<label>Search: </label> <input type="text" size="50" id="textBoxSearch" onkeyup="tableSearch.runSearch();"> <br> <label id="searchResult" style=""> </label>
@@ -64,15 +68,15 @@
 	<table class="sortable" id="songList" width="100%">
 		<thead>
 			<tr>
-				<th width="4%" class="sorttable_nosort"></th>
-				<th width="3.9%" id="requestColumn" class="sorttable_reverse sorttable_stable">Requests</th>
-				<th width="23.9%">Name</th>
-				<th width="3.2%">Time</th>
-				<th width="9.1%">Artist</th>
-				<th width="14.7%">Album</th>
-				<th width="5.9%">Album Artist</th>
-				<th width="27%">Composer</th>
-				<th width="7.4%">Genre</th>
+				<th width="57px" class="sorttable_nosort"></th>
+				<th width="64px" id="requestColumn" class="sorttable_reverse sorttable_stable">Requests</th>
+				<th width="">Name</th>
+				<th width="55px">Time</th>
+				<th width="">Artist</th>
+				<th width="">Album</th>
+				<th width="">Album Artist</th>
+				<th width="">Composer</th>
+				<th width="125px">Genre</th>
 				<th style="display: none">ID</th>
 			</tr>
 		</thead>

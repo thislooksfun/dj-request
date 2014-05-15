@@ -57,7 +57,7 @@ public class AdminEndpoint
                 System.out.println("Request!");
                 Song song = SongSystem.instance.getSong(Integer.parseInt(msg.substring(7)));
                 song.requests = 0;
-                WebsocketHelper.sendRequestUpdate(song.UUID, song.requests);
+                WebsocketHelper.sendRequestUpdate(song.UUID, song.requests, song.manual);
             }
             session.getBasicRemote().sendText(msg);
         } catch (IOException | NumberFormatException e) {

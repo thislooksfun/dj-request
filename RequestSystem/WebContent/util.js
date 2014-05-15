@@ -26,6 +26,24 @@ function resortRequests()
 	}
 }
 
+function resortManRequests()
+{
+	var requests = document.getElementById("manRequestColumn");
+
+	var sortLevel = 0;
+
+	var oldClassname = requests.className;
+	if ((requests.className = requests.className.replace('sorttable_sorted_reverse', '')) != oldClassname) {
+		sortLevel = requests.className.search(/\bsorttable_reverse\b/) != -1 ? 1 : 2;
+	} else if ((requests.className = requests.className.replace('sorttable_sorted', '')) != oldClassname) {
+		sortLevel = requests.className.search(/\bsorttable_reverse\b/) != -1 ? 2 : 1;
+	}
+
+	for (var j = 0; j < sortLevel; j++) {
+		sorttable.innerSortFunction.apply(requests, []);
+	}
+}
+
 function colorTable()
 {
 	var color1 = "#242424";
@@ -60,8 +78,11 @@ function checkForEmpty()
 	if (row1Text == ("empty".toUpperCase())) {
 		row1.style.display = "none";
 		document.getElementById("noManualRequestBar").style.display = "";
+		document.getElementById("spacerBar").style.display = "none";
 	} else {
 		document.getElementById("noManualRequestBar").style.display = "none";
+		document.getElementById("spacerBar").style.display = "";
+		
 	}
 	
 	if (tableSearch.RowsText[0] == ("empty".toUpperCase())) {
