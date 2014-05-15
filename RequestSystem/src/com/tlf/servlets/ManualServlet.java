@@ -1,4 +1,4 @@
-package com.tlf.servlets.websocket;
+package com.tlf.servlets;
 
 import java.io.IOException;
 import java.util.HashMap;
