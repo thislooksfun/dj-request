@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Login</title>
 <script type="text/javascript" src="util.js"></script>
-<link rel="stylesheet" href="/request.css" id="Stylesheet">
+<link rel="stylesheet" href="/request.css">
 </head>
 <body>
 	<div class="center">

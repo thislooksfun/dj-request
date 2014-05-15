@@ -10,7 +10,7 @@
 <script type="text/javascript" src="tablesearch.js"></script>
 <script type="text/javascript" src="removediacritics.js"></script>
 <script type="text/javascript" src="util.js"></script>
-<link rel="stylesheet" href="/request.css" id="Stylesheet">
+<link rel="stylesheet" href="/request.css">
 <script type="text/javascript">
 	var link = "/request?search=";
 	function updateLink() {
@@ -39,11 +39,11 @@
 	<table id="manualRequests" width="100%">
 		<thead>
 			<tr>
-				<th width="4%" class="sorttable_nosort"></th>
-				<th width="25%">Requested by</th>
-				<th width="25%">Name</th>
-				<th width="25%">Artist</th>
-				<th width="25%">Album</th>
+				<th width="64px" class="sorttable_nosort"></th>
+				<th width="">Requested by</th>
+				<th width="">Name</th>
+				<th width="55px">Time</th>
+				<th width="">Artist</th>
 			</tr>
 		</thead>
 		<tbody id="manualSubmits">
@@ -64,15 +64,15 @@
 	<table class="sortable" id="songList" width="100%">
 		<thead>
 			<tr>
-				<th width="65px" class="sorttable_nosort"></th>
-				<th width="3.9%" id="requestColumn" class="sorttable_reverse sorttable_stable">Requests</th>
-				<th width="23.9%">Name</th>
-				<th width="3.2%">Time</th>
-				<th width="9.1%">Artist</th>
-				<th width="14.7%">Album</th>
-				<th width="5.9%">Album Artist</th>
-				<th width="27%">Composer</th>
-				<th width="7.4%">Genre</th>
+				<th width="64px" class="sorttable_nosort"></th>
+				<th width="64px" id="requestColumn" class="sorttable_reverse sorttable_stable">Requests</th>
+				<th width="">Name</th>
+				<th width="55px">Time</th>
+				<th width="">Artist</th>
+				<th width="">Album</th>
+				<th width="">Album Artist</th>
+				<th width="">Composer</th>
+				<th width="125px">Genre</th>
 				<th style="display: none">ID</th>
 			</tr>
 		</thead>
@@ -92,7 +92,7 @@
 	</div>
 	<div id="noItemsBar" style="display: none; width: 100%">
 		<div class="center">
-			<h2>No items found. Please alert the DJ.</h2>
+			<h2>No items found. Try reloading the page.</h2>
 		</div>
 	</div>
 </body>

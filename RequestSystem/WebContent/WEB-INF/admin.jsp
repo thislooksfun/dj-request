@@ -11,7 +11,7 @@
 <script type="text/javascript" src="tablesearch.js"></script>
 <script type="text/javascript" src="removediacritics.js"></script>
 <script type="text/javascript" src="util.js"></script>
-<link rel="stylesheet" href="/request.css" id="Stylesheet">
+<link rel="stylesheet" href="/request.css">
 </head>
 <body onload="onLoad();">
 	<noscript>

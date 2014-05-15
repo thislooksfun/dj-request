@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Login</title>
-<link rel="stylesheet" href="/request.css" id="Stylesheet">
+<link rel="stylesheet" href="/request.css">
 </head>
 <body>
 	<p align="right">
