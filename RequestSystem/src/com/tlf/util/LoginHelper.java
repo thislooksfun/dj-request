@@ -44,7 +44,6 @@ public class LoginHelper
         Object temp = this.failedAttemps.get(session);
         int attempt = (temp != null ? (int) temp + 1 : 0);
         this.failedAttemps.put(session, attempt);
-        System.out.println("" + attempt);
         return false;
     }
     

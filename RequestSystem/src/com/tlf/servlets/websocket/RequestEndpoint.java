@@ -35,7 +35,6 @@ public class RequestEndpoint
     {
         try {
             if (msg.indexOf("REQUEST:") == 0) {
-                System.out.println("Request!");
                 Song song = SongSystem.instance.getSong(Integer.parseInt(msg.substring(8)));
                 song.requests++;
                 WebsocketHelper.sendRequestUpdate(song.UUID, song.requests, song.manual);

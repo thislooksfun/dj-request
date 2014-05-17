@@ -64,8 +64,6 @@ public class LibraryDecoder
 						if (!song.explicit()) {
 							this.songSystem.notExplicit.put(song.UUID, song);
 						}
-					} else if (song.isSong) {
-						System.out.println("Found duplicate: " + song.name() + ", " + song.artist() + ", " + song.time());
 					}
 				}
 			}

@@ -39,7 +39,6 @@ public class Song
 	
 	public Song(Element song)
 	{
-		System.out.println();
 		this.UUID = songNumber++;
 		this.manual = false;
 		NodeList keys = song.getElementsByTagName("key");

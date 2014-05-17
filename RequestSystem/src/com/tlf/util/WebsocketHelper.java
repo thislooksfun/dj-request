@@ -22,7 +22,6 @@ public class WebsocketHelper
 		Iterator<Session> iterator = sessions.iterator();
 		
 		while (iterator.hasNext()) {
-			System.out.println("Sending!");
 			Session session = iterator.next();
 			
 			try {
@@ -36,12 +35,10 @@ public class WebsocketHelper
 	public static void sendManualRequest(Song song)
 	{
 		Iterator<Session> iterator = sessions.iterator();
-		System.out.println("Sending request1!");
 		while (iterator.hasNext()) {
 			Session session = iterator.next();
 			
 			try {
-				System.out.println("Sending request2!");
 				session.getBasicRemote().sendObject(song);
 			} catch (IOException | EncodeException e) {
 				e.printStackTrace();
@@ -80,7 +77,6 @@ public class WebsocketHelper
 	
 	public static void openSession(Session session)
 	{
-		System.out.println("Session " + session.getId() + " opened!");
 		sessions.add(session);
 		
 		try {
@@ -97,7 +93,6 @@ public class WebsocketHelper
 			
 			while (iterator.hasNext()) {
 				Song song = SongSystem.instance.songs.get(iterator.next());
-				System.out.println(song.name() + ": " + song.explicit());
 				session.getBasicRemote().sendObject(song);
 			}
 		} catch (IOException | EncodeException e) {
@@ -107,7 +102,6 @@ public class WebsocketHelper
 	
 	public static void closeSession(Session session, CloseReason reason)
 	{
-		System.out.println("Session " + session.getId() + " closed: " + reason.getReasonPhrase() + " code " + reason.getCloseCode().getCode());
 		sessions.remove(session);
 	}
 }

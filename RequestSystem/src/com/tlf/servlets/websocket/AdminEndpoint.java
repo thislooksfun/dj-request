@@ -54,7 +54,6 @@ public class AdminEndpoint
     {
         try {
             if (msg.indexOf("PLAYED:") == 0) {
-                System.out.println("Request!");
                 Song song = SongSystem.instance.getSong(Integer.parseInt(msg.substring(7)));
                 song.requests = 0;
                 SongSystem.instance.remove(song);
