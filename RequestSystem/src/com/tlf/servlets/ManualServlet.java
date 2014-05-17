@@ -74,6 +74,7 @@ public class ManualServlet extends HttpServlet
         data.put("Name", name);
         data.put("Time", time);
         data.put("Artist", artist);
+        data.put("Explicit", request.getParameter("Explicit"));
         
         SongSystem.instance.manualRequest(data);
         response.sendRedirect("/");

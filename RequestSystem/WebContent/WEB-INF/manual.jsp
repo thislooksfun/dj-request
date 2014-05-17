@@ -60,7 +60,7 @@ span.head {
 				<label>Song name</label><input type="text" id="Name" name="Name" value="<%=(request.getParameter("search") == null ? "" : request.getParameter("search"))%>"><br>
 				<label>Length</label><input type="text" id="Time" name="Time" placeholder="eg: 1:23"><br>
 				<label>Artist</label><input type="text" id="Artist" name="Artist"><br>
-				<label>Explicit</label><input type="checkbox" id="Explicit"><br>
+				<label>Explicit</label><input type="checkbox" id="Explicit" name="Explicit" value="true"><br>
 				<div class="center">
 					<input type="submit" value="Request">
 				</div>

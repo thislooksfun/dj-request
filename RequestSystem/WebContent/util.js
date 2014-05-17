@@ -155,9 +155,10 @@ function checkForEmpty()
 
 function checkNotFound()
 {
-	var $empty = $("#songList").find(".dataTables_empty");
+	var $empty1 = $("#manualRequests").find(".dataTables_empty");
+	var $empty2 = $("#songList").find(".dataTables_empty");
 	
-	if ($empty.length > 0) {
+	if ($empty1.length > 0 && $empty2.length > 0) {
 		document.getElementById("noResultBar").style.display = "";
 	} else {
 		document.getElementById("noResultBar").style.display = "none";

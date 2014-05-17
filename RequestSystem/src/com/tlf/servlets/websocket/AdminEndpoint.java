@@ -57,6 +57,7 @@ public class AdminEndpoint
                 System.out.println("Request!");
                 Song song = SongSystem.instance.getSong(Integer.parseInt(msg.substring(7)));
                 song.requests = 0;
+                SongSystem.instance.remove(song);
                 WebsocketHelper.sendRequestUpdate(song.UUID, song.requests, song.manual);
             }
             session.getBasicRemote().sendText(msg);

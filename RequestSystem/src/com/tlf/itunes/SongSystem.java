@@ -34,7 +34,7 @@ public class SongSystem
 	{
 		Song song = new Song(data);
 		song.requests = 1;
-		if (this.decoder.checkLoaded(song, true)) {
+		if (!this.decoder.checkLoaded(song, true)) {
 			this.songs.put(song.UUID, song);
 			if (!song.explicit()) {
 				this.notExplicit.put(song.UUID, song);
@@ -42,5 +42,10 @@ public class SongSystem
 			
 			WebsocketHelper.sendManualRequest(song);
 		}
+	}
+	
+	public void remove(Song song) {
+		this.songs.remove(song);
+		this.notExplicit.remove(song);
 	}
 }

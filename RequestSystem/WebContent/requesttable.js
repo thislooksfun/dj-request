@@ -41,7 +41,7 @@ function addSong(song)
 	button.style.cursor = "not-allowed";
 	
 	if (hasPlaceholder) {
-		songTable.row(1).remove();
+		songTable.row(0).remove();
 		hasPlaceholder = false;
 	}
 }
@@ -74,7 +74,7 @@ function addManualRequest(song)
 	button.style.cursor = "not-allowed";
 
 	if (hasManualPlaceholder) {
-		manTable.row(1).remove();
+		manTable.row(0).remove();
 		hasManualPlaceholder = false;
 	}
 	
@@ -110,34 +110,44 @@ function updateRequestCount(data)
 	}
 }
 
-function clearTable() {
+function clearTable()
+{
+	if (!hasManualPlaceholder)
+	{
+		manTable.clear();
+		manTable.row.add([
+			"empty",
+			"empty",
+			"empty",
+			"empty",
+			"empty",
+			"empty",
+			"empty"
+			]);
+		manTable.draw();
+		
+		hasManualPlaceholder = true;
+	}
+	
 	if (!hasPlaceholder)
 	{
-		var table = document.getElementById("songList");
-		var rowCount = table.rows.length;
-		table.insertRow(rowCount).insertCell(0).innerHTML = "empty";
-
-		var temp = 0;
-		for (var i = 1; i < rowCount; i++) {
-			table.deleteRow(1);
-			temp++;
-		}
+		songTable.clear();
+		songTable.row.add([
+			"empty",
+			"empty",
+			"empty",
+			"empty",
+			"empty",
+			"empty",
+			"empty",
+			"empty",
+			"empty",
+			"empty"
+			]);
+		songTable.draw();
 
 		hasPlaceholder = true;
 	}
 	
-	if (!hasManualPlaceholder)
-	{
-		var table = document.getElementById("manualRequests");
-		var rowCount = table.rows.length;
-		table.insertRow(rowCount).insertCell(0).innerHTML = "empty";
-
-		var temp = 0;
-		for (var i = 1; i < rowCount; i++) {
-			table.deleteRow(1);
-			temp++;
-		}
-
-		hasManualPlaceholder = true;
-	}
+	checkForEmpty();
 }

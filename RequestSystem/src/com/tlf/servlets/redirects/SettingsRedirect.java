@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.tlf.itunes.Song;
 import com.tlf.itunes.SongSystem;
 import com.tlf.util.LoginHelper;
 import com.tlf.util.WebsocketHelper;
@@ -53,7 +52,6 @@ public class SettingsRedirect extends HttpServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		if (LoginHelper.instance.isSessionLoggedIn(request.getSession())) {
-			System.out.println(request.getParameter("explicit"));
 			boolean old = SongSystem.instance.allowExplicit;
 			SongSystem.instance.allowExplicit = Boolean.parseBoolean(request.getParameter("explicit"));
 			boolean different = old != SongSystem.instance.allowExplicit;
