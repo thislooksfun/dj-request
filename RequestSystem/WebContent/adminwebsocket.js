@@ -18,16 +18,16 @@ function connect() {
 		ws = new WebSocket(wsUri);
 		
 		if (ws != null) {
-			log("CONNECTING TO " + wsUri);
+			console.log("CONNECTING TO " + wsUri);
 		}
 		
 		ws.onopen = function(evt) {
-			log("CONNECTED");
+			console.log("CONNECTED");
 			reconnecting = false;
 			clearTable();
 		};
 		ws.onclose = function(evt) {
-			log("DISCONNECTED");
+			console.log("DISCONNECTED");
 			if (!reconnecting) {
 				reconnecting = true;
 				connect();
@@ -37,35 +37,22 @@ function connect() {
 			onMessage(message);
 		};
 		ws.onerror = function(evt) {
-			log("An error occurred... :(");
+			console.log("An error occurred... :(");
 		};
 	}
 };
 
 function send(message) {
-	log("SENT: " + message);
+	console.log("SENT: " + message);
 	ws.send(message);
 }
 
 function playSong(song) {
 	if (song != null) {
 		send("PLAYED:"+song);
-		resortRequests();
 	}
 }
 
-function getRadioButtonValue(rbutton)
-{
-	for (var i = 0; i < rbutton.length; ++i)
-	{ 
-		if (rbutton[i].checked) {
-			rbutton[i].checked = false;
-			return rbutton[i].value;
-		}
-	}
-	
-	return null;
-}
 
 function postToServer() {
 	var tosend = document.getElementById("msg").value;
@@ -90,26 +77,31 @@ function onMessage(message)
 	if (data.length > 10 && data.substring(0, 10) == "SONGCOUNT:") {
 		totalSongCount = +data.substring(10);
 		currentSong = 0;
-		log("Loading " + totalSongCount + " songs");
+		console.log("Loading " + totalSongCount + " songs");
 	} else if (data.length > 5 && data.substring(0, 5) == "song=") {
 		addSong(data);
 		currentSong++;
 		if (totalSongCount > 0) {
 			if (currentSong < totalSongCount) {
+				document.getElementById("noItemsBar").style.display = "none";
+				document.getElementById("noManualRequestBar").style.display = "none";
+				document.getElementById("spacerBar").style.display = "";
 				document.getElementById("tableHeader").textContent = Math.round((currentSong/totalSongCount)*100) + "% loaded  (" + currentSong + "/" + totalSongCount + ")";
-				document.getElementById("textBoxSearch").disabled = true;
-				document.getElementById("textBoxSearch").style.cursor = "not-allowed";
+				document.getElementById("manualRequests_filter").firstChild.lastChild.disabled = true;
+				document.getElementById("manualRequests_filter").firstChild.lastChild.style.cursor = "not-allowed";
 			} else {
-				tableSearch.init();
+				document.getElementById("manualRequests_filter").firstChild.lastChild.disabled = false;
+				document.getElementById("manualRequests_filter").firstChild.lastChild.style.cursor = "";
 				document.getElementById("tableHeader").textContent = "Please select a song";
-				document.getElementById("textBoxSearch").disabled = false;
-				document.getElementById("textBoxSearch").style.cursor = "";
 				var buttons = document.getElementsByName("playButtons");
 				for (var i = 0; i < buttons.length; i++) {
-					buttons[i].disabled = false;
-					buttons[i].style.cursor = "pointer";
+					if (buttons[i].parent.nextSibling.innerHTML != 0) {
+						buttons[i].disabled = false;
+						buttons[i].style.cursor = "pointer";
+					}
 				}
 				checkForEmpty();
+				console.log("Loaded");
 			}
 		}
 	} else if (data.length > 14 && data.substring(0, 14) == "REQUESTUPDATE:") {
@@ -117,6 +109,10 @@ function onMessage(message)
 	} else if (data.length == 10 && data.substring(0, 10) == "FULLUPDATE") {
 		clearTable();
 	} else {
-		log(data);
+		console.log(data);
 	}
 }
+
+window.onunload = function() {
+	ws.close();
+};

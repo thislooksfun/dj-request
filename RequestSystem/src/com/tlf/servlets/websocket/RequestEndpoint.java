@@ -1,7 +1,5 @@
 package com.tlf.servlets.websocket;
 
-import java.io.IOException;
-
 import javax.websocket.CloseReason;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -42,8 +40,7 @@ public class RequestEndpoint
                 song.requests++;
                 WebsocketHelper.sendRequestUpdate(song.UUID, song.requests, song.manual);
             }
-            session.getBasicRemote().sendText(msg);
-        } catch (IOException | NumberFormatException e) {
+        } catch (NumberFormatException e) {
             e.printStackTrace();
         }
     }

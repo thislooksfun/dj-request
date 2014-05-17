@@ -13,10 +13,6 @@
 	font-size: 30px;
 }
 
-body {
-	background-color: #222;
-}
-
 label {
 	display: inline-block;
 }
@@ -34,7 +30,6 @@ div.container_page {
 }
 div.container_form {
 	background-color: #333;
-	color: #fff;
 	font-size: 50px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
@@ -71,9 +66,11 @@ span.head {
 				</div>
 			</form>
 		</div>
-		<div id="RNameError" class="tip left" style="display: none">This field can't be blank</div>
-		<div id="NameError" class="tip left" style="display: none">This field can't be blank</div>
-		<div id="TimeError" class="tip left" style="display: none">Time must be in a proper format. eg. 1:23</div>
+		<div id="RNameError" 		class="tip left" style="display: none">This field can't be blank</div>
+		<div id="NameError" 		class="tip left" style="display: none">This field can't be blank</div>
+		<div id="TimeErrorBlank" 	class="tip left" style="display: none">This field can't be blank</div>
+		<div id="TimeErrorFormat" 	class="tip left" style="display: none">Time must be in a proper format. eg. 1:23</div>
+		<div id="ArtistError" 		class="tip left" style="display: none">This field can't be blank</div>
 	</div>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -91,8 +88,13 @@ span.head {
 			$("#NameError")[0].style.top = $("#Name").offset().top + "px";
 			$("#NameError")[0].style.left = ($("#Name").offset().left + $("#Name").width() + 10) + "px";
 			
-			$("#TimeError")[0].style.top = $("#Time").offset().top + "px";
-			$("#TimeError")[0].style.left = ($("#Time").offset().left + $("#Time").width() + 10) + "px";
+			$("#TimeErrorBlank")[0].style.top = $("#Time").offset().top + "px";
+			$("#TimeErrorBlank")[0].style.left = ($("#Time").offset().left + $("#Time").width() + 10) + "px";
+			$("#TimeErrorFormat")[0].style.top = $("#Time").offset().top + "px";
+			$("#TimeErrorFormat")[0].style.left = ($("#Time").offset().left + $("#Time").width() + 10) + "px";
+			
+			$("#ArtistError")[0].style.top = $("#Artist").offset().top + "px";
+			$("#ArtistError")[0].style.left = ($("#Artist").offset().left + $("#Time").width() + 10) + "px";
 		});
 		
 		function validateForm() {
@@ -100,6 +102,7 @@ span.head {
 			var rName = form["RName"].value.trim();
 			var name = form["Name"].value.trim();
 			var time = form["Time"].value.trim();
+			var artist = form["Artist"].value.trim();
 			var check = true;
 			
 			if (rName == null || rName == "") {
@@ -110,6 +113,7 @@ span.head {
 				$("#RName").removeClass("error");
 				$("#RNameError")[0].style.display = "none";
 			}
+			
 			if (name == null || name == "") {
 				check = false;
 				$("#Name").addClass("error");
@@ -118,13 +122,31 @@ span.head {
 				$("#Name").removeClass("error");
 				$("#NameError")[0].style.display = "none";
 			}
-			if (time != "" && !(/^[\d]+:[0-5][0-9]$/.test(time))) {
-				check = false;
+			
+			if (time == null || time == "") {
 				$("#Time").addClass("error");
-				$("#TimeError")[0].style.display = "";
+				$("#TimeErrorBlank")[0].style.display = "";
 			} else {
 				$("#Time").removeClass("error");
-				$("#TimeError")[0].style.display = "none";
+				$("#TimeErrorBlank")[0].style.display = "none";
+				
+				if (time != "" && !(/^[\d]+:[0-5][0-9]$/.test(time))) {
+					check = false;
+					$("#Time").addClass("error");
+					$("#TimeErrorFormat")[0].style.display = "";
+				} else {
+					$("#Time").removeClass("error");
+					$("#TimeErrorFormat")[0].style.display = "none";
+				}
+			}
+			
+			if (artist == null || artist == "") {
+				check = false;
+				$("#Artist").addClass("error");
+				$("#ArtistError")[0].style.display = "";
+			} else {
+				$("#Artist").removeClass("error");
+				$("#ArtistError")[0].style.display = "none";
 			}
 			
 			return check;

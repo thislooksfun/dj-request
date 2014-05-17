@@ -22,6 +22,7 @@ public class WebsocketHelper
         Iterator<Session> iterator = sessions.iterator();
         
         while (iterator.hasNext()) {
+        	System.out.println("Sending!");
             Session session = iterator.next();
             
             try {

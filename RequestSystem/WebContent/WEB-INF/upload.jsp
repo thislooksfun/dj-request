@@ -5,7 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Login</title>
-<script type="text/javascript" src="util.js"></script>
+<script type="text/javascript">
+String.prototype.endsWith = function(suffix) {
+	return this.indexOf(suffix, this.length - suffix.length) !== -1;
+};
+</script>
 <link rel="stylesheet" href="/request.css">
 <style type="text/css">
 * {

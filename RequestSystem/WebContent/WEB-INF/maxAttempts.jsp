@@ -9,7 +9,7 @@
 </head>
 <body>
 	<p align="right">
-		<a href=".."><font color="white" size="5">Main site</font></a>
+		<a href=".."><font size="5">Main site</font></a>
 	</p>
 	<div class="center">
 		<h2>

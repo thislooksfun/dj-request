@@ -5,12 +5,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Admin site</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" language="javascript" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="adminwebsocket.js"></script>
-<script type="text/javascript" src="sorttable.js"></script>
 <script type="text/javascript" src="adminrequesttable.js"></script>
-<script type="text/javascript" src="tablesearch.js"></script>
 <script type="text/javascript" src="removediacritics.js"></script>
 <script type="text/javascript" src="util.js"></script>
+
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0-beta.1/css/jquery.dataTables.css">
 <link rel="stylesheet" href="/request.css">
 </head>
 <body onload="onLoad();">
@@ -24,7 +26,7 @@
 	</form>
 	<div id="header" align="right" style="position: absolute; top: 5px; right: 10px; width">
 		<button onclick="document.getElementById('logoutForm').submit();">Logout</button>
-		<a href=".."><font size="5">Main site</font></a>
+		<a href="/"><font size="5">Main site</font></a>
 	</div>
 	<div class="center">
 		<h1>Admin site</h1>
@@ -38,17 +40,23 @@
 	<table class="sortable" id="manualRequests" width="100%">
 		<thead>
 			<tr>
-				<th width="57px" class="sorttable_nosort"></th>
-				<th width="64px" id="manRequestColumn" class="sorttable_reverse sorttable_stable">Requests</th>
+				<th width="57px" class="nosort"></th>
+				<th width="64px" id="manRequestColumn" class="reverse">Requests</th>
 				<th width="">Requested by</th>
 				<th width="">Name</th>
 				<th width="55px">Time</th>
 				<th width="">Artist</th>
-				<th style="display: none">ID</th>
+				<th class="hidden" style="display: none">ID</th>
 			</tr>
 		</thead>
-		<tbody id="manualSubmits">
+		<tbody id="manSongBody">
 			<tr>
+				<td>empty</td>
+				<td>empty</td>
+				<td>empty</td>
+				<td>empty</td>
+				<td>empty</td>
+				<td>empty</td>
 				<td>empty</td>
 			</tr>
 		</tbody>
@@ -62,14 +70,11 @@
 	<div id="spacerBar" style="display: none; width: 100%; height: 50px">
 	</div>
 	
-	<div class="center">
-		<label>Search: </label> <input type="text" size="50" id="textBoxSearch" onkeyup="tableSearch.runSearch();"> <br> <label id="searchResult" style=""> </label>
-	</div>
 	<table class="sortable" id="songList" width="100%">
 		<thead>
 			<tr>
-				<th width="57px" class="sorttable_nosort"></th>
-				<th width="64px" id="requestColumn" class="sorttable_reverse sorttable_stable">Requests</th>
+				<th width="57px" class="nosort"></th>
+				<th width="64px" id="requestColumn" class="reverse">Requests</th>
 				<th width="">Name</th>
 				<th width="55px">Time</th>
 				<th width="">Artist</th>
@@ -77,11 +82,20 @@
 				<th width="">Album Artist</th>
 				<th width="">Composer</th>
 				<th width="125px">Genre</th>
-				<th style="display: none">ID</th>
+				<th class="hidden" style="display: none">ID</th>
 			</tr>
 		</thead>
-		<tbody id="searchSongs">
+		<tbody id="songBody">
 			<tr>
+				<td>empty</td>
+				<td>empty</td>
+				<td>empty</td>
+				<td>empty</td>
+				<td>empty</td>
+				<td>empty</td>
+				<td>empty</td>
+				<td>empty</td>
+				<td>empty</td>
 				<td>empty</td>
 			</tr>
 		</tbody>

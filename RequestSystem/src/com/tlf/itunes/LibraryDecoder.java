@@ -59,15 +59,40 @@ public class LibraryDecoder
                 } else if (((Element) nNode).getElementsByTagName("key").item(0).getTextContent().equals("Track ID")) {
                     Song song = new Song((Element) nNode);
                     
-                    if (song.isSong && !this.songInfo.contains(song.name() + song.album() + song.artist())) {
+                    if (song.isSong && !checkLoaded(song, true)) {
                         this.songSystem.songs.put(song.UUID, song);
-                        this.songInfo.add(song.name() + song.album() + song.artist());
                         if (!song.explicit()) {
                             this.songSystem.notExplicit.put(song.UUID, song);
                         }
+                    } else if (song.isSong) {
+                    	System.out.println("Found duplicate: " + song.name() + ", " + song.artist() + ", " + song.time());
                     }
                 }
             }
         }
+    }
+    
+    /**
+     * Returns true if the song has been loaded, and false if it hasn't
+     * Same as <code>checkLoaded(song, false)</code>
+     * @param song The song to check
+     * @return loaded
+     */
+    public boolean checkLoaded(Song song) {
+    	return checkLoaded(song, false);
+    }
+    
+    /**
+     * Returns true if the song has been loaded, and false if it hasn't
+     * @param song The song to check
+     * @param load Whether or not you want to add this song to the loaded list if it hasn't been loaded already
+     * @return loaded
+     */
+    public boolean checkLoaded(Song song, boolean load) {
+    		boolean loaded = this.songInfo.contains(song.name().toLowerCase() + song.artist().toLowerCase() + song.time());
+        	if (load && !loaded) {
+        		this.songInfo.add(song.name().toLowerCase() + song.artist().toLowerCase() + song.time());
+        	}
+        	return loaded;
     }
 }

@@ -1,82 +1,142 @@
-function log(message) {
-	console.log(message);
-}
+var manTable;
+var songTable;
+var lastSearch;
+
+var link = "/request";
 
 function onLoad() {
-	connect();
-	tableSearch.init();
+	initTables();
 	checkForEmpty();
+	connect();
 }
 
-function resortRequests()
+function initTables()
 {
-	var requests = document.getElementById("requestColumn");
-
-	var sortLevel = 0;
-
-	var oldClassname = requests.className;
-	if ((requests.className = requests.className.replace('sorttable_sorted_reverse', '')) != oldClassname) {
-		sortLevel = requests.className.search(/\bsorttable_reverse\b/) != -1 ? 1 : 2;
-	} else if ((requests.className = requests.className.replace('sorttable_sorted', '')) != oldClassname) {
-		sortLevel = requests.className.search(/\bsorttable_reverse\b/) != -1 ? 2 : 1;
-	}
-
-	for (var j = 0; j < sortLevel; j++) {
-		sorttable.innerSortFunction.apply(requests, []);
-	}
-}
-
-function resortManRequests()
-{
-	var requests = document.getElementById("manRequestColumn");
-
-	var sortLevel = 0;
-
-	var oldClassname = requests.className;
-	if ((requests.className = requests.className.replace('sorttable_sorted_reverse', '')) != oldClassname) {
-		sortLevel = requests.className.search(/\bsorttable_reverse\b/) != -1 ? 1 : 2;
-	} else if ((requests.className = requests.className.replace('sorttable_sorted', '')) != oldClassname) {
-		sortLevel = requests.className.search(/\bsorttable_reverse\b/) != -1 ? 2 : 1;
-	}
-
-	for (var j = 0; j < sortLevel; j++) {
-		sorttable.innerSortFunction.apply(requests, []);
-	}
-}
-
-function colorTable()
-{
-	var color1 = "#242424";
-	var color2 = "#424242";
-
-	var colorState = false;
-
-	for (var i = 0, row; row = tableSearch.Rows[i], rowText = tableSearch.RowsText[i]; i++) {
-		if (row.style.display != "none") {
-			var cells = row.cells;
-			for (var j = 0; j < cells.length; j++) {
-				cells[j].style.backgroundColor = colorState ? color1 : color2;
-			}
-			colorState = !colorState;
+	//Initalizing table 1
+	$("#manualRequests").dataTable({
+		"paging": false,
+		"info": false,
+		"columnDefs": [{
+			"targets": "nosort",
+			"searchable": false,
+			"orderable": false
+		}, {
+			"targets": "hidden",
+			"visible": false,
+            "searchable": false,
+            "orderable": false
+		}, {
+        	"targets": "reverse",
+        	"orderSequence": ["desc", "asc"]
+        }, {
+        	"targets": 4,
+        	"sType": "time"
+        }]
+	}).fnSort([[1, 'desc'], [3, 'asc']]);
+	manTable = $("#manualRequests").DataTable();
+	
+	//Makes column 1 (request count) sort by column 3 (song name) if the data in column 1 is identical
+	$('#manualRequests thead th:eq(1)').unbind('click').click(function() {
+		var table = $("#manualRequests").dataTable();
+		var aaSorting = table.fnSettings().aaSorting;
+		if (aaSorting[0][1] == 'desc') {
+			table.fnSort([[1, 'asc'], [3, 'asc']]);
+		} else {
+			table.fnSort([[1, 'desc'], [3, 'asc']]);
 		}
+	});
+	
+	
+	//Initalizing table 2
+	$("#songList").dataTable({
+		"paging": false,
+		"info": false,
+		"dom": "lrtip",
+		"columnDefs": [{
+			"targets": "nosort",
+			"searchable": false,
+			"orderable": false
+		}, {
+			"targets": "hidden",
+			"visible": false,
+            "searchable": false,
+            "orderable": false
+		}, {
+        	"targets": "reverse",
+        	"orderSequence": ["desc", "asc"]
+        }, {
+        	"targets": 3,
+        	"sType": "time"
+        }]
+	}).fnSort([[1, 'desc'], [2, 'asc']]);
+	songTable = $("#songList").DataTable();
+	
+	//Makes column 1 (request count) sort by column 2 (song name) if the data in column 1 is identical
+	$('#songList thead th:eq(1)').unbind('click').click(function() {
+		var table = $("#songList").dataTable();
+		var aaSorting = table.fnSettings().aaSorting;
+		if (aaSorting[0][1] == 'desc') {
+			table.fnSort([[1, 'asc'], [2, 'asc']]);
+		} else {
+			table.fnSort([[1, 'desc'], [2, 'asc']]);
+		}
+	});
+	
+	
+	//Apply sort from table 1 to table 2
+	$('#manualRequests').on('search.dt', function() {
+		var term = removeDiacritics(manTable.search());
+		if (term != lastSearch) {
+			lastSearch = term;
+			manTable.search(term).draw();
+		    songTable.search(term).draw();
+		    updateLink(term);
+		    checkNotFound();
+		}
+	});
+}
+function updateLink(param) {
+	var rLink = document.getElementById('requestLink');
+	if (rLink != null) {
+		rLink.href = link + "?search=" + formatForURI(param);
 	}
 }
 
-String.prototype.endsWith = function(suffix) {
-	return this.indexOf(suffix, this.length - suffix.length) !== -1;
-};
-
-window.onunload = function() {
-	ws.close();
-};
+var URIFormat = [
+	{"match":/\x25/g, "replace":"%25"},
+	{"match":/\x21/g, "replace":"%21"},
+	{"match":/\x23/g, "replace":"%23"},
+	{"match":/\x24/g, "replace":"%24"},
+	{"match":/\x26/g, "replace":"%26"},
+	{"match":/\x27/g, "replace":"%27"},
+	{"match":/\x28/g, "replace":"%28"},
+	{"match":/\x29/g, "replace":"%29"},
+	{"match":/\x2A/g, "replace":"%2A"},
+	{"match":/\x2B/g, "replace":"%2B"},
+	{"match":/\x2C/g, "replace":"%2C"},
+	{"match":/\x2F/g, "replace":"%2F"},
+	{"match":/\x3A/g, "replace":"%3A"},
+	{"match":/\x3B/g, "replace":"%3B"},
+	{"match":/\x3D/g, "replace":"%3D"},
+	{"match":/\x3F/g, "replace":"%3F"},
+	{"match":/\x40/g, "replace":"%40"},
+	{"match":/\x5A/g, "replace":"%5A"},
+	{"match":/\x5D/g, "replace":"%5D"}
+];
+function formatForURI(param) {
+	for (var i = 0; i < URIFormat.length; i++) {
+		param = param.replace(URIFormat[i]["match"], URIFormat[i]["replace"]);
+	}
+	return param;
+}
 
 function checkForEmpty()
 {
-	var row1 = document.getElementById('manualSubmits').getElementsByTagName('TR')[0];
-	var row1Text = removeDiacritics((row1.innerText) ? row1.innerText.toUpperCase() : row1.textContent.toUpperCase()).trim();
-
-	if (row1Text == ("empty".toUpperCase())) {
-		row1.style.display = "none";
+	var manRow1 = document.getElementById('manSongBody').getElementsByTagName('TR')[0];
+	var row1 = document.getElementById('songBody').getElementsByTagName('TR')[0];
+	
+	if (hasManualPlaceholder) {
+		manRow1.style.display = "none";
 		document.getElementById("noManualRequestBar").style.display = "";
 		document.getElementById("spacerBar").style.display = "none";
 	} else {
@@ -85,10 +145,95 @@ function checkForEmpty()
 		
 	}
 	
-	if (tableSearch.RowsText[0] == ("empty".toUpperCase())) {
-		tableSearch.Rows[0].style.display = "none";
+	if (hasPlaceholder) {
+		row1.style.display = "none";
 		document.getElementById("noItemsBar").style.display = "";
 	} else {
 		document.getElementById("noItemsBar").style.display = "none";
 	}
 }
+
+function checkNotFound()
+{
+	var $empty = $("#songList").find(".dataTables_empty");
+	
+	if ($empty.length > 0) {
+		document.getElementById("noResultBar").style.display = "";
+	} else {
+		document.getElementById("noResultBar").style.display = "none";
+	}
+}
+
+//Custom sorting
+jQuery.fn.dataTableExt.oSort['time-asc'] = function(x,y)
+{
+	var xTimes = x.split(":");
+	var yTimes = y.split(":");
+	
+	if (xTimes.length < yTimes.length) {
+		return -1;
+	} else if (xTimes.length > yTimes.length) {
+		return 1;
+	} else {
+		for (var i = 0; i < xTimes.length; i++)
+		{
+			if (xTimes[i].length < yTimes[i].length) {
+				return -1;
+			} else if (xTimes[i].length > yTimes[i].length) {
+				return 1;
+			} else {
+				var numX = parseInt(xTimes[i]);
+				var numY = parseInt(yTimes[i]);
+				if (numX < numY) {
+					return -1;
+				} else if (numX > numY) {
+					return 1;
+				}
+			}
+		}
+	}
+	
+	return 0;
+};
+
+jQuery.fn.dataTableExt.oSort['time-desc'] = function(x,y)
+{
+	var xTimes = x.split(":");
+	var yTimes = y.split(":");
+	
+	if (xTimes.length < yTimes.length) {
+		return 1;
+	} else if (xTimes.length > yTimes.length) {
+		return -1;
+	} else {
+		for (var i = 0; i < xTimes.length; i++)
+		{
+			if (xTimes[i].length < yTimes[i].length) {
+				return 1;
+			} else if (xTimes[i].length > yTimes[i].length) {
+				return -1;
+			} else {
+				var numX = parseInt(xTimes[i]);
+				var numY = parseInt(yTimes[i]);
+				if (numX < numY) {
+					return 1;
+				} else if (numX > numY) {
+					return -1;
+				}
+			}
+		}
+	}
+	
+	return 0;
+};
+
+jQuery.fn.DataTable.ext.type.search.string = function ( data ) {
+    return ! data ? '' : (typeof data === 'string' ? removeDiacritics(data) : data);
+};
+
+//String prototype methods
+String.prototype.replaceAll = function(find, replace) {
+	console.log(find);
+	console.log(new RegExp(find, 'g'));
+	return this.replace(new RegExp(find, 'g'), replace);
+};

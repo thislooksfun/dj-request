@@ -20,16 +20,16 @@ public class Song
 	public boolean isSong = true;
 	
 	// Song information
-	private String requestedBy;
-	private String name;
-	private String artist;
-	private String albumArtist;
-	private String composer;
-	private String album;
-	private String genre;
-	private String time;
-	private int year;
-	private boolean explicit;
+	private String requestedBy = "";
+	private String name = "";
+	private String artist = "";
+	private String albumArtist = "";
+	private String composer = "";
+	private String album = "";
+	private String genre = "";
+	private String time = "0:00";
+	private int year = 0;
+	private boolean explicit = false;
 	
 	/** Number of requests this song currently has */
 	public int requests = 0;
@@ -39,6 +39,7 @@ public class Song
 	
 	public Song(Element song)
 	{
+		System.out.println();
 		this.UUID = songNumber++;
 		this.manual = false;
 		NodeList keys = song.getElementsByTagName("key");
@@ -122,9 +123,6 @@ public class Song
 			break;
 		case "genre":
 			this.genre = next.getTextContent();
-			break;
-		case "year":
-			this.year = Integer.parseInt(next.getTextContent());
 			break;
 		case "total time":
 			this.parseTime(Integer.parseInt(next.getTextContent()));

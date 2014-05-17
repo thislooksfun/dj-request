@@ -1,5 +1,5 @@
 body {
-	background-color: #000;
+	background-color: #222;
 }
 
 table thead {
@@ -21,10 +21,25 @@ table tr, A:link, A:visited, body {
 	color: #fff
 }
 
+.dataTables_filter {
+	color: #fff !important;
+}
+.dataTables_empty {
+	display: none !important;
+}
+
 .center {
 	 text-align: center;
 }
 span.center {
 	text-align: center;
 	display: inline-block;
+}
+
+div.container_page {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
 }
