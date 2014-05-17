@@ -95,7 +95,7 @@ function onMessage(message)
 				document.getElementById("tableHeader").textContent = "Please select a song";
 				var buttons = document.getElementsByName("playButtons");
 				for (var i = 0; i < buttons.length; i++) {
-					if (buttons[i].parent.nextSibling.innerHTML != 0) {
+					if (buttons[i].parentNode.nextSibling.innerHTML != 0) {
 						buttons[i].disabled = false;
 						buttons[i].style.cursor = "pointer";
 					}
