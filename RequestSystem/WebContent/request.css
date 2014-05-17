@@ -43,3 +43,16 @@ div.container_page {
 	height: 100%;
 	width: 100%;
 }
+
+#backToTop {
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	z-index: 2000;
+	padding: 10px;
+	background-color: #333;
+	box-shadow: 3px 3px 6px 8px #222;
+}
+#backToTop input {
+	font-size: 50px;
+}

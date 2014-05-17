@@ -20,6 +20,7 @@
 			<font color="red" size="6">This site requires javascript in order to function, please turn it on then try again</font>
 		</div>
 	</noscript>
+	<div id="backToTop" style="display: none"><input type="button" onclick="scrollToTop();" value="Back to top"></div>
 	<p align="right">
 		<a href="/admin"><font size="5">Admin site</font></a>
 	</p>
@@ -30,7 +31,7 @@
 		<br>
 		<font size="6" id="tableHeader">Please select a song</font><br> <font size="4" id="tableHeader">To request a song, simply click "request" on the song you want. If your song isn't listed, and you have it on your device, click the "manual request" button. You can also click the headers to sort.</font>
 	</div>
-
+	
 	<table class="sortable" id="manualRequests" width="100%">
 		<thead>
 			<tr>

@@ -164,6 +164,21 @@ function checkNotFound()
 	}
 }
 
+function scrollToTop() {
+	$("html, body").animate({ scrollTop: 0 }, "slow");
+	return false;
+}
+
+function fixDiv() {
+	var $cache = $('#backToTop');
+	if ($(window).scrollTop() > 250) {
+		$cache[0].style.display = "";
+	} else {
+		$cache[0].style.display = "none";
+	}
+};
+$(window).scroll(fixDiv);
+
 //Custom sorting
 jQuery.fn.dataTableExt.oSort['time-asc'] = function(x,y)
 {
@@ -233,7 +248,5 @@ jQuery.fn.DataTable.ext.type.search.string = function ( data ) {
 
 //String prototype methods
 String.prototype.replaceAll = function(find, replace) {
-	console.log(find);
-	console.log(new RegExp(find, 'g'));
 	return this.replace(new RegExp(find, 'g'), replace);
 };

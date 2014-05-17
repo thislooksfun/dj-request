@@ -24,6 +24,7 @@
 	<form action="LogoutServlet" method="post" id="logoutForm">
 		<input type="hidden" name="sessionKey" value="<%=session.getId() %>">
 	</form>
+	<div id="backToTop" style="display: none"><input type="button" onclick="scrollToTop();" value="Back to top"></div>
 	<div id="header" align="right" style="position: absolute; top: 5px; right: 10px; width">
 		<button onclick="document.getElementById('logoutForm').submit();">Logout</button>
 		<a href="/"><font size="5">Main site</font></a>
@@ -36,7 +37,7 @@
 		</h2>
 		<br> <font size="6" id="tableHeader">Please select a song</font><br> <font size="4">To clear the requests on a song, simply click "played." You can also click the headers to sort.</font>
 	</div>
-
+	
 	<table class="sortable" id="manualRequests" width="100%">
 		<thead>
 			<tr>
