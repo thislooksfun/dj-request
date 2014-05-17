@@ -63,7 +63,7 @@ div.container_header {
 				}
 			%>
 
-			<form action="LoginServlet" method="post">
+			<form action="login" method="post">
 				<label>Username</label><input type="text" name="user"><br>
 				<label>Password</label><input type="password" name="pwd"><br>
 				<input type="submit" value="Log in">
