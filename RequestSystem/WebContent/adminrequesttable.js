@@ -3,8 +3,6 @@ var hasManualPlaceholder = true;
 
 function addSong(song)
 {
-	var table = document.getElementById("songList");
-	
 	var manualIndex = song.indexOf("manual=");
 	var isManual = song.substring(song.indexOf("&^&", manualIndex)+3, song.indexOf("&^&", song.indexOf("&^&", manualIndex)+3));
 	if (isManual === "true") {
@@ -34,22 +32,20 @@ function addSong(song)
 	    	info[7], //Composer
 	    	info[8], //Genre
 	    	info[0]  //UUID - hidden
-	    ]).draw().node();
+	    ]).node();
 	
 	var button = row.cells[0].firstChild;
 	button.disabled = true;
 	button.style.cursor = "not-allowed";
 
 	if (hasPlaceholder) {
-		table.deleteRow(1);
+		songTable.row(1).remove();
 		hasPlaceholder = false;
 	}
 }
 
 function addManualRequest(song)
 {
-	var table = document.getElementById("manualRequests");
-
 	var posisions = [song.indexOf("uuid="), song.indexOf("requests="), song.indexOf("requestedby="), song.indexOf("name="), song.indexOf("artist="), song.indexOf("time=")];
 	var info = [];
 
@@ -69,14 +65,14 @@ function addManualRequest(song)
 	    info[4], //Time
 	    info[5], //Artist
 	    info[0]  //UUID - hidden
-	    ]).draw().node();
+	    ]).node();
 	
 	var button = row.cells[0].firstChild;
 	button.disabled = true;
 	button.style.cursor = "not-allowed";
 
 	if (hasManualPlaceholder) {
-		table.deleteRow(1);
+		manTable.row(1).remove().draw();
 		hasManualPlaceholder = false;
 	}
 	
@@ -135,15 +131,17 @@ function clearTable() {
 	
 	if (!hasManualPlaceholder)
 	{
-		var table = document.getElementById("manualRequests");
-		var rowCount = table.rows.length;
+		var table = manTable;
+		var rowCount = manTable.rows().length;
 		table.insertRow(rowCount).insertCell(0).innerHTML = "empty";
 
 		var temp = 0;
 		for (var i = 1; i < rowCount; i++) {
-			table.deleteRow(1);
+			table.row(1).remove();
 			temp++;
 		}
+		
+		table.draw();
 
 		hasManualPlaceholder = true;
 	}

@@ -100,6 +100,8 @@ function onMessage(message)
 				document.getElementById("manualRequests_filter").firstChild.lastChild.disabled = true;
 				document.getElementById("manualRequests_filter").firstChild.lastChild.style.cursor = "not-allowed";
 			} else {
+				manTable.draw();
+				songTable.draw();
 				document.getElementById("manualRequests_filter").firstChild.lastChild.disabled = false;
 				document.getElementById("manualRequests_filter").firstChild.lastChild.style.cursor = "";
 				document.getElementById("tableHeader").textContent = "Please select a song";
