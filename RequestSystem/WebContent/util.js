@@ -171,7 +171,7 @@ function scrollToTop() {
 
 function fixDiv() {
 	var $cache = $('#backToTop');
-	if ($(window).scrollTop() > 250) {
+	if ($(window).scrollTop() > 400) {
 		$cache[0].style.display = "";
 	} else {
 		$cache[0].style.display = "none";

@@ -24,7 +24,7 @@
 	<form action="LogoutServlet" method="post" id="logoutForm">
 		<input type="hidden" name="sessionKey" value="<%=session.getId() %>">
 	</form>
-	<div id="backToTop" style="display: none"><input type="button" onclick="scrollToTop();" value="Back to top"></div>
+	<div id="backToTop" style="display: none" onclick="scrollToTop();"><b>Back to top</b></div>
 	<div id="header" align="right" style="position: absolute; top: 5px; right: 10px; width">
 		<button onclick="document.getElementById('logoutForm').submit();">Logout</button>
 		<a href="/"><font size="5">Main site</font></a>

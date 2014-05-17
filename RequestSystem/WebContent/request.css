@@ -49,10 +49,9 @@ div.container_page {
 	top: 10px;
 	right: 10px;
 	z-index: 2000;
+	font-size: 25px;
+	cursor: pointer;
 	padding: 10px;
-	background-color: #333;
+	background-color: #444;
 	box-shadow: 3px 3px 6px 8px #222;
-}
-#backToTop input {
-	font-size: 50px;
 }

@@ -20,7 +20,7 @@
 			<font color="red" size="6">This site requires javascript in order to function, please turn it on then try again</font>
 		</div>
 	</noscript>
-	<div id="backToTop" style="display: none"><input type="button" onclick="scrollToTop();" value="Back to top"></div>
+	<div id="backToTop" style="display: none" onclick="scrollToTop();"><b>Back to top</b></div>
 	<p align="right">
 		<a href="/admin"><font size="5">Admin site</font></a>
 	</p>
