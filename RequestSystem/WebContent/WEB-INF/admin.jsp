@@ -25,8 +25,9 @@
 		<input type="hidden" name="sessionKey" value="<%=session.getId() %>">
 	</form>
 	<div id="backToTop" style="display: none" onclick="scrollToTop();"><b>Back to top</b></div>
-	<div id="header" align="right" style="position: absolute; top: 5px; right: 10px; width">
+	<div id="header" align="right" style="position: absolute; top: 5px; right: 10px">
 		<button onclick="document.getElementById('logoutForm').submit();">Logout</button>
+		<a href="/settings"><font size="5" style="padding-right: 5px;">Settings</font></a>
 		<a href="/"><font size="5">Main site</font></a>
 	</div>
 	<div class="center">
