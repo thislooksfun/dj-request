@@ -56,7 +56,9 @@ public class AdminEndpoint
             if (msg.indexOf("PLAYED:") == 0) {
                 Song song = SongSystem.instance.getSong(Integer.parseInt(msg.substring(7)));
                 song.requests = 0;
-                SongSystem.instance.remove(song);
+                if (song.manual) {
+                	SongSystem.instance.remove(song.UUID);
+                }
                 WebsocketHelper.sendRequestUpdate(song.UUID, song.requests, song.manual);
             }
             session.getBasicRemote().sendText(msg);

@@ -44,8 +44,8 @@ public class SongSystem
 		}
 	}
 	
-	public void remove(Song song) {
-		this.songs.remove(song);
-		this.notExplicit.remove(song);
+	public void remove(int UUID) {
+		this.songs.remove(UUID);
+		this.notExplicit.remove(UUID);
 	}
 }

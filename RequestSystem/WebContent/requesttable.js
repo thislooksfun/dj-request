@@ -104,7 +104,12 @@ function updateRequestCount(data)
 	
 	for (i = 0; i < rows.length; i++) {
 		if (table.fnGetData(i, lastCell) == info[0]) {
-			table.fnUpdate(info[1], i, 1); //(data, row, column)
+			if (info[2] == "true" && info[1] == 0) {
+				table.api().row(i).remove().draw();
+			} else {
+				table.fnUpdate(info[1], i, 1); //(data, row, column)
+				table.api().cell(i, 0).node().firstChild.disabled = (info[1] == 0);
+			}
 			break;
 		}
 	}
