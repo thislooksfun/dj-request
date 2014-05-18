@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Request</title>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="/jQuery.min.js"></script>
 <link rel="stylesheet" href="/request.css">
 <link rel="stylesheet" href="/arrowbox.css">
 <style type="text/css">

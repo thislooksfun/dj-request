@@ -4,14 +4,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Request</title>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script type="text/javascript" language="javascript" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/jQuery.min.js"></script>
+<script type="text/javascript" language="javascript" src="/DataTables.js"></script>
 <script type="text/javascript" src="websocket.js"></script>
 <script type="text/javascript" src="requesttable.js"></script>
 <script type="text/javascript" src="removediacritics.js"></script>
 <script type="text/javascript" src="util.js"></script>
 
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0-beta.1/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="/DataTables.css">
 <link rel="stylesheet" href="/request.css">
 </head>
 <body onload="onLoad()">

@@ -32,6 +32,12 @@ public class LibraryDecoder
 	public void parseLibrary(InputStream is)
 	{
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		dbFactory.setValidating(false);
+		try {
+			dbFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+		} catch (ParserConfigurationException e1) {
+			e1.printStackTrace();
+		}
 		DocumentBuilder dBuilder;
 		try {
 			dBuilder = dbFactory.newDocumentBuilder();

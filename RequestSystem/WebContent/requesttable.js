@@ -48,7 +48,7 @@ function addSong(song)
 
 function addManualRequest(song)
 {
-	var posisions = [song.indexOf("uuid="), song.indexOf("requests="), song.indexOf("requestedby="), song.indexOf("name="), song.indexOf("artist="), song.indexOf("time=")];
+	var posisions = [song.indexOf("uuid="), song.indexOf("requests="), song.indexOf("requestedby="), song.indexOf("name="), song.indexOf("time="), song.indexOf("artist=")];
 	var info = [];
 
 	for (var i = 0; i < posisions.length; i++) {
