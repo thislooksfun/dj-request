@@ -22,7 +22,7 @@
 	</noscript>
 	<div id="backToTop" style="display: none" onclick="scrollToTop();"><b>Back to top</b></div>
 	<p align="right">
-		<a href="/admin"><font size="5">Admin site</font></a>
+		<a href="/request"><font size="5">Manual Request</font></a>
 	</p>
 	<div class="center">
 		<font size="7">Welcome!</font>
