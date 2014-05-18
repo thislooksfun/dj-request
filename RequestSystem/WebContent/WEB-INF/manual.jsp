@@ -54,7 +54,7 @@ span.head {
 <body>
 	<div id="pageContainer" class="container_page">
 		<div id="formContainer" class="container_form">
-			<form id="uploadForm" action="ManualServlet" method="post" onsubmit="return validateForm();">
+			<form id="uploadForm" action="ManualServlet" method="post">
 				<span class="center head">Request:</span><br>
 				<label>Your name</label><input type="text" id="RName" name="RName"><br>
 				<label>Song name</label><input type="text" id="Name" name="Name" value="<%=(request.getParameter("search") == null ? "" : request.getParameter("search"))%>"><br>
@@ -62,7 +62,7 @@ span.head {
 				<label>Artist</label><input type="text" id="Artist" name="Artist"><br>
 				<label>Explicit</label><input type="checkbox" id="Explicit" name="Explicit" value="true"><br>
 				<div class="center">
-					<input type="submit" value="Request">
+					<input type="button" onclick="return validateForm();" value="Request">
 				</div>
 			</form>
 		</div>
@@ -124,6 +124,7 @@ span.head {
 			}
 			
 			if (time == null || time == "") {
+				check = false;
 				$("#Time").addClass("error");
 				$("#TimeErrorBlank")[0].style.display = "";
 			} else {
@@ -149,7 +150,9 @@ span.head {
 				$("#ArtistError")[0].style.display = "none";
 			}
 			
-			return check;
+			if (check) {
+				form.submit();
+			}
 		}
 	</script>
 </body>
