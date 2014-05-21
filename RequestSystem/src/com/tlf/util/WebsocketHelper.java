@@ -78,6 +78,7 @@ public class WebsocketHelper
 	public static void openSession(Session session)
 	{
 		sessions.add(session);
+		System.out.println("Opened session " + session.getId());
 		
 		try {
 			session.getBasicRemote().sendText("Welcome!");
@@ -103,5 +104,6 @@ public class WebsocketHelper
 	public static void closeSession(Session session, CloseReason reason)
 	{
 		sessions.remove(session);
+		System.out.println("Closed session " + session.getId());
 	}
 }
