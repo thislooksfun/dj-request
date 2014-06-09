@@ -9,11 +9,7 @@
 <link rel="stylesheet" href="/request.css">
 <style type="text/css">
 * {
-	font-size: 25px;
-}
-
-label {
-	display: inline-block;
+	font-size: 30px;
 }
 
 div.container_body {
@@ -26,7 +22,7 @@ div.container_body {
 div.container_login {
 	background-color: #333;
 	position: relative;
-	width: 450px;
+	width: 390px;
 	padding: 10px;
 	top: 150px;
 	margin: 0 auto;
@@ -36,6 +32,22 @@ div.container_login {
 div.container_header {
 	text-align: right;
 	padding: 5px;
+}
+div.spacer {
+	width: 100%;
+	height: 5px;
+}
+
+.big-btn {
+	background-color: #888;
+	border-color: #aaa;
+	color: #000;
+    width: 100px;
+    height: 45px;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    padding: 0px;
 }
 </style>
 </head>
@@ -64,22 +76,12 @@ div.container_header {
 			%>
 
 			<form action="login" method="post">
-				<label>Username</label><input type="text" name="user"><br>
-				<label>Password</label><input type="password" name="pwd"><br>
-				<input type="submit" value="Log in">
+				<input type="text" name="user" placeholder="Username"><br>
+				<input type="password" name="pwd" placeholder="Password"><br>
+				<div class="spacer"></div>
+				<div class="center"><input class="big-btn" type="submit" value="Log in"></div>
 			</form>
 		</div>
 	</div>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			var max = 0;
-			$("label").each(function() {
-				if ($(this).width() > max) {
-					max = $(this).width();
-				}
-			});
-			$("label").width((max+10) + "px");
-		});
-	</script>
 </body>
 </html>
