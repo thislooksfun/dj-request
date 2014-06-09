@@ -46,7 +46,7 @@ div.container_header {
 		<div id="loginContainer" class="container_login">
 			<h2>Please Login</h2>
 			
-			<font color="red" size="6">You are out of login attempts</font>
+			<font color="red" size="6">You are out of login attempts</font><!-- Whoops! -->
 		</div>
 	</div>
 </body>
