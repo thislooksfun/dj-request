@@ -41,6 +41,8 @@ public class SongSystem
 			}
 			
 			WebsocketHelper.sendManualRequest(song);
+		} else {
+			//this.getSong().requests++;
 		}
 	}
 	

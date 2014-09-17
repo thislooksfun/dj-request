@@ -20,18 +20,16 @@
 			<font color="red" size="6">This site requires javascript in order to function, please turn it on then try again</font>
 		</div>
 	</noscript>
-	<div id="backToTop" style="display: none" onclick="scrollToTop();"><b>Back to top</b></div>
+	<div id="backToTop" style="display: none" onclick="scrollToTop();">
+		<b>Back to top</b>
+	</div>
 	<p align="right">
 		<a href="/request"><font size="5">Manual Request</font></a>
 	</p>
 	<div class="center">
-		<font size="7">Welcome!</font>
-		<br>
-		<br>
-		<br>
-		<font size="6" id="tableHeader">Please select a song</font><br> <font size="4" id="tableHeader">To request a song, simply click "request" on the song you want. If your song isn't listed, and you have it on your device, click the "manual request" button. You can also click the headers to sort.</font>
+		<font size="7">Welcome!</font> <br> <br> <br> <font size="6" id="tableHeader">Please select a song</font><br> <font size="4" id="tableHeader">To request a song, simply click "request" on the song you want. If your song isn't listed, and you have it on your device, click the "manual request" button. You can also click the headers to sort.</font>
 	</div>
-	
+
 	<table class="sortable" id="manualRequests" width="100%">
 		<thead>
 			<tr>
@@ -62,9 +60,8 @@
 			<h2>No manual requests found.</h2>
 		</div>
 	</div>
-	<div id="spacerBar" style="display: none; width: 100%; height: 50px">
-	</div>
-	
+	<div id="spacerBar" style="display: none; width: 100%; height: 50px"></div>
+
 	<table class="sortable" id="songList" width="100%">
 		<thead>
 			<tr>
@@ -108,5 +105,53 @@
 			<h2>No items found. Try reloading the page.</h2>
 		</div>
 	</div>
+	<!--
+	<script type="text/javascript">
+		$('document').ready(function() {
+			$('#form').validate({
+				rules: {
+					"name": {
+						required: true,
+						maxlength: 40
+					},
+					
+					"email": {
+						required: true,
+						email: true,
+						maxlength: 100
+					},
+					
+					"message": {
+						required: true
+					}
+				},
+				
+				messages: {
+					"name": {
+						required: "This field is required"
+					},
+					
+					"email": {
+						required: "This field is required",
+						email: "Please enter a valid email address"
+					},
+					
+					"message": {
+						required: "This field is required"
+					}
+				},
+				
+				submitHandler : function(form) {
+					$(form).ajaxSubmit({
+						target : '#preview',
+						success : function() {
+							$('#formbox').slideUp('fast');
+						}
+					});
+				}
+			});
+		});
+	</script>
+	-->
 </body>
 </html>
