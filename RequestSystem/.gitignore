@@ -1,8 +1,8 @@
 /build
 /.classpath
-/.DS_Store
 /.project
 /.settings
+/.metadata
 /src/.DS_Store
 /src/com/.DS_Store
 /src/com/tlf/.DS_Store

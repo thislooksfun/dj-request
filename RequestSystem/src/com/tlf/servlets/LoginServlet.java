@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		if (LoginHelper.instance.login(request.getSession(), request.getParameter("user"), request.getParameter("pwd"))) {
+		if (LoginHelper.instance.loginWithAuth(request.getSession(), request.getParameter("user"), request.getParameter("pwd"))) {
 			response.sendRedirect("/upload");
 		} else {
 			response.sendRedirect("/login");

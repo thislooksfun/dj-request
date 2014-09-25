@@ -21,7 +21,7 @@ public class RequestEndpoint
     @OnOpen
     public void onOpen(Session session)
     {
-        WebsocketHelper.openSession(session);
+        WebsocketHelper.openSession(session, null);
     }
     
     @OnClose
