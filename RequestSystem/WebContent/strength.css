@@ -1,0 +1,56 @@
+.strength_container {
+	position: absolute;
+}
+
+.strength_meter {
+    position: absolute;
+    left: 17px;
+    top: 137px;
+    width: 100%;
+    height: 43px;
+    z-index: 0;
+    border-radius: 5px;
+    pointer-events: none;
+}
+
+.strength_meter div {
+    width: 0%;
+    height: 43px;
+    text-align: right;
+    color: #000;
+    line-height: 43px;
+    -webkit-transition: all .3s ease-in-out;
+    padding-right: 12px;
+    border-radius: 5px;
+}
+.strength_meter div p {
+    position: absolute;
+    top: -14px;
+    right: 40px;
+    color: #FFF;
+    font-size: 13px;
+}
+.strength_meter div p.isStrong {
+    color: #3b3b3b;
+}
+
+.veryweak {
+    background-color: #FFA0A0;
+    border-color: #F04040 !important;
+    width: 108.5px !important;
+}
+.weak {
+    background-color: #FFB78C;
+    border-color: #FF853C !important;
+    width: 217px !important;
+}
+.medium {
+    background-color: #FFEC8B;
+    border-color: #FC0 !important;
+    width: 325.5px !important;
+}
+.strong {
+    background-color: #C3FF88;
+    border-color: #8DFF1C !important;
+    width: 434px !important;
+}

@@ -6,8 +6,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Create Account</title>
 <script type="text/javascript" src="/jQuery.min.js"></script>
+<script type="text/javascript" src="/strength.js"></script>
+<link rel="stylesheet" href="/strength.css">
 <link rel="stylesheet" href="/request.css">
-<link rel="stylesheet" href="/arrowbox.css">
+<link rel="stylesheet" href="/formstyle.css"> <!-- Input style taken with permission from http://git.aaronlumsden.com/strength.js/#demo -->
 <style type="text/css">
 * {
 	font-size: 30px;
@@ -17,10 +19,6 @@ label {
 	display: inline-block;
 }
 
-.error {
-	border: 2px solid red;
-}
-
 div.container_page {
 	position: absolute;
 	top: 0px;
@@ -28,50 +26,60 @@ div.container_page {
 	height: 100%;
 	width: 100%;
 }
-div.container_form {
-	background-color: #333;
-	font-size: 50px;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
-	padding: 15px;
-	position: relative;
-	top: 150px;
-	display : block;
-	text-align: center;
-	width: 540px;
-	margin: 0 auto;
-	text-decoration: none;
-	display: block;
-	-moz-box-shadow: 5px 5px 8px 7px #111;
-	-webkit-box-shadow: 5px 5px 8px 7px #111;
-	box-shadow: 5px 5px 8px 7px #111;
-}
-span.head {
-	font-size: 50px;
+a {
+	position: absolute;
+	right: 50px;
+	bottom: 20px;
+	font-size: 25px;
 }
 </style>
 </head>
 <body>
 	<div id="pageContainer" class="container_page">
 		<div id="formContainer" class="container_form">
-			<form id="uploadForm" action="createaccount" method="post">
-				<span class="center head">Create Account:</span><br>
-				<label>Username</label><input type="text"     id="user"  name="username"><br>
-				<label>Password</label><input type="password" id="pass1" name="password"><br>
-				<label>Password</label><input type="password" id="pass2" name="pass2"><br>
-				<label>Email</label><input    type="email"    id="email" name="email"><br>
-				<div class="center">
-					<input type="button" onclick="return validateForm();" value="Create">
-				</div>
-			</form>
+			<div id="formContainerInner" class="container_form_inner">
+				<form id="uploadForm" action="createaccount" method="post">
+					<span class="center head">Create Account:</span>
+					<div class="inputDiv">
+						<input type="text" class="rounded" id="user" name="username" onblur="checkUser()" onkeyup="checkUser(event)" placeholder="Username">
+						<div class="errorDiv">
+							<div id="usernameBlank"		class="errorMsg">Can't be blank</div>
+							<div id="usernameExists"	class="errorMsg">This username is taken</div>
+							<div id="usernameReserved"	class="errorMsg">This username is reserved</div>
+						</div>
+					</div>
+					<div class="inputDiv">
+						<input type="password" class="rounded" id="pass1" name="pass1" onclick="showMeter()" onkeyup="checkPasswords(event)" onblur="checkPasswords(); hideMeter()" placeholder="Password">
+						<div class="strength_container">
+							<div id="strength_meter" class="strength_meter"></div>
+						</div>
+						<div class="errorDiv">
+							<div id="password1Blank"	class="errorMsg">Can't be blank</div>
+							<div id="passwordMismatch1" class="errorMsg">Passwords must match</div>
+						</div>
+					</div>
+					<div class="inputDiv">
+						<input type="password" class="rounded" id="pass2" name="pass2" onkeyup="checkPasswords(event)" onblur="checkPasswords()" placeholder="Re-enter Password">
+						<div class="errorDiv">
+							<div id="password2Blank"	class="errorMsg">Can't be blank</div>
+							<div id="passwordMismatch2" class="errorMsg">Passwords must match</div>
+						</div>
+					</div>
+					<div class="inputDiv">
+						<input type="email" class="rounded" id="email" name="email" onkeyup="checkEmail(event)" onblur="checkEmail()" placeholder="Email">
+						<div class="errorDiv">
+							<div id="emailBlank"	class="errorMsg">Can't be blank</div>
+							<div id="emailFormat" 	class="errorMsg">Not a valid email</div>
+						</div>
+					</div>
+					<div class="center">
+						<input type="button" id="submitButton" class="button" onclick="return validateForm();" value="Create">
+						<div id="buttonBack" class="buttonBack"></div>
+						<a href="/login">Login</a>
+					</div>
+				</form>
+			</div>
 		</div>
-		<div id="usernameBlank"		class="tip left" style="display: none">This field can't be blank</div>
-		<div id="usernameExists"	class="tip left" style="display: none">This username is taken</div>
-		<div id="password1Blank"	class="tip left" style="display: none">This field can't be blank</div>
-		<div id="password2Blank"	class="tip left" style="display: none">This field can't be blank</div>
-		<div id="passwordMismatch"	class="tip left" style="display: none">Passwords must be the same</div>
-		<div id="emailBlank"		class="tip left" style="display: none">This field can't be blank</div>
-		<div id="emailFormat"		class="tip left" style="display: none">Email must be in proper format (hello@world.com)</div>
 	</div>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -83,107 +91,214 @@ span.head {
 			});
 			$("label").width(max + "px");
 			
-			$("#usernameBlank")[0].style.top =		$("#user").offset().top + "px";
-			$("#usernameBlank")[0].style.left =		($("#user").offset().left + $("#user").width() + 10) + "px";
-			$("#usernameExists")[0].style.top =		$("#user").offset().top + "px";
-			$("#usernameExists")[0].style.left =	($("#user").offset().left + $("#user").width() + 10) + "px";
+			$("#pass1").strength();
 			
-			$("#password1Blank")[0].style.top = 	$("#pass1").offset().top + "px";
-			$("#password1Blank")[0].style.left = 	($("#pass1").offset().left + $("#pass1").width() + 10) + "px";
-			
-			$("#password2Blank")[0].style.top = 	$("#pass2").offset().top + "px";
-			$("#password2Blank")[0].style.left = 	($("#pass2").offset().left + $("#pass2").width() + 10) + "px";
-			
-			$("#passwordMismatch")[0].style.top = 	$("#pass1").offset().top + "px";
-			$("#passwordMismatch")[0].style.left = 	($("#pass1").offset().left + $("#pass1").width() + 10) + "px";
-			
-			$("#emailBlank")[0].style.top =			$("#email").offset().top + "px";
-			$("#emailBlank")[0].style.left =		($("#email").offset().left + $("#email").width() + 10) + "px";
-			$("#emailFormat")[0].style.top =		$("#email").offset().top + "px";
-			$("#emailFormat")[0].style.left =		($("#email").offset().left + $("#email").width() + 10) + "px";
+			validateForm();
 		});
 		
-		function validateForm() {
+		function hideMeter() {
+			$('#strength_meter').fadeOut();
+		}
+		function showMeter() {
+			$('#strength_meter').fadeIn();
+		}
+		
+		function checkUser(e)
+		{
+			if (e != null) {
+				var charCode = (typeof e.which === "number") ? e.which : e.keyCode;
+				if (charCode === 13) {
+					validateForm();
+					return;
+				}
+			}
+			
 			var form = document.forms["uploadForm"];
 			var user = form["username"].value.trim();
-			var pass1 = form["password"].value.trim();
-			var pass2 = form["pass2"].value.trim();
-			var email = form["email"].value.trim();
 			var check = true;
-			var pass1Blank = false;
-			var pass2Blank = false;
 			
 			
 			$("#user").removeClass("error");
-			$("#pass1").removeClass("error");
-			$("#pass2").removeClass("error");
-			$("#email").removeClass("error");
-			
-			$("#usernameBlank")[0].style.display = "none";
-			$("#usernameExists")[0].style.display = "none";
-			$("#password1Blank")[0].style.display = "none";
-			$("#password2Blank")[0].style.display = "none";
-			$("#passwordMismatch")[0].style.display = "none";
-			$("#emailBlank")[0].style.display = "none";
-			$("#emailFormat")[0].style.display = "none";
-			
 			
 			if (user == null || user == "") {
 				check = false;
 				$("#user").addClass("error");
-				$("#usernameBlank")[0].style.display = "";
+				$("#usernameBlank").fadeIn();
+				$("#usernameExists").fadeOut();
 			} else {
-				$.post("createaccount", {
-					userCheck: true,
-					username: user
-				}, function(data) {
-					console.log(data);
-					if (data != null && data != "") {
-						console.log("2");
-						check = false;
-						$("#user").addClass("error");
-						$("#usernameExists")[0].style.display = "";
-					}
+				$("#usernameBlank").fadeOut();
+				
+				$.ajax({
+					type: "POST",
+					url: "createaccount",
+					data: {
+						userCheck: true,
+						username: user
+					},
+					success: function(data) {
+						if (data == null || data == "") {
+							$("#usernameExists").fadeOut();
+						} else {
+							if (data == "0") {
+								check = false;
+								$("#user").addClass("error");
+								$("#usernameExists").fadeIn();
+							} else if (data == "1") {
+								check = false;
+								$("#user").addClass("error");
+								$("#usernameReserved").fadeIn();
+							}
+						}
+					},
+					async: false
 				});
+				
+				if ($("#user").hasClass("error")) {
+					check = false;
+				}
 			}
+			
+			if (check) {
+				$("#submitButton").removeClass("error1");
+			} else {
+				$("#submitButton").addClass("error1");
+			}
+			
+			checkButton();
+			
+			return check;
+		}
+		function checkPasswords(e)
+		{
+			if (e != null) {
+				var charCode = (typeof e.which === "number") ? e.which : e.keyCode;
+				if (charCode === 13) {
+					validateForm();
+					return;
+				}
+			}
+			
+			var form = document.forms["uploadForm"];
+			var pass1 = form["pass1"].value.trim();
+			var pass2 = form["pass2"].value.trim();
+			var pass1Blank = false;
+			var pass2Blank = false;
+			var check = true;
+			
+			
+			$("#pass1").removeClass("error");
+			$("#pass2").removeClass("error");
 			
 			if (pass1 == null || pass1 == "") {
 				check = false;
 				pass1Blank = true;
 				$("#pass1").addClass("error");
-				$("#password1Blank")[0].style.display = "";
+				$("#password1Blank").fadeIn();
+			} else {
+				$("#password1Blank").fadeOut();
 			}
 			
 			if (pass2 == null || pass2 == "") {
 				check = false;
 				pass2Blank = true;
 				$("#pass2").addClass("error");
-				$("#password2Blank")[0].style.display = "";
+				$("#password2Blank").fadeIn();
+			} else {
+				$("#password2Blank").fadeOut();
 			}
 			
-			if (!pass1Blank && !pass2Blank) {
-				if (pass1 != pass2) {
-					check = false;
-					$("#pass1").addClass("error");
-					$("#pass2").addClass("error");
-					$("#passwordMismatch")[0].style.display = "";
+			if (!pass1Blank && !pass2Blank && (pass1 != pass2)) {
+				check = false;
+				$("#pass1").addClass("error");
+				$("#pass2").addClass("error");
+				$("#passwordMismatch1").fadeIn();
+				$("#passwordMismatch2").fadeIn();
+			} else {
+				$("#passwordMismatch1").fadeOut();
+				$("#passwordMismatch2").fadeOut();
+			}
+			
+			if (check) {
+				$("#submitButton").removeClass("error2");
+			} else {
+				$("#submitButton").addClass("error2");
+			}
+			
+			checkButton();
+			
+			return check;
+		}
+		function checkEmail(e)
+		{
+			if (e != null) {
+				var charCode = (typeof e.which === "number") ? e.which : e.keyCode;
+				if (charCode === 13) {
+					validateForm();
+					return;
 				}
 			}
+			
+			var form = document.forms["uploadForm"];
+			var email = form["email"].value.trim();
+			var check = true;
+			
+			
+			$("#email").removeClass("error");
 			
 			if (email == null || email == "") {
 				check = false;
 				$("#email").addClass("error");
-				$("#emailBlank")[0].style.display = "";
+				$("#emailBlank").fadeIn();
+				$("#emailFormat").fadeOut();
 			} else {
+				$("#emailBlank").fadeOut();
 				if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w+)+$/.test(email))) {
 					check = false;
 					$("#email").addClass("error");
-					$("#emailFormat")[0].style.display = "";
+					$("#emailFormat").fadeIn();
+				} else {
+					$("#emailFormat").fadeOut();
 				}
 			}
 			
 			if (check) {
-				form.submit();
+				$("#submitButton").removeClass("error3");
+			} else {
+				$("#submitButton").addClass("error3");
+			}
+			
+			checkButton();
+			
+			return check;
+		}
+		
+		function checkButton() {
+			var button = $("#submitButton");
+			if (button.hasClass("error1") || button.hasClass("error2") || button.hasClass("error3")) {
+				button.addClass("error");
+			} else {
+				button.removeClass("error");
+			}
+		}
+		
+		function validateForm() {
+			var check = true;
+			if (!checkUser()) {
+				check = false;
+			}
+			
+			if (!checkPasswords()) {
+				check = false;
+			}
+			
+			if (!checkEmail()) {
+				check = false;
+			}
+			
+			if (check) {
+				document.forms["uploadForm"].submit();
+			} else {
+				$("#submitButton").addClass("error");
 			}
 		}
 	</script>

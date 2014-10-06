@@ -7,81 +7,171 @@
 <title>Login</title>
 <script type="text/javascript" src="/jQuery.min.js"></script>
 <link rel="stylesheet" href="/request.css">
+<link rel="stylesheet" href="/formstyle.css"> <!-- Input style taken with permission from http://git.aaronlumsden.com/strength.js/#demo -->
 <style type="text/css">
 * {
 	font-size: 30px;
 }
 
-div.container_body {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0px;
-	left: 0px;
-}
-div.container_login {
-	background-color: #333;
-	position: relative;
-	width: 390px;
-	padding: 10px;
-	top: 150px;
-	margin: 0 auto;
-	box-shadow: 5px 5px 10px 10px #111;
-	border-radius: 10px;
-}
-div.container_header {
-	text-align: right;
-	padding: 5px;
-}
-div.spacer {
-	width: 100%;
-	height: 5px;
+label {
+	display: inline-block;
 }
 
-.big-btn {
-	background-color: #888;
-	border-color: #aaa;
-	color: #000;
-    width: 100px;
-    height: 45px;
-    border-radius: 8px;
-    -moz-border-radius: 8px;
-    -webkit-border-radius: 8px;
-    padding: 0px;
+div.container_page {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+}
+a {
+	position: absolute;
+	right: 50px;
+	bottom: 20px;
+	font-size: 25px;
 }
 </style>
 </head>
 <body>
-	<div id="bodyContainer" class="container_body">
-		<div id="headerContainer" class="container_header">
-			<a href="/"><font size="40px">Main site</font></a>
-		</div>
-		<div id="loginContainer" class="container_login">
-			<h2>Please Login</h2>
+	<div id="pageContainer" class="container_page">
+		<div id="formContainer" class="container_form">
+			<div id="formContainerInner" class="container_form_inner">
+				<form id="uploadForm" action="login" method="post">
+					<span class="center head">Login:</span>
 			
-			<%
-				int attempt = LoginHelper.instance.getLoginAttempt(session);
-				int maxAttemps = LoginHelper.maxAttemps;
-				int remaining = maxAttemps - attempt;
-				
-				if (attempt > -1) {
-					out.println("<font color=\"red\">Username or password is incorrect</font><br>");
-					
-					if (remaining == 1) {
-						out.println("<font color=\"red\">This is your final attempt</font><br>");
-					} else {
-						out.println(String.format("<font color=\"red\">You have %s attempts left</font><br>", remaining));
-					}
-				}
-			%>
-
-			<form action="login" method="post">
-				<input type="text" name="user" placeholder="Username"><br>
-				<input type="password" name="pwd" placeholder="Password"><br>
-				<div class="spacer"></div>
-				<div class="center"><input class="big-btn" type="submit" value="Log in"></div>
-			</form>
+					<%
+						int attempt = LoginHelper.instance.getLoginAttempt(session);
+						int maxAttemps = LoginHelper.maxAttemps;
+						int remaining = maxAttemps - attempt;
+						
+						if (attempt > -1) {
+							out.println("<br><font color=\"red\">Username or password is incorrect</font><br>");
+							
+							if (remaining == 1) {
+								out.println("<font color=\"red\">This is your final attempt</font><br>");
+							} else {
+								out.println(String.format("<font color=\"red\">You have %s attempts left</font><br></br>", remaining));
+							}
+						}
+					%>
+					<div class="inputDiv">
+						<input type="text" class="rounded" id="user" onkeyup="checkUser(event)" name="user" placeholder="Username"><br>
+						<div class="errorDiv">
+							<div id="usernameBlank" class="errorMsg">Can't be blank</div>
+						</div>
+					</div>
+					<div class="inputDiv">
+						<input type="password" class="rounded" id="pass" onkeyup="checkPassword(event)" name="pwd" placeholder="Password"><br>
+						<div class="errorDiv">
+							<div id="passwordBlank" class="errorMsg">Can't be blank</div>
+						</div>
+					</div>
+					<div class="spacer"></div>
+					<div class="center"><input type="button" id="submitButton" class="button" onclick="return validateForm();" value="Log in"></div>
+				</form>
+			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#submitButton").addClass("error");
+			validateForm();
+		});
+		
+		function checkUser(e)
+		{
+			if (e != null) {
+				var charCode = (typeof e.which === "number") ? e.which : e.keyCode;
+				if (charCode === 13) {
+					validateForm();
+					return;
+				}
+			}
+			
+			var form = document.forms["uploadForm"];
+			var user = form["user"].value.trim();
+			var check = true;
+			
+			if (user == null || user == "") {
+				check = false;
+				$("#user").addClass("error");
+				$("#usernameBlank").fadeIn();
+			} else {
+				$("#user").removeClass("error");
+				$("#usernameBlank").fadeOut();
+			}
+			
+			if (check) {
+				$("#submitButton").removeClass("error1");
+			} else {
+				$("#submitButton").addClass("error1");
+			}
+			
+			checkButton();
+			
+			return check;
+		}
+		
+		function checkPassword(e)
+		{
+			if (e != null) {
+				var charCode = (typeof e.which === "number") ? e.which : e.keyCode;
+				if (charCode === 13) {
+					validateForm();
+					return;
+				}
+			}
+			
+			var form = document.forms["uploadForm"];
+			var pass = form["pwd"].value.trim();
+			var check = true;
+			
+			if (pass == null || pass == "") {
+				check = false;
+				$("#pass").addClass("error");
+				$("#passwordBlank").fadeIn();
+			} else {
+				$("#pass").removeClass("error");
+				$("#passwordBlank").fadeOut();
+			}
+			
+			if (check) {
+				$("#submitButton").removeClass("error2");
+			} else {
+				$("#submitButton").addClass("error2");
+			}
+			
+			checkButton();
+			
+			return check;
+		}
+		
+		function checkButton() {
+			var button = $("#submitButton");
+			if (button.hasClass("error1") || button.hasClass("error2")) {
+				button.addClass("error");
+			} else {
+				button.removeClass("error");
+			}
+		}
+		
+		function validateForm()
+		{
+			var check = true;
+			if (!checkUser()) {
+				check = false;
+			}
+			
+			if (!checkPassword()) {
+				check = false;
+			}
+			
+			if (check) {
+				document.forms["uploadForm"].submit();
+			} else {
+				$("#submitButton").addClass("error");
+			}
+		}
+	</script>
 </body>
 </html>
