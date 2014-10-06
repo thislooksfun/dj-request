@@ -19,14 +19,6 @@ public class LoginServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 	
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public LoginServlet()
-	{
-		super();
-	}
-	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
@@ -43,10 +35,6 @@ public class LoginServlet extends HttpServlet
 		}
 	}
 	
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{

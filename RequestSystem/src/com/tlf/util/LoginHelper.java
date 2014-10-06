@@ -29,7 +29,7 @@ public class LoginHelper
 	private LoginHelper()
 	{
 		this.populatePasswords();
-		LoginChecker.init();
+		//LoginChecker.init();
 	}
 	
 	private void populatePasswords()
@@ -68,25 +68,28 @@ public class LoginHelper
 	
 	public boolean loginWithAuth(HttpSession session, String username, String password)
 	{
-		username = username.toLowerCase();
-		if (this.users.get(username) != null)
-		{
-			try
+		if (username != null && !username.equals("")) {
+			username = username.toLowerCase();
+			if (this.users.get(username) != null)
 			{
-				if (PasswordHash.validatePassword(password, this.users.get(username)))
+				try
 				{
-					this.login(session, username);
-					return true;
+					if (PasswordHash.validatePassword(password, this.users.get(username)))
+					{
+						this.login(session, username);
+						return true;
+					}
+				} catch (NoSuchAlgorithmException | InvalidKeySpecException e)
+				{
+					e.printStackTrace();
 				}
-			} catch (NoSuchAlgorithmException | InvalidKeySpecException e)
-			{
-				e.printStackTrace();
 			}
+			
+			Object temp = this.failedAttemps.get(session);
+			int attempt = (temp != null ? (int)temp + 1 : 0);
+			this.failedAttemps.put(session, attempt);
 		}
 		
-		Object temp = this.failedAttemps.get(session);
-		int attempt = (temp != null ? (int)temp + 1 : 0);
-		this.failedAttemps.put(session, attempt);
 		return false;
 	}
 	
@@ -97,8 +100,19 @@ public class LoginHelper
 			this.logout(username);
 		}
 		this.loggedIn.put(session, username);
-		this.lastActionTime.put(username, System.currentTimeMillis());
+		this.updateLastAction(username);
 		this.failedAttemps.remove(session);
+	}
+	
+	public void updateLastAction(HttpSession session) {
+		if (this.isSessionLoggedIn(session)) {
+			this.lastActionTime.put(this.getUserForSession(session), System.currentTimeMillis());
+		}
+	}
+	public void updateLastAction(String username) {
+		if (this.isUserLoggedIn(username)) {
+			this.lastActionTime.put(username, System.currentTimeMillis());
+		}
 	}
 	
 	public Map<String, Long> getActionTimes()
@@ -109,6 +123,11 @@ public class LoginHelper
 	public boolean isUser(String username)
 	{
 		return this.users.containsKey(username.toLowerCase());
+	}
+	
+	public boolean isReserved(String username)
+	{
+		return false; //TODO
 	}
 	
 	public void createUser(String username, String password, String email)

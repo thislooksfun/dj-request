@@ -18,14 +18,6 @@ public class LogoutServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 	
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public LogoutServlet()
-	{
-		super();
-	}
-	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{

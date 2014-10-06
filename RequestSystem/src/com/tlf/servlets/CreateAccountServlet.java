@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.tlf.util.LoginChecker;
 import com.tlf.util.LoginHelper;
 
 /**
@@ -20,23 +19,17 @@ public class CreateAccountServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 	
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public CreateAccountServlet()
-	{
-		super();
-	}
-	
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/createAccount.jsp");
-        rd.forward(request, response);
-        LoginChecker.init();
+		System.out.println(request.getParameter("old"));
+		if (Boolean.parseBoolean(request.getParameter("old"))) {
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/createAccount2.jsp");
+	        rd.forward(request, response);
+		} else {
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/createAccount.jsp");
+	        rd.forward(request, response);
+		}
 	}
 	
 	/**
@@ -47,16 +40,35 @@ public class CreateAccountServlet extends HttpServlet
 	{
 		boolean userCheck = Boolean.parseBoolean(request.getParameter("userCheck"));
 		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		String email = request.getParameter("email1");
+		String pass1 = request.getParameter("pass1");
+		String pass2 = request.getParameter("pass2");
+		String email = request.getParameter("email");
 		
-		System.out.println(username);
-		if (LoginHelper.instance.isUser(username)) {
-			response.getWriter().write("Sup");
-		} else if (!userCheck) {
-			LoginHelper.instance.createUser(username, password, email);
+		if (userCheck) {
+			if (LoginHelper.instance.isUser(username)) {
+				response.getWriter().write("0");
+			} else if (LoginHelper.instance.isReserved(username)) {
+				response.getWriter().write("1");
+			}
+		} else if (checkUser(username) && checkPasswords(pass1, pass2) && checkEmail(email)) {
+			LoginHelper.instance.createUser(username, pass1, email);
 			LoginHelper.instance.login(request.getSession(), username);
 			response.sendRedirect("/admin");
+		} else {
+			response.sendRedirect("/createaccount");
 		}
+	}
+	
+	private boolean checkUser(String username) {
+		return (stringNotEmpty(username) && !LoginHelper.instance.isUser(username) && !LoginHelper.instance.isReserved(username));
+	}
+	private boolean checkPasswords(String pass1, String pass2) {
+		return (stringNotEmpty(pass1) && stringNotEmpty(pass2) && pass1.equals(pass2));
+	}
+	private boolean checkEmail(String email) {
+		return (stringNotEmpty(email) && email.matches("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w+)+$"));
+	}
+	private boolean stringNotEmpty(String s) {
+		return (s != null && !s.equals(""));
 	}
 }

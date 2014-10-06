@@ -19,7 +19,7 @@ public class LoginChecker implements Runnable
 		while (ite.hasNext())
 		{
 			Entry<String, Long> entry = ite.next();
-			if (time-entry.getValue() >= (60*1000)) {
+			if (time-entry.getValue() >= (60*60*1000)) {
 				LoginHelper.instance.logout(entry.getKey());
 				System.out.println("Logged out user: "+entry.getKey());
 			}
