@@ -42,13 +42,19 @@ public class CreateAccountServlet extends HttpServlet
 		String username = request.getParameter("username");
 		String pass1 = request.getParameter("pass1");
 		String pass2 = request.getParameter("pass2");
-		String email = request.getParameter("email");
+		String email = request.getParameter("email1");
 		
 		if (userCheck) {
-			if (LoginHelper.instance.isUser(username)) {
-				response.getWriter().write("0");
-			} else if (LoginHelper.instance.isReserved(username)) {
-				response.getWriter().write("1");
+			if (stringNotEmpty(username)) {
+				if (LoginHelper.instance.isUser(username)) {
+					response.getWriter().write("0");
+				} else if (LoginHelper.instance.isReserved(username)) {
+					response.getWriter().write("1");
+				}
+			} else if (stringNotEmpty(email)) {
+				if (LoginHelper.instance.isEmail(email)) {
+					response.getWriter().write("0");
+				}
 			}
 		} else if (checkUser(username) && checkPasswords(pass1, pass2) && checkEmail(email)) {
 			LoginHelper.instance.createUser(username, pass1, email);
@@ -60,7 +66,7 @@ public class CreateAccountServlet extends HttpServlet
 	}
 	
 	private boolean checkUser(String username) {
-		return (stringNotEmpty(username) && !LoginHelper.instance.isUser(username) && !LoginHelper.instance.isReserved(username));
+		return (stringNotEmpty(username) && !LoginHelper.instance.isUser(username) && !LoginHelper.instance.isReserved(username) && !(username.contains("::")));
 	}
 	private boolean checkPasswords(String pass1, String pass2) {
 		return (stringNotEmpty(pass1) && stringNotEmpty(pass2) && pass1.equals(pass2));

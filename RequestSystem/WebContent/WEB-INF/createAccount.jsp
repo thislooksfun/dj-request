@@ -44,6 +44,7 @@ a {
 						<input type="text" class="rounded" id="user" name="username" onblur="checkUser()" onkeyup="checkUser(event)" placeholder="Username">
 						<div class="errorDiv">
 							<div id="usernameBlank"		class="errorMsg">Can't be blank</div>
+							<div id="usernameFormat"	class="errorMsg">Can't contain '::'</div>
 							<div id="usernameExists"	class="errorMsg">This username is taken</div>
 							<div id="usernameReserved"	class="errorMsg">This username is reserved</div>
 						</div>
@@ -66,10 +67,11 @@ a {
 						</div>
 					</div>
 					<div class="inputDiv">
-						<input type="email" class="rounded" id="email" name="email" onkeyup="checkEmail(event)" onblur="checkEmail()" placeholder="Email">
+						<input type="email" class="rounded" id="email" name="email1" onkeyup="checkEmail(event)" onblur="checkEmail()" placeholder="Email">
 						<div class="errorDiv">
 							<div id="emailBlank"	class="errorMsg">Can't be blank</div>
 							<div id="emailFormat" 	class="errorMsg">Not a valid email</div>
+							<div id="emailExists"	class="errorMsg">This email is taken</div>
 						</div>
 					</div>
 					<div class="center">
@@ -124,37 +126,45 @@ a {
 				check = false;
 				$("#user").addClass("error");
 				$("#usernameBlank").fadeIn();
+				$("#usernameFormat").fadeOut();
 				$("#usernameExists").fadeOut();
+				$("#usernameReserved").fadeOut();
 			} else {
 				$("#usernameBlank").fadeOut();
 				
-				$.ajax({
-					type: "POST",
-					url: "createaccount",
-					data: {
-						userCheck: true,
-						username: user
-					},
-					success: function(data) {
-						if (data == null || data == "") {
-							$("#usernameExists").fadeOut();
-						} else {
-							if (data == "0") {
-								check = false;
-								$("#user").addClass("error");
-								$("#usernameExists").fadeIn();
-							} else if (data == "1") {
-								check = false;
-								$("#user").addClass("error");
-								$("#usernameReserved").fadeIn();
-							}
-						}
-					},
-					async: false
-				});
-				
-				if ($("#user").hasClass("error")) {
+				if (user.indexOf("::") > -1) {
 					check = false;
+					$("#user").addClass("error");
+					$("#usernameFormat").fadeIn();
+				} else {
+					$.ajax({
+						type: "POST",
+						url: "createaccount",
+						data: {
+							userCheck: true,
+							username: user
+						},
+						success: function(data) {
+							if (data == null || data == "") {
+								$("#usernameExists").fadeOut();
+							} else {
+								if (data == "0") {
+									check = false;
+									$("#user").addClass("error");
+									$("#usernameExists").fadeIn();
+								} else if (data == "1") {
+									check = false;
+									$("#user").addClass("error");
+									$("#usernameReserved").fadeIn();
+								}
+							}
+						},
+						async: false
+					});
+					
+					if ($("#user").hasClass("error")) {
+						check = false;
+					}
 				}
 			}
 			
@@ -250,14 +260,41 @@ a {
 				$("#email").addClass("error");
 				$("#emailBlank").fadeIn();
 				$("#emailFormat").fadeOut();
+				$("#emailExists").fadeOut();
 			} else {
 				$("#emailBlank").fadeOut();
 				if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w+)+$/.test(email))) {
 					check = false;
 					$("#email").addClass("error");
 					$("#emailFormat").fadeIn();
+					$("#emailExists").fadeOut();
 				} else {
 					$("#emailFormat").fadeOut();
+					
+					$.ajax({
+						type: "POST",
+						url: "createaccount",
+						data: {
+							userCheck: true,
+							email1: email
+						},
+						success: function(data) {
+							if (data == null || data == "") {
+								$("#emailExists").fadeOut();
+							} else {
+								if (data == "0") {
+									check = false;
+									$("#email").addClass("error");
+									$("#emailExists").fadeIn();
+								}
+							}
+						},
+						async: false
+					});
+					
+					if ($("#email").hasClass("error")) {
+						check = false;
+					}
 				}
 			}
 			

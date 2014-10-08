@@ -1,8 +1,10 @@
 package com.tlf.util;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -22,17 +24,18 @@ public class LoginHelper
 	public static final int maxAttemps = 5;
 	
 	private BiMap<String, String> users = Maps.synchronizedBiMap(HashBiMap.create(new HashMap<String, String>()));
+	private BiMap<String, String> emails = Maps.synchronizedBiMap(HashBiMap.create(new HashMap<String, String>()));
 	private BiMap<HttpSession, String> loggedIn = Maps.synchronizedBiMap(HashBiMap.create(new HashMap<HttpSession, String>()));
 	private Map<String, Long> lastActionTime = new HashMap<String, Long>();
 	private BiMap<HttpSession, Integer> failedAttemps = Maps.synchronizedBiMap(HashBiMap.create(new HashMap<HttpSession, Integer>()));
 	
 	private LoginHelper()
 	{
-		this.populatePasswords();
+		this.loadUserData();
 		//LoginChecker.init();
 	}
 	
-	private void populatePasswords()
+	private File loadUserData()
 	{
 		File users = new File("users.txt");
 		if (!users.exists())
@@ -55,8 +58,12 @@ public class LoginHelper
 			while (line != null)
 			{
 				System.out.println("Line = " + line);
-				String[] info = line.split(" ");
-				this.users.put(info[0].toLowerCase(), info[1]);
+				String[] info = line.split("::");
+				System.out.println(info[0]);
+				System.out.println(info[1]);
+				System.out.println(info[2]);
+				this.users.put(info[0].toLowerCase(), info[2]);
+				this.emails.put(info[1].toLowerCase(), info[0]);
 				line = reader.readLine();
 			}
 			reader.close();
@@ -64,11 +71,17 @@ public class LoginHelper
 		{
 			e.printStackTrace();
 		}
+		
+		return users;
 	}
 	
 	public boolean loginWithAuth(HttpSession session, String username, String password)
 	{
 		if (username != null && !username.equals("")) {
+			if (username.matches("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w+)+$")) {
+				username = this.emails.get(username); //Get username if supplied with email
+			}
+			
 			username = username.toLowerCase();
 			if (this.users.get(username) != null)
 			{
@@ -120,6 +133,11 @@ public class LoginHelper
 		return Util.cloneMap(this.lastActionTime);
 	}
 	
+	public boolean isEmail(String email)
+	{
+		return this.emails.containsKey(email);
+	}
+	
 	public boolean isUser(String username)
 	{
 		return this.users.containsKey(username.toLowerCase());
@@ -134,8 +152,17 @@ public class LoginHelper
 	{
 		try
 		{
-			this.users.put(username, PasswordHash.createHash(password));
-		} catch (NoSuchAlgorithmException | InvalidKeySpecException e)
+			File users = this.loadUserData();
+			
+			if (!this.users.containsKey(username) && !this.emails.containsKey(email)) {
+				String hash = PasswordHash.createHash(password);
+				this.users.put(username, hash);
+				FileWriter fw = new FileWriter(users);
+				BufferedWriter bw = new BufferedWriter(fw);
+				bw.write(username+"::"+email+"::"+hash+"\n");
+				bw.close();
+			}
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException | IOException e)
 		{
 			e.printStackTrace();
 		}
